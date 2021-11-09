@@ -13,6 +13,7 @@ namespace SR
     {
 
         public static DesignationDef SR_Dig;
+        public static DesignationDef SR_Place;
 
     }
 }

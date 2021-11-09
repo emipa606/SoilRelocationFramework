@@ -4,13 +4,13 @@ using RimWorld;
 
 namespace SR
 {
-	public class JobDriver_Dig : JobDriver_AffectFloor
+	public class JobDriver_Place : JobDriver_AffectFloor
 	{
 		protected override int BaseWorkAmount
 		{
 			get
 			{
-				return 800; //smoothing a floor was 2800
+				return 400; //smoothing a floor was 2800, digging is 800 so I figure with gravity helping it's half the work.
 			}
 		}
 
@@ -18,7 +18,7 @@ namespace SR
 		{
 			get
 			{
-				return DesignationDefOf.SR_Dig;
+				return DesignationDefOf.SR_Place;
 			}
 		}
 
@@ -30,14 +30,14 @@ namespace SR
 			}
 		}
 
-		public JobDriver_Dig()
+		public JobDriver_Place()
 		{
 			clearSnow = true;
 		}
 
 		protected override void DoEffect(IntVec3 c)
 		{
-			TerrainDef t = TerrainDef.Named("Gravel"); //What we are setting the terrain to, stone is a placeholder.
+			TerrainDef t = TerrainDef.Named("Soil"); //What we are setting the terrain to, blindly placing soil is a placeholder.
 			Map.terrainGrid.SetTerrain(TargetLocA, t); //Set the terrain to the above.
 			FilthMaker.RemoveAllFilth(TargetLocA, Map);
 		}

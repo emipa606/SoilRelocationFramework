@@ -6,7 +6,7 @@ using RimWorld;
 
 namespace SR
 {
-	public class Designator_Dig : Designator
+	public class Designator_Place : Designator
 	{
 		public override int DraggableDimensions
 		{
@@ -24,15 +24,15 @@ namespace SR
 			}
 		}
 
-		public Designator_Dig()
+		public Designator_Place()
 		{
-			defaultLabel = "DesignatorDig".Translate();
-			defaultDesc = "DesignatorDigDesc".Translate();
-			icon = ContentFinder<Texture2D>.Get("UI/Designators/RemoveFloor", true);
+			defaultLabel = "DesignatorPlace".Translate();
+			defaultDesc = "DesignatorPlaceDesc".Translate();
+			this.icon = TexCommand.Install; 
 			useMouseIcon = true;
 			soundDragSustain = SoundDefOf.Designate_DragStandard;
 			soundDragChanged = SoundDefOf.Designate_DragStandard_Changed;
-			soundSucceeded = SoundDefOf.Designate_Mine;
+			soundSucceeded = SoundDefOf.Designate_SmoothSurface;
 			//this.hotKey = KeyBindingDefOf.Misc5;
 		}
 
@@ -60,9 +60,9 @@ namespace SR
 			{
 				return false;
 			}
-			if (Map.designationManager.DesignationAt(c, DesignationDefOf.SR_Dig) != null)
+			if (Map.designationManager.DesignationAt(c, DesignationDefOf.SR_Place) != null)
 			{
-				return "Already digging.".Translate();
+				return "Already placing soil.".Translate();
 			}
 			if (c.InNoBuildEdgeArea(Map))
 			{
@@ -73,17 +73,16 @@ namespace SR
 			{
 				return "Must remove building first.".Translate();
 			}
-
-			if (!c.GetTerrain(Map).affordances.Contains(TerrainAffordanceDefOf.GrowSoil))
+			if (c.GetTerrain(Map).defName != "Gravel")//affordances.Contains(TerrainAffordanceDefOf.GrowSoil)) only allow gravel, temp
 			{
-				return "Mest designate soil.".Translate();
+				return "Mest designate gravel.".Translate();
 			}
 			return AcceptanceReport.WasAccepted;
 		}
 
 		public override void DesignateSingleCell(IntVec3 c)
 		{
-			Map.designationManager.AddDesignation(new Designation(c, DesignationDefOf.SR_Dig));
+			Map.designationManager.AddDesignation(new Designation(c, DesignationDefOf.SR_Place));
 		}
 
 		public override void SelectedUpdate()
