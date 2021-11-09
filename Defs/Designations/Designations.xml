@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+    <DesignationDef>
+        <defName>SR_Dig</defName>
+        <texturePath>UI/Designators/Dig</texturePath>
+        <targetType>Cell</targetType>
+    </DesignationDef>
+
+    <DesignationDef>
+        <defName>SR_Place</defName>
+        <texturePath>UI/Designators/Place</texturePath>
+        <targetType>Cell</targetType>
+    </DesignationDef>
+
+</Defs>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<WorkGiverDef Name="SR_Dig">
+	<defName>SR_ConstructDig</defName>
+	<label>dig</label>
+	<giverClass>SR.WorkGiver_Dig</giverClass>
+	<workType>Construction</workType>
+	<priorityInType>70</priorityInType>
+	<verb>dig</verb>
+	<gerund>digging</gerund>
+	<requiredCapacities>
+	    <li>Manipulation</li>
+	</requiredCapacities>
+	<nonColonistsCanDo>true</nonColonistsCanDo>
+	<prioritizeSustains>true</prioritizeSustains>
+	<equivalenceGroup>AssistInConstruction</equivalenceGroup>
+	</WorkGiverDef>
+    
+	<WorkGiverDef Name="SR_Place">
+	<defName>SR_Place</defName>
+	<label>place</label>
+	<giverClass>SR.WorkGiver_Place</giverClass>
+	<workType>Construction</workType>
+	<priorityInType>70</priorityInType>
+	<verb>place</verb>
+	<gerund>placing</gerund>
+	<requiredCapacities>
+	    <li>Manipulation</li>
+	</requiredCapacities>
+	<nonColonistsCanDo>true</nonColonistsCanDo>
+	<prioritizeSustains>true</prioritizeSustains>
+	<equivalenceGroup>AssistInConstruction</equivalenceGroup>
+	</WorkGiverDef>
+
+</Defs>

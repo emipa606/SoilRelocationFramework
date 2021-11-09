@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+    <!-- Add Dig designator -->
+    <Operation Class="PatchOperationAdd">
+        <xpath>/Defs/DesignationCategoryDef[defName="Orders"]/specialDesignatorClasses</xpath>
+        <value>
+            <li>SR.Designator_Dig</li>
+	    <li>SR.Designator_Place</li>
+        </value>
+    </Operation>
+
+</Patch>
