@@ -11,10 +11,9 @@
 	<gerund>digging soil</gerund>
 	<requiredCapacities>
 	    <li>Manipulation</li>
-	</requiredCapacities>
-	<nonColonistsCanDo>true</nonColonistsCanDo>
-	<prioritizeSustains>true</prioritizeSustains>
-	<equivalenceGroup>AssistInConstruction</equivalenceGroup>
+	</requiredCapacities>    
+	<scanThings>false</scanThings>
+	<scanCells>true</scanCells>
 	</WorkGiverDef>
     
 	<WorkGiverDef>
@@ -28,9 +27,8 @@
 	<requiredCapacities>
 	    <li>Manipulation</li>
 	</requiredCapacities>
-	<nonColonistsCanDo>true</nonColonistsCanDo>
-	<prioritizeSustains>true</prioritizeSustains>
-	<equivalenceGroup>AssistInConstruction</equivalenceGroup>
+	<scanThings>false</scanThings>
+	<scanCells>true</scanCells>
 	</WorkGiverDef>
 
 </Defs>
