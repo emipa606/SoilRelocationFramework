@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Designator_Place.cs" />
+    <Compile Include="WorkGiverDefOf.cs" />
     <Compile Include="JobDefOf.cs" />
     <Compile Include="JobDriver_Place.cs" />
     <Compile Include="JobDriver_Dig.cs" />

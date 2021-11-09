@@ -2,7 +2,7 @@
 <Defs>
 
 	<WorkGiverDef>
-	<defName>DigSoil</defName>
+	<defName>SR_Dig</defName>
 	<label>dig soil</label>
 	<giverClass>SR.WorkGiver_Dig</giverClass>
 	<workType>Construction</workType>
@@ -18,7 +18,7 @@
 	</WorkGiverDef>
     
 	<WorkGiverDef>
-	<defName>PlaceSoil</defName>
+	<defName>SR_Place</defName>
 	<label>place soil</label>
 	<giverClass>SR.WorkGiver_Place</giverClass>
 	<workType>Construction</workType>
