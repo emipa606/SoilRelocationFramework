@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
-	<WorkGiverDef Name="SR_Dig">
-	<defName>SR_ConstructDig</defName>
-	<label>dig</label>
+	<WorkGiverDef>
+	<defName>DigSoil</defName>
+	<label>dig soil</label>
 	<giverClass>SR.WorkGiver_Dig</giverClass>
 	<workType>Construction</workType>
 	<priorityInType>70</priorityInType>
-	<verb>dig</verb>
-	<gerund>digging</gerund>
+	<verb>dig soil</verb>
+	<gerund>digging soil</gerund>
 	<requiredCapacities>
 	    <li>Manipulation</li>
 	</requiredCapacities>
@@ -17,14 +17,14 @@
 	<equivalenceGroup>AssistInConstruction</equivalenceGroup>
 	</WorkGiverDef>
     
-	<WorkGiverDef Name="SR_Place">
-	<defName>SR_Place</defName>
-	<label>place</label>
+	<WorkGiverDef>
+	<defName>PlaceSoil</defName>
+	<label>place soil</label>
 	<giverClass>SR.WorkGiver_Place</giverClass>
 	<workType>Construction</workType>
 	<priorityInType>70</priorityInType>
-	<verb>place</verb>
-	<gerund>placing</gerund>
+	<verb>place soil</verb>
+	<gerund>placing soil</gerund>
 	<requiredCapacities>
 	    <li>Manipulation</li>
 	</requiredCapacities>

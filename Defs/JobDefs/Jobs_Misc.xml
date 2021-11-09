@@ -4,7 +4,7 @@
     <JobDef>
         <defName>SR_Dig</defName>
         <driverClass>SR.JobDriver_Dig</driverClass>
-        <reportString>digging TargetA.</reportString>
+        <reportString>digging soil at TargetA.</reportString>
         <suspendable>false</suspendable>
         <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
     </JobDef>
