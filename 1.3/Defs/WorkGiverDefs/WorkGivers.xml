@@ -11,7 +11,7 @@
 	<gerund>digging soil</gerund>
 	<requiredCapacities>
 	    <li>Manipulation</li>
-	</requiredCapacities>    
+	</requiredCapacities>
 	<scanThings>false</scanThings>
 	<scanCells>true</scanCells>
 	</WorkGiverDef>
