@@ -13,7 +13,6 @@ namespace SR
     {
 
         public static JobDef SR_Dig;
-        public static JobDef SR_Place;
 
     }
 }

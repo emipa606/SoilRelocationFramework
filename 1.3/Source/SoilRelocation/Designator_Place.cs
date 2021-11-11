@@ -82,7 +82,8 @@ namespace SR
 
 		public override void DesignateSingleCell(IntVec3 c)
 		{
-			Map.designationManager.AddDesignation(new Designation(c, DesignationDefOf.SR_Place));
+			Blueprint_Build blueprint_Build = GenConstruct.PlaceBlueprintForBuild_NewTemp(DefDatabase<BuildableDef>.GetNamed("Stool"), c, base.Map, Rot4.North, Faction.OfPlayer, null, null, null);
+			//Map.designationManager.AddDesignation(new Designation(c, DesignationDefOf.SR_Place));
 		}
 
 		public override void SelectedUpdate()
