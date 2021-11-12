@@ -6,10 +6,6 @@
         <xpath>/Defs/DesignationCategoryDef[defName="Orders"]/specialDesignatorClasses</xpath>
 	<value>
 		<li>SR.Designator_Dig</li>
-		<li>SR.Designator_PlaceSoil</li>
-		<li>SR.Designator_PlaceRichSoil</li>
-		<li>SR.Designator_PlaceGravel</li>
-		<li>SR.Designator_PlaceSand</li>
 	</value>
     </Operation>
 

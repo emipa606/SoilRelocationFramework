@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
+<DesignatorDropdownGroupDef>
+	<defName>SR</defName>
+</DesignatorDropdownGroupDef>
+
  <ThingDef ParentName="BuildingBase">
  <defName>Building_Soil</defName>
  <label>soil</label>
@@ -11,12 +15,15 @@
 	<graphicClass>Graphic_Single</graphicClass>
       </graphicData>
       <costList>
-	<SR_Soil>200</SR_Soil>
+	<SR_Soil>75</SR_Soil>
       </costList>
             <statBases>
           <WorkToBuild>200</WorkToBuild>
       </statBases>
       <altitudeLayer>FloorEmplacement</altitudeLayer>
+      <designationCategory>Orders</designationCategory>
+      <designatorDropdown>SR</designatorDropdown>
+      <placingDraggableDimensions>2</placingDraggableDimensions>
       </ThingDef>
   
    <ThingDef ParentName="BuildingBase">
@@ -29,12 +36,15 @@
 	<graphicClass>Graphic_Single</graphicClass>
       </graphicData>
       <costList>
-	<SR_RichSoil>200</SR_RichSoil>
+	<SR_RichSoil>75</SR_RichSoil>
       </costList>
             <statBases>
           <WorkToBuild>200</WorkToBuild>
       </statBases>
       <altitudeLayer>FloorEmplacement</altitudeLayer>
+      <designationCategory>Orders</designationCategory>
+      <designatorDropdown>SR</designatorDropdown>
+      <placingDraggableDimensions>2</placingDraggableDimensions>
       </ThingDef>
   
    <ThingDef ParentName="BuildingBase">
@@ -47,12 +57,15 @@
 	<graphicClass>Graphic_Single</graphicClass>
       </graphicData>
       <costList>
-	<SR_Sand>200</SR_Sand>
+	<SR_Sand>75</SR_Sand>
       </costList>
       <statBases>
           <WorkToBuild>200</WorkToBuild>
       </statBases>
       <altitudeLayer>FloorEmplacement</altitudeLayer>
+      <designationCategory>Orders</designationCategory>
+      <designatorDropdown>SR</designatorDropdown>
+      <placingDraggableDimensions>2</placingDraggableDimensions>
   </ThingDef>
   
      <ThingDef ParentName="BuildingBase">
@@ -65,11 +78,15 @@
 	<graphicClass>Graphic_Single</graphicClass>
       </graphicData>
       <costList>
-	<SR_Gravel>200</SR_Gravel>
+	<SR_Gravel>75</SR_Gravel>
       </costList>
             <statBases>
           <WorkToBuild>200</WorkToBuild>
       </statBases>
+      <altitudeLayer>FloorEmplacement</altitudeLayer>
+      <designationCategory>Orders</designationCategory>
+      <designatorDropdown>SR</designatorDropdown>
+      <placingDraggableDimensions>2</placingDraggableDimensions>
   </ThingDef>
 
 </Defs>

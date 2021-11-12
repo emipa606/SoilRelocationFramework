@@ -11,12 +11,6 @@ namespace SR
     [DefOf]
     public static class DesignationDefOf
     {
-
         public static DesignationDef SR_Dig;
-        public static DesignationDef SR_PlaceSoil;
-        public static DesignationDef SR_PlaceRichSoil;
-        public static DesignationDef SR_PlaceSand;
-        public static DesignationDef SR_PlaceGravel;
-
     }
 }

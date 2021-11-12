@@ -7,8 +7,8 @@
         <targetType>Cell</targetType>
     </DesignationDef>
 
-    <DesignationDef>
-        <defName>SR_PlaceSoil</defName>
+ <!--   <DesignationDef>
+        <defName>Designator_PlaceSoil</defName>
         <targetType>Cell</targetType>
     </DesignationDef>
     
@@ -25,6 +25,6 @@
     <DesignationDef>
         <defName>SR_PlaceGravel</defName>
         <targetType>Cell</targetType>
-    </DesignationDef>
+    </DesignationDef>-->
 
 </Defs>

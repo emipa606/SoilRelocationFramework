@@ -26,8 +26,8 @@ namespace SR
 
 		public Designator_Dig()
 		{
-			defaultLabel = "DesignatorDig".Translate();
-			defaultDesc = "DesignatorDigDesc".Translate();
+			defaultLabel = "Dig";
+			defaultDesc = "Dig up soil";
 			icon = ContentFinder<Texture2D>.Get("DesignatorDig", true);
 			useMouseIcon = true;
 			soundDragSustain = SoundDefOf.Designate_DragStandard;
@@ -74,8 +74,7 @@ namespace SR
 			{
 				return "TooCloseToMapEdge".Translate();
 			}
-			Building edifice = c.GetEdifice(Map);
-			if (edifice != null)
+			if (c.GetFirstBuilding(Map) != null)
 			{
 				return "Must remove building first.";
 			}
