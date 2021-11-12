@@ -11,9 +11,12 @@
     <thingClass>SR.Building_Soil</thingClass>
     <category>Building</category>
       <graphicData>
-        <texPath>DesignatorPlaceSoil</texPath>
 	<graphicClass>Graphic_Single</graphicClass>
       </graphicData>
+      <blueprintGraphicData>
+       <texPath>DesignationDig</texPath>
+       </blueprintGraphicData>
+        <uiIconPath>DesignatorPlaceSoil</uiIconPath>
       <costList>
 	<SR_Soil>75</SR_Soil>
       </costList>
@@ -24,6 +27,7 @@
       <designationCategory>Orders</designationCategory>
       <designatorDropdown>SR</designatorDropdown>
       <placingDraggableDimensions>2</placingDraggableDimensions>
+      <constructEffect>ConstructDirt</constructEffect>
       </ThingDef>
   
    <ThingDef ParentName="BuildingBase">
@@ -31,10 +35,13 @@
    <label>rich soil</label>
     <thingClass>SR.Building_RichSoil</thingClass>
     <category>Building</category>
-      <graphicData>
-        <texPath>DesignatorPlaceRichSoil</texPath>
+      <graphicData>      
 	<graphicClass>Graphic_Single</graphicClass>
       </graphicData>
+      <blueprintGraphicData>
+       <texPath>DesignationDig</texPath>
+       </blueprintGraphicData>
+        <uiIconPath>DesignatorPlaceRichSoil</uiIconPath>
       <costList>
 	<SR_RichSoil>75</SR_RichSoil>
       </costList>
@@ -45,6 +52,7 @@
       <designationCategory>Orders</designationCategory>
       <designatorDropdown>SR</designatorDropdown>
       <placingDraggableDimensions>2</placingDraggableDimensions>
+      <constructEffect>ConstructDirt</constructEffect>
       </ThingDef>
   
    <ThingDef ParentName="BuildingBase">
@@ -53,9 +61,12 @@
     <thingClass>SR.Building_Sand</thingClass>
     <category>Building</category>
       <graphicData>
-        <texPath>DesignatorPlaceSand</texPath>
 	<graphicClass>Graphic_Single</graphicClass>
       </graphicData>
+      <blueprintGraphicData>
+       <texPath>DesignationDig</texPath>
+       </blueprintGraphicData>
+        <uiIconPath>DesignatorPlaceSand</uiIconPath>
       <costList>
 	<SR_Sand>75</SR_Sand>
       </costList>
@@ -66,6 +77,7 @@
       <designationCategory>Orders</designationCategory>
       <designatorDropdown>SR</designatorDropdown>
       <placingDraggableDimensions>2</placingDraggableDimensions>
+      <constructEffect>ConstructDirt</constructEffect>
   </ThingDef>
   
      <ThingDef ParentName="BuildingBase">
@@ -74,9 +86,12 @@
     <thingClass>SR.Building_Gravel</thingClass>
     <category>Building</category>
       <graphicData>
-        <texPath>DesignatorPlaceGravel</texPath>
 	<graphicClass>Graphic_Single</graphicClass>
       </graphicData>
+      <blueprintGraphicData>
+       <texPath>DesignationDig</texPath>
+       </blueprintGraphicData>
+        <uiIconPath>DesignatorPlaceGravel</uiIconPath>
       <costList>
 	<SR_Gravel>75</SR_Gravel>
       </costList>
@@ -87,6 +102,7 @@
       <designationCategory>Orders</designationCategory>
       <designatorDropdown>SR</designatorDropdown>
       <placingDraggableDimensions>2</placingDraggableDimensions>
+      <constructEffect>ConstructDirt</constructEffect>
   </ThingDef>
 
 </Defs>

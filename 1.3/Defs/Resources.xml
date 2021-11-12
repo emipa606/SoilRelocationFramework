@@ -6,8 +6,8 @@
     <label>soil</label>
     <description>Soil. Dirt. You know, the plain old brown stuff on the ground what things grow in.</description>
     <graphicData>
-      <texPath>Things/Item/Resource/Silver</texPath>
-      <graphicClass>Graphic_StackCount</graphicClass>
+      <texPath>ResourceSoil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <statBases>
       <MarketValue>.01</MarketValue>
@@ -24,8 +24,8 @@
     <label>rich soil</label>
     <description>This is the good stuff, soil that makes plants grow much more rapidly.</description>
     <graphicData>
-      <texPath>Things/Item/Resource/Silver</texPath>
-      <graphicClass>Graphic_StackCount</graphicClass>
+      <texPath>ResourceRichSoil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <statBases>
       <MarketValue>.1</MarketValue>
@@ -42,8 +42,8 @@
     <label>sand</label>
     <description>Sand can be used for various construction purpose and processed into glass, but it isn't very hospitable for plants.</description>
     <graphicData>
-      <texPath>Things/Item/Resource/Silver</texPath>
-      <graphicClass>Graphic_StackCount</graphicClass>
+      <texPath>ResourceSand</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <statBases>
       <MarketValue>.01</MarketValue>
@@ -60,8 +60,8 @@
     <label>rocky soil</label>
     <description>Plants can grow in this, but it's not the best.</description>
     <graphicData>
-      <texPath>Things/Item/Resource/Silver</texPath>
-      <graphicClass>Graphic_StackCount</graphicClass>
+      <texPath>ResourceGravel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <statBases>
       <MarketValue>.005</MarketValue>
