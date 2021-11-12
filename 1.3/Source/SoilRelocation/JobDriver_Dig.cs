@@ -59,8 +59,7 @@ namespace SR
 			Thing item;
 			thingOwner.TryDrop(thing, c, Map, ThingPlaceMode.Direct, out item);
 
-			TerrainDef nt = TerrainDef.Named("Gravel"); //What we are setting the terrain to, stone is a placeholder.
-			Map.terrainGrid.SetTerrain(TargetLocA, nt); //Set the terrain to the above.
+			Map.terrainGrid.SetTerrain(TargetLocA, Map.GetComponent<MapComponent_StoneGrid>().StoneTypeAt(c)); //Set the terrain to the above.
 			FilthMaker.RemoveAllFilth(TargetLocA, Map);
 		}
 	}

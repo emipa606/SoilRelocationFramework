@@ -56,6 +56,7 @@
     <Compile Include="Building_Terrain.cs" />
     <Compile Include="JobDefOf.cs" />
     <Compile Include="JobDriver_Dig.cs" />
+    <Compile Include="MapComponent_StoneGrid.cs" />
     <Compile Include="SoilRelocation.cs" />
     <Compile Include="DesignationDefOf.cs" />
     <Compile Include="Designator_Dig.cs" />
