@@ -15,20 +15,5 @@
 	<scanThings>false</scanThings>
 	<scanCells>true</scanCells>
 	</WorkGiverDef>
-    
-	<WorkGiverDef>
-	<defName>SR_Place</defName>
-	<label>place soil</label>
-	<giverClass>SR.WorkGiver_Place</giverClass>
-	<workType>Construction</workType>
-	<priorityInType>70</priorityInType>
-	<verb>place soil</verb>
-	<gerund>placing soil</gerund>
-	<requiredCapacities>
-	    <li>Manipulation</li>
-	</requiredCapacities>
-	<scanThings>false</scanThings>
-	<scanCells>true</scanCells>
-	</WorkGiverDef>
 
 </Defs>

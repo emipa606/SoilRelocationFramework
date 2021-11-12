@@ -7,7 +7,7 @@
     <ProjectGuid>{06C33236-3E25-42B0-B5F4-E22BC46B4E7C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SoilRelocation</RootNamespace>
+    <RootNamespace>SR</RootNamespace>
     <AssemblyName>SoilRelocation</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -49,16 +49,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Building_Gravel.cs" />
+    <Compile Include="Building_Sand.cs" />
+    <Compile Include="Building_RichSoil.cs" />
+    <Compile Include="Building_Soil.cs" />
+    <Compile Include="Building_Terrain.cs" />
     <Compile Include="Designator_Place.cs" />
-    <Compile Include="WorkGiverDefOf.cs" />
+    <Compile Include="Designator_PlaceRichSoil.cs" />
+    <Compile Include="Designator_PlaceGravel.cs" />
+    <Compile Include="Designator_PlaceSand.cs" />
+    <Compile Include="Designator_PlaceSoil.cs" />
     <Compile Include="JobDefOf.cs" />
-    <Compile Include="JobDriver_Place.cs" />
     <Compile Include="JobDriver_Dig.cs" />
     <Compile Include="SoilRelocation.cs" />
     <Compile Include="DesignationDefOf.cs" />
     <Compile Include="Designator_Dig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WorkGiver_Place.cs" />
     <Compile Include="WorkGiver_Dig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

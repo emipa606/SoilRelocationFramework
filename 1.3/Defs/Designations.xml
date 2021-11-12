@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+    <DesignationDef>
+        <defName>SR_Dig</defName>
+        <texturePath>DesignationDig</texturePath>
+        <targetType>Cell</targetType>
+    </DesignationDef>
+
+    <DesignationDef>
+        <defName>SR_PlaceSoil</defName>
+        <targetType>Cell</targetType>
+    </DesignationDef>
+    
+    <DesignationDef>
+        <defName>SR_PlaceRichSoil</defName>
+        <targetType>Cell</targetType>
+    </DesignationDef>
+    
+    <DesignationDef>
+        <defName>SR_PlaceSand</defName>
+        <targetType>Cell</targetType>
+    </DesignationDef>
+    
+    <DesignationDef>
+        <defName>SR_PlaceGravel</defName>
+        <targetType>Cell</targetType>
+    </DesignationDef>
+
+</Defs>

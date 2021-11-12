@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+ <ThingDef ParentName="BuildingBase">
+ <defName>Building_Soil</defName>
+ <label>soil</label>
+    <thingClass>SR.Building_Soil</thingClass>
+    <category>Building</category>
+      <graphicData>
+        <texPath>DesignatorPlaceSoil</texPath>
+	<graphicClass>Graphic_Single</graphicClass>
+      </graphicData>
+      <costList>
+	<SR_Soil>200</SR_Soil>
+      </costList>
+            <statBases>
+          <WorkToBuild>200</WorkToBuild>
+      </statBases>
+      <altitudeLayer>FloorEmplacement</altitudeLayer>
+      </ThingDef>
+  
+   <ThingDef ParentName="BuildingBase">
+   <defName>Building_RichSoil</defName>
+   <label>rich soil</label>
+    <thingClass>SR.Building_RichSoil</thingClass>
+    <category>Building</category>
+      <graphicData>
+        <texPath>DesignatorPlaceRichSoil</texPath>
+	<graphicClass>Graphic_Single</graphicClass>
+      </graphicData>
+      <costList>
+	<SR_RichSoil>200</SR_RichSoil>
+      </costList>
+            <statBases>
+          <WorkToBuild>200</WorkToBuild>
+      </statBases>
+      <altitudeLayer>FloorEmplacement</altitudeLayer>
+      </ThingDef>
+  
+   <ThingDef ParentName="BuildingBase">
+   <defName>Building_Sand</defName>
+   <label>sand</label>
+    <thingClass>SR.Building_Sand</thingClass>
+    <category>Building</category>
+      <graphicData>
+        <texPath>DesignatorPlaceSand</texPath>
+	<graphicClass>Graphic_Single</graphicClass>
+      </graphicData>
+      <costList>
+	<SR_Sand>200</SR_Sand>
+      </costList>
+      <statBases>
+          <WorkToBuild>200</WorkToBuild>
+      </statBases>
+      <altitudeLayer>FloorEmplacement</altitudeLayer>
+  </ThingDef>
+  
+     <ThingDef ParentName="BuildingBase">
+     <defName>Building_Gravel</defName>
+     <label>stony soil</label>
+    <thingClass>SR.Building_Gravel</thingClass>
+    <category>Building</category>
+      <graphicData>
+        <texPath>DesignatorPlaceGravel</texPath>
+	<graphicClass>Graphic_Single</graphicClass>
+      </graphicData>
+      <costList>
+	<SR_Gravel>200</SR_Gravel>
+      </costList>
+            <statBases>
+          <WorkToBuild>200</WorkToBuild>
+      </statBases>
+  </ThingDef>
+
+</Defs>

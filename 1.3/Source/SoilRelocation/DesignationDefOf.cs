@@ -13,7 +13,10 @@ namespace SR
     {
 
         public static DesignationDef SR_Dig;
-        public static DesignationDef SR_Place;
+        public static DesignationDef SR_PlaceSoil;
+        public static DesignationDef SR_PlaceRichSoil;
+        public static DesignationDef SR_PlaceSand;
+        public static DesignationDef SR_PlaceGravel;
 
     }
 }

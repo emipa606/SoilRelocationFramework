@@ -9,12 +9,4 @@
         <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
     </JobDef>
 
-    <JobDef>
-        <defName>SR_Place</defName>
-        <driverClass>SR.JobDriver_Place</driverClass>
-        <reportString>placing soil at TargetA.</reportString>
-        <suspendable>false</suspendable>
-        <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
-    </JobDef>
-
 </Defs>

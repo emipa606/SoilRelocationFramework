@@ -28,7 +28,7 @@ namespace SR
 		{
 			defaultLabel = "DesignatorDig".Translate();
 			defaultDesc = "DesignatorDigDesc".Translate();
-			icon = ContentFinder<Texture2D>.Get("UI/Designators/RemoveFloor", true);
+			icon = ContentFinder<Texture2D>.Get("DesignatorDig", true);
 			useMouseIcon = true;
 			soundDragSustain = SoundDefOf.Designate_DragStandard;
 			soundDragChanged = SoundDefOf.Designate_DragStandard_Changed;
@@ -50,6 +50,12 @@ namespace SR
 			DesignateSingleCell(t.Position);
 		}
 
+		private List<string> SoilTerrainDefBlacklist = new List<string>
+		{
+			"MarshyTerrain", //Must use moisture pump.
+			"SoftSand", //Must use moisture pump.
+		};
+
 		public override AcceptanceReport CanDesignateCell(IntVec3 c)
 		{
 			if (!c.InBounds(Map))
@@ -62,7 +68,7 @@ namespace SR
 			}
 			if (Map.designationManager.DesignationAt(c, DesignationDefOf.SR_Dig) != null)
 			{
-				return "Already digging.".Translate();
+				return "Already digging.";
 			}
 			if (c.InNoBuildEdgeArea(Map))
 			{
@@ -71,13 +77,21 @@ namespace SR
 			Building edifice = c.GetEdifice(Map);
 			if (edifice != null)
 			{
-				return "Must remove building first.".Translate();
+				return "Must remove building first.";
 			}
 
-			if (!c.GetTerrain(Map).affordances.Contains(TerrainAffordanceDefOf.GrowSoil))
+			TerrainDef t = c.GetTerrain(Map);
+
+			if (!t.affordances.Contains(TerrainAffordanceDefOf.GrowSoil))
 			{
-				return "Mest designate soil.".Translate();
+				return "Mest designate soil.";
 			}
+
+			if (SoilTerrainDefBlacklist.Contains(t.defName))
+            {
+				return "Soil type cannot be dug.";
+            }			
+
 			return AcceptanceReport.WasAccepted;
 		}
 
