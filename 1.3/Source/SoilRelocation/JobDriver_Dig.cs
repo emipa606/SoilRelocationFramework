@@ -67,10 +67,7 @@ namespace SR
 			}
 			else //No under-terrain
 			{
-				var sg = Map.GetComponent<MapComponent_StoneGrid>();
-				if (sg == null)
-					Log.Error("SoilRelocation.JobDriver_Dig.DoEffect: Could not find MapComponent of type MapComponent_StoneGrid on the map!");
-				TerrainDef st = sg.StoneTypeAt(c);
+				var st = Map.GetComponent<CMS.MapComponent_StoneGrid>().StoneTypeAt(c);
 				//Log.Warning("There was no underterrain, placing \"" + st.defName + "\" where \"" +  ot.defName + "\" was.");
 				Map.terrainGrid.SetTerrain(TargetLocA, st); //Set the terrain to the natural stone for this area to represent bedrock
 			}
