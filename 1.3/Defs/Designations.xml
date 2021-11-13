@@ -7,24 +7,4 @@
         <targetType>Cell</targetType>
     </DesignationDef>
 
- <!--   <DesignationDef>
-        <defName>Designator_PlaceSoil</defName>
-        <targetType>Cell</targetType>
-    </DesignationDef>
-    
-    <DesignationDef>
-        <defName>SR_PlaceRichSoil</defName>
-        <targetType>Cell</targetType>
-    </DesignationDef>
-    
-    <DesignationDef>
-        <defName>SR_PlaceSand</defName>
-        <targetType>Cell</targetType>
-    </DesignationDef>
-    
-    <DesignationDef>
-        <defName>SR_PlaceGravel</defName>
-        <targetType>Cell</targetType>
-    </DesignationDef>-->
-
 </Defs>

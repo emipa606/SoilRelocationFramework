@@ -14,6 +14,8 @@ namespace SR
 
         public MapComponent_StoneGrid(Map map) : base(map)
         {
+            if (map == null)
+                Log.Error("SR.MapComponent_StoneGrid: Map is null in constructor!");
             RockNoises.Init(map);
             StoneGrid = new TerrainDef[map.cellIndices.NumGridCells];
             for (int i = 0; i < map.cellIndices.NumGridCells; i++)
@@ -25,6 +27,8 @@ namespace SR
 
         public TerrainDef StoneTypeAt(IntVec3 c)
         {
+            if (map == null)
+               Log.Error("SR.MapComponent_StoneGrid: Map is null in StoneTypeAt!");
             return StoneGrid[map.cellIndices.CellToIndex(c)];
         }
     }

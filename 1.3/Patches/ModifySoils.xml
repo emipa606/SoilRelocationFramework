@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Patch>
+
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			
+			<!--designatorDropdown, costList, designationCategory-->
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/TerrainDef[defName = "Soil"]</xpath>
+				<value>
+					<costList>
+						<SR_Soil>75</SR_Soil>
+					</costList>
+					<designatorDropdown>SR</designatorDropdown>
+					<designationCategory>Floors</designationCategory>
+				</value>
+			</li>
+			
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/TerrainDef[defName = "Sand"]</xpath>
+				<value>
+					<costList>
+						<SR_Sand>75</SR_Sand>
+					</costList>
+					<designatorDropdown>SR</designatorDropdown>
+					<designationCategory>Floors</designationCategory>
+				</value>
+			</li>
+		
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/TerrainDef[defName = "SoilRich"]</xpath>
+				<value>
+					<costList>
+						<SR_RichSoil>75</SR_RichSoil>
+					</costList>
+					<designatorDropdown>SR</designatorDropdown>
+					<designationCategory>Floors</designationCategory>
+				</value>
+			</li>
+		
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/TerrainDef[defName = "Gravel"]</xpath>
+				<value>
+					<costList>
+						<SR_Gravel>75</SR_Gravel>
+					</costList>
+					<designatorDropdown>SR</designatorDropdown>
+					<designationCategory>Floors</designationCategory>
+				</value>
+			</li>
+			
+			<!--WorkToBuild-->
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/TerrainDef[defName = "Soil"]/statBases</xpath>
+				<value>
+					<WorkToBuild>200</WorkToBuild>
+				</value>
+			</li>
+			
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/TerrainDef[defName = "Sand"]/statBases</xpath>
+				<value>
+					<WorkToBuild>200</WorkToBuild>
+				</value>
+			</li>
+			
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/TerrainDef[defName = "SoilRich"]/statBases</xpath>
+				<value>
+					<WorkToBuild>200</WorkToBuild>
+				</value>
+			</li>
+			
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/TerrainDef[defName = "Gravel"]/statBases</xpath>
+				<value>
+					<WorkToBuild>200</WorkToBuild>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+	
+</Patch>

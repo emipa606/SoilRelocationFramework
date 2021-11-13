@@ -54,12 +54,26 @@ namespace SR
 			//Code modified from part of GenLeaving.DoLeavingsFor
 			ThingOwner<Thing> thingOwner = new ThingOwner<Thing>();
 			Thing thing = ThingMaker.MakeThing(ThingDef.Named(thingDefName), null);
-			thing.stackCount = Rand.Range(190, 210);
+			thing.stackCount = Rand.Range(73, 76); //Decent chance to lose soil digging it up (cost is 75 for a tile), tiny chance to gain some to add some randomness to it, lossy process since soil is messy.
 			thingOwner.TryAdd(thing, true);
 			Thing item;
 			thingOwner.TryDrop(thing, c, Map, ThingPlaceMode.Direct, out item);
-
-			Map.terrainGrid.SetTerrain(TargetLocA, Map.GetComponent<MapComponent_StoneGrid>().StoneTypeAt(c)); //Set the terrain to the above.
+			TerrainDef ut = Map.terrainGrid.UnderTerrainAt(c); //Get under-terrain
+			if (ut != null) //If there was under-terrain
+			{
+				//Log.Warning("There was underterrain, it's \"" + ut.defName + "\", swapping it into place where \"" + ot.defName + "\" was.");
+				Map.terrainGrid.SetTerrain(c, ut); //Set the top layer to the under-terrain
+				Map.terrainGrid.SetUnderTerrain(c, null); //Clear the under-terrain
+			}
+			else //No under-terrain
+			{
+				var sg = Map.GetComponent<MapComponent_StoneGrid>();
+				if (sg == null)
+					Log.Error("SoilRelocation.JobDriver_Dig.DoEffect: Could not find MapComponent of type MapComponent_StoneGrid on the map!");
+				TerrainDef st = sg.StoneTypeAt(c);
+				//Log.Warning("There was no underterrain, placing \"" + st.defName + "\" where \"" +  ot.defName + "\" was.");
+				Map.terrainGrid.SetTerrain(TargetLocA, st); //Set the terrain to the natural stone for this area to represent bedrock
+			}
 			FilthMaker.RemoveAllFilth(TargetLocA, Map);
 		}
 	}
