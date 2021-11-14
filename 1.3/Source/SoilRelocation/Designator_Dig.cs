@@ -50,10 +50,12 @@ namespace SR
 			DesignateSingleCell(t.Position);
 		}
 
-		private List<string> SoilTerrainDefBlacklist = new List<string>
+		private List<string> SoilTerrainWhitelist = new List<string>
 		{
-			"MarshyTerrain", //Must use moisture pump.
-			"SoftSand", //Must use moisture pump.
+			"Soil",
+			"SoilRich",
+			"Gravel",
+			"Sand",
 		};
 
 		public override AcceptanceReport CanDesignateCell(IntVec3 c)
@@ -81,14 +83,9 @@ namespace SR
 
 			TerrainDef t = c.GetTerrain(Map);
 
-			if (!t.affordances.Contains(TerrainAffordanceDefOf.GrowSoil))
-			{
-				return "Mest designate soil.";
-			}
-
-			if (SoilTerrainDefBlacklist.Contains(t.defName))
+			if (!SoilTerrainWhitelist.Contains(t.defName))
             {
-				return "Soil type cannot be dug.";
+				return "This terrain cannot be dug, must target soil, rich soil, stony soil, or sand.";
             }			
 
 			return AcceptanceReport.WasAccepted;

@@ -57,7 +57,7 @@
   
   <ThingDef ParentName="ResourceBase">
      <defName>SR_Gravel</defName>
-    <label>rocky soil</label>
+    <label>stony soil</label>
     <description>Plants can grow in this, but it's not the best.</description>
     <graphicData>
       <texPath>ResourceGravel</texPath>

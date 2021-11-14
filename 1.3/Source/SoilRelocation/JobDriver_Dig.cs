@@ -50,7 +50,10 @@ namespace SR
 				case "Sand":
 					thingDefName = "SR_Sand";
 					break;
-				//Other cases will fall through, meaning Soil, MossyTerrain, Gravel, and anything added by mods which will yield SR_Soil (in the case of mods we'd wanna add code for support here).
+				case "Gravel":
+					thingDefName = "SR_Gravel";
+					break;
+				//Other cases will fall through, meaning Soil, MossyTerrain, and anything added by mods which will yield SR_Soil (in the case of mods we'd wanna add code for support here).
             }
 			//Code modified from part of GenLeaving.DoLeavingsFor
 			ThingOwner<Thing> thingOwner = new ThingOwner<Thing>();
