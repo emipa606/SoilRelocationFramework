@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="UdderlyEvelyn.ConsistentMapStone">
       <HintPath>..\..\..\..\ConsistentMapStone\1.3\Assemblies\UdderlyEvelyn.ConsistentMapStone.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>

@@ -11,14 +11,14 @@ namespace SR
 		{
 			get
 			{
-				Log.Message("Getting DesDeff from WorkGiver_Dig");
+				//Log.Message("Getting DesDef from WorkGiver_Dig");
 				return DesignationDefOf.SR_Dig;
 			}
 		}
 
 		public override Job JobOnCell(Pawn pawn, IntVec3 c, bool forced = false)
 		{
-			Log.Message("Running WorkGiver_Dig.JobOnCell");
+			//Log.Message("Running WorkGiver_Dig.JobOnCell");
 			return JobMaker.MakeJob(JobDefOf.SR_Dig, c); 
 		}
 	}

@@ -27,7 +27,7 @@ namespace SR
 		public Designator_Dig()
 		{
 			defaultLabel = "Dig";
-			defaultDesc = "Dig up soil";
+			defaultDesc = "Dig up soil to place elsewhere.";
 			icon = ContentFinder<Texture2D>.Get("DesignatorDig", true);
 			useMouseIcon = true;
 			soundDragSustain = SoundDefOf.Designate_DragStandard;

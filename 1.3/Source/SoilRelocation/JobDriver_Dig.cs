@@ -38,6 +38,7 @@ namespace SR
 
 		protected override void DoEffect(IntVec3 c)
 		{
+			//Log.Message("JobDriver_Dig.DoEffect");
 			TerrainDef ot = c.GetTerrain(Map);
 			//Spawn item based on old terrain (ot)..
 			string thingDefName = "SR_Soil";
@@ -67,8 +68,14 @@ namespace SR
 			}
 			else //No under-terrain
 			{
-				var st = Map.GetComponent<CMS.MapComponent_StoneGrid>().StoneTypeAt(c);
+				//var sg = Map.GetComponent<CMS.MapComponent_StoneGrid>();
+				//if (sg == null)
+				//	Log.Error("MapComponent_StoneGrid is null for this map!");
+				//var st = sg.StoneTypeAt(c);
+				////if (st == null)
+				////	Log.Error("No stone type returned!");
 				//Log.Warning("There was no underterrain, placing \"" + st.defName + "\" where \"" +  ot.defName + "\" was.");
+				var st = Map.GetComponent<CMS.MapComponent_StoneGrid>().StoneTypeAt(c);
 				Map.terrainGrid.SetTerrain(TargetLocA, st); //Set the terrain to the natural stone for this area to represent bedrock
 			}
 			FilthMaker.RemoveAllFilth(TargetLocA, Map);
