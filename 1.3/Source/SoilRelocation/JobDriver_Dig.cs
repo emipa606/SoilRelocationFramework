@@ -78,7 +78,7 @@ namespace SR
 				////if (st == null)
 				////	Log.Error("No stone type returned!");
 				//Log.Warning("There was no underterrain, placing \"" + st.defName + "\" where \"" +  ot.defName + "\" was.");
-				var st = Map.GetComponent<CMS.MapComponent_StoneGrid>().StoneTypeAt(c);
+				var st = Map.GetComponent<CMS.MapComponent_StoneGrid>().StoneTerrainAt(c);
 				Map.terrainGrid.SetTerrain(TargetLocA, st); //Set the terrain to the natural stone for this area to represent bedrock
 			}
 			FilthMaker.RemoveAllFilth(TargetLocA, Map);
