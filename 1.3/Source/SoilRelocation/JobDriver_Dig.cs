@@ -38,46 +38,20 @@ namespace SR
 
 		protected override void DoEffect(IntVec3 c)
 		{
-			//Log.Message("JobDriver_Dig.DoEffect");
 			TerrainDef ot = c.GetTerrain(Map);
 			//Spawn item based on old terrain (ot)..
-			string thingDefName = "SR_Soil";
-			switch (ot.defName)
-            {
-				case "SoilRich":
-					thingDefName = "SR_RichSoil";
-					break;
-				case "Sand":
-					thingDefName = "SR_Sand";
-					break;
-				case "Gravel":
-					thingDefName = "SR_Gravel";
-					break;
-				//Other cases will fall through, meaning Soil, MossyTerrain, and anything added by mods which will yield SR_Soil (in the case of mods we'd wanna add code for support here).
-            }
-			//Code modified from part of GenLeaving.DoLeavingsFor
-			ThingOwner<Thing> thingOwner = new ThingOwner<Thing>();
-			Thing thing = ThingMaker.MakeThing(ThingDef.Named(thingDefName), null);
-			thing.stackCount = Rand.Range(73, 76); //Decent chance to lose soil digging it up (cost is 75 for a tile), tiny chance to gain some to add some randomness to it, lossy process since soil is messy.
-			thingOwner.TryAdd(thing, true);
-			Thing item;
-			thingOwner.TryDrop(thing, c, Map, ThingPlaceMode.Direct, out item);
+			if (ot.costList.Count == 0)
+				Utilities.DropThing(Map, c, DefDatabase<ThingDef>.GetNamed("SR_Soil"), Rand.Range(73, 76)); //Drop regular soil, assume the item is supposed to yield that.
+			else
+				Utilities.DropThings(Map, c, ot.costList, 2, 1);
 			TerrainDef ut = Map.terrainGrid.UnderTerrainAt(c); //Get under-terrain
 			if (ut != null) //If there was under-terrain
 			{
-				//Log.Warning("There was underterrain, it's \"" + ut.defName + "\", swapping it into place where \"" + ot.defName + "\" was.");
 				Map.terrainGrid.SetTerrain(c, ut); //Set the top layer to the under-terrain
 				Map.terrainGrid.SetUnderTerrain(c, null); //Clear the under-terrain
 			}
 			else //No under-terrain
 			{
-				//var sg = Map.GetComponent<CMS.MapComponent_StoneGrid>();
-				//if (sg == null)
-				//	Log.Error("MapComponent_StoneGrid is null for this map!");
-				//var st = sg.StoneTypeAt(c);
-				////if (st == null)
-				////	Log.Error("No stone type returned!");
-				//Log.Warning("There was no underterrain, placing \"" + st.defName + "\" where \"" +  ot.defName + "\" was.");
 				var st = Map.GetComponent<CMS.MapComponent_StoneGrid>().StoneTerrainAt(c);
 				Map.terrainGrid.SetTerrain(TargetLocA, st); //Set the terrain to the natural stone for this area to represent bedrock
 			}

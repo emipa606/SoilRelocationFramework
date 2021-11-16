@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+<!--Digging Related-->
+<Dig>Dig</Dig>
+<DigDesc>Dig up soil to place elsewhere.</DigDesc>
+<AlreadyDigging>Already digging.</AlreadyDigging>
+<RemoveBuildingFirst>Must remove building first.</RemoveBuildingFirst>
+<TerrainCannotBeDug>This terrain cannot be dug.</TerrainCannotBeDug>
+<TerrainTooMoist>This terrain must have its moisture extracted before it can be dug.</TerrainTooMoist>
+
+<!--Melting System Related-->
+<MeltStateSolid>Solid</MeltStateSolid>
+<MeltStateMelting>Melting</MeltStateMelting>
+<MeltStateLiquid>Liquid</MeltStateLiquid>
+<MessageMeltedAway>{1_label} has melted away.</MessageMeltedAway>
+  <MeltableCurrentlyFrozen>Frozen (won't melt)</MeltableCurrentlyFrozen>
+  <MeltableCurrentlyRefrigerated>Refrigerated (melts in {0})</MeltableCurrentlyRefrigerated>
+  <MeltableNotRefrigerated>Not refrigerated (melts in {0})</MeltableNotRefrigerated>
+
+</LanguageData>

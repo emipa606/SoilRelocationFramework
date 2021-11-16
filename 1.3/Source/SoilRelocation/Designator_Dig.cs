@@ -26,8 +26,8 @@ namespace SR
 
 		public Designator_Dig()
 		{
-			defaultLabel = "Dig";
-			defaultDesc = "Dig up soil to place elsewhere.";
+			defaultLabel = "Dig".Translate();
+			defaultDesc = "DigDesc".Translate();
 			icon = ContentFinder<Texture2D>.Get("DesignatorDig", true);
 			useMouseIcon = true;
 			soundDragSustain = SoundDefOf.Designate_DragStandard;
@@ -50,14 +50,6 @@ namespace SR
 			DesignateSingleCell(t.Position);
 		}
 
-		private List<string> SoilTerrainWhitelist = new List<string>
-		{
-			"Soil",
-			"SoilRich",
-			"Gravel",
-			"Sand",
-		};
-
 		public override AcceptanceReport CanDesignateCell(IntVec3 c)
 		{
 			if (!c.InBounds(Map))
@@ -70,7 +62,7 @@ namespace SR
 			}
 			if (Map.designationManager.DesignationAt(c, DesignationDefOf.SR_Dig) != null)
 			{
-				return "Already digging.";
+				return "AlreadyDigging".Translate();
 			}
 			if (c.InNoBuildEdgeArea(Map))
 			{
@@ -78,14 +70,19 @@ namespace SR
 			}
 			if (c.GetFirstBuilding(Map) != null)
 			{
-				return "Must remove building first.";
+				return "RemoveBuildingFirst".Translate();
 			}
 
 			TerrainDef t = c.GetTerrain(Map);
 
-			if (!SoilTerrainWhitelist.Contains(t.defName))
+			if (!t.affordances.Contains(TerrainAffordanceDefOf.Diggable))
+			{
+				return "TerrainCannotBeDug".Translate();
+			}
+
+			if (t.affordances.Contains(TerrainAffordanceDefOf.Bridgeable))
             {
-				return "This terrain cannot be dug, must target soil, rich soil, stony soil, or sand.";
+				return "TerrainTooMoist".Translate(); //Too moist lol.
             }			
 
 			return AcceptanceReport.WasAccepted;

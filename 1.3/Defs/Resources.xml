@@ -14,7 +14,7 @@
       <Mass>0.008</Mass>
     </statBases>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>Soils</li>
     </thingCategories>
     <stackLimit>500</stackLimit>
   </ThingDef>
@@ -32,7 +32,7 @@
       <Mass>0.008</Mass>
     </statBases>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>Soils</li>
     </thingCategories>
     <stackLimit>500</stackLimit>
   </ThingDef>
@@ -50,7 +50,7 @@
       <Mass>0.008</Mass>
     </statBases>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>Soils</li>
     </thingCategories>
     <stackLimit>500</stackLimit>
   </ThingDef>
@@ -68,9 +68,32 @@
       <Mass>0.008</Mass>
     </statBases>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>Soils</li>
     </thingCategories>
     <stackLimit>500</stackLimit>
+  </ThingDef>
+  
+  <ThingDef ParentName="ResourceBase">
+     <defName>SR_Ice</defName>
+    <label>ice</label>
+    <description>Nothing's going to grow in this, but maybe it has other uses?</description>
+    <graphicData>
+      <texPath>ResourceIce</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <MarketValue>.005</MarketValue>
+      <Mass>0.008</Mass>
+    </statBases>
+    <thingCategories>
+      <li>Soils</li>
+    </thingCategories>
+    <stackLimit>500</stackLimit>
+    <comps>
+	<li Class="SR.CompProperties_Meltable"/>
+    </comps>
+    <tickerType>Rare</tickerType>
   </ThingDef>
   
 </Defs>

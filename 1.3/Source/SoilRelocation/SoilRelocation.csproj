@@ -53,12 +53,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompProperties_Meltable.cs" />
+    <Compile Include="CompMeltable.cs" />
     <Compile Include="JobDefOf.cs" />
     <Compile Include="JobDriver_Dig.cs" />
+    <Compile Include="MeltStage.cs" />
     <Compile Include="SoilRelocation.cs" />
     <Compile Include="DesignationDefOf.cs" />
     <Compile Include="Designator_Dig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities.cs" />
     <Compile Include="WorkGiver_Dig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
