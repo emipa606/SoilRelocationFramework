@@ -33,11 +33,14 @@ namespace SR
 		{
 			get
 			{
-				if (MeltProgress < PropsMelt.TicksToMeltStart)
+				if (PropsMelt.MeltingDestroys)
 				{
-					return MeltStage.Solid;
+					return parent.AmbientTemperature <= 0 ? MeltStage.Solid: MeltStage.Melting;
 				}
-				return MeltStage.Melting;
+				else
+				{
+					return MeltProgress < PropsMelt.TicksToMeltStart ? MeltStage.Solid : MeltStage.Melting;
+				}
 			}
 		}
 
@@ -79,15 +82,15 @@ namespace SR
 			MeltProgress += num * (float)interval;
 			if (Stage == MeltStage.Melting)
 			{
-				if (Mathf.FloorToInt(meltProgress / 2500f) != Mathf.FloorToInt(MeltProgress / 2500f) && ShouldTakeMeltDamage())
+				if (PropsMelt.MeltDamagePerHour > 0f)
 				{
-					if (PropsMelt.MeltDamagePerHour > 0f)
+					if (Mathf.FloorToInt(meltProgress / 2500f) != Mathf.FloorToInt(MeltProgress / 2500f) && ShouldTakeMeltDamage())
 					{
-						if (parent.HitPoints <= PropsMelt.MeltDamagePerHour)
+						if (/*parent.HitPoints <= PropsMelt.MeltDamagePerHour && */PropsMelt.MeltingDestroys)
                         {
 							if (parent.IsInAnyStorage() && parent.SpawnedOrAnyParentSpawned)
 							{
-								Messages.Message("MessageMeltedAway".Translate(parent.Label, parent).CapitalizeFirst(), new TargetInfo(parent.PositionHeld, parent.MapHeld), MessageTypeDefOf.NegativeEvent);
+								Messages.Message("MessageMeltedAway".Translate(parent.def.label, parent).CapitalizeFirst(), new TargetInfo(parent.PositionHeld, parent.MapHeld), MessageTypeDefOf.NegativeEvent);
 							}
 							parent.Destroy();
 						}

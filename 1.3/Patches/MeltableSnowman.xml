@@ -3,9 +3,9 @@
 <Patch>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>/Defs/ThingDef[defName = "Snowman"]/comps/li/compClass</xpath>
+		<xpath>/Defs/ThingDef[defName = "Snowman"]/comps/li</xpath>
 		<value>
-			<compClass>SR.CompMeltable</compClass>
+			<li Class="SR.CompProperties_Meltable"/>
 		</value>
 	</Operation>
 </Patch>
