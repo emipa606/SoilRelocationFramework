@@ -53,37 +53,27 @@ namespace SR
 		public override AcceptanceReport CanDesignateCell(IntVec3 c)
 		{
 			if (!c.InBounds(Map))
-			{
 				return false;
-			}
+
 			if (c.Fogged(Map))
-			{
 				return false;
-			}
+
 			if (Map.designationManager.DesignationAt(c, DesignationDefOf.SR_Dig) != null)
-			{
 				return "AlreadyDigging".Translate();
-			}
+
 			if (c.InNoBuildEdgeArea(Map))
-			{
 				return "TooCloseToMapEdge".Translate();
-			}
+
 			if (c.GetFirstBuilding(Map) != null)
-			{
 				return "RemoveBuildingFirst".Translate();
-			}
 
 			TerrainDef t = c.GetTerrain(Map);
 
 			if (!t.affordances.Contains(TerrainAffordanceDefOf.Diggable))
-			{
 				return "TerrainCannotBeDug".Translate();
-			}
 
-			if (t.affordances.Contains(TerrainAffordanceDefOf.Bridgeable))
-            {
+			if (t.driesTo != null)
 				return "TerrainTooMoist".Translate(); //Too moist lol.
-            }			
 
 			return AcceptanceReport.WasAccepted;
 		}

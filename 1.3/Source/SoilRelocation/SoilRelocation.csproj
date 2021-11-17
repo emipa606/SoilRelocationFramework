@@ -58,6 +58,7 @@
     <Compile Include="JobDefOf.cs" />
     <Compile Include="JobDriver_Dig.cs" />
     <Compile Include="MeltStage.cs" />
+    <Compile Include="SoilDefs.cs" />
     <Compile Include="SoilRelocation.cs" />
     <Compile Include="DesignationDefOf.cs" />
     <Compile Include="Designator_Dig.cs" />

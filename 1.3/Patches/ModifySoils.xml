@@ -62,11 +62,12 @@
 				</value>
 			</li>
 			
-			<!--WorkToBuild-->
+			<!--WorkToBuild, MarketValue-->
 			<li Class="PatchOperationAdd">
 				<xpath>/Defs/TerrainDef[defName = "Soil"]/statBases</xpath>
 				<value>
 					<WorkToBuild>200</WorkToBuild>
+					<MarketValue>0</MarketValue>
 				</value>
 			</li>
 			
@@ -74,6 +75,7 @@
 				<xpath>/Defs/TerrainDef[defName = "Sand"]/statBases</xpath>
 				<value>
 					<WorkToBuild>200</WorkToBuild>
+					<MarketValue>0</MarketValue>
 				</value>
 			</li>
 			
@@ -81,6 +83,7 @@
 				<xpath>/Defs/TerrainDef[defName = "SoilRich"]/statBases</xpath>
 				<value>
 					<WorkToBuild>200</WorkToBuild>
+					<MarketValue>0</MarketValue>
 				</value>
 			</li>
 			
@@ -88,6 +91,7 @@
 				<xpath>/Defs/TerrainDef[defName = "Gravel"]/statBases</xpath>
 				<value>
 					<WorkToBuild>200</WorkToBuild>
+					<MarketValue>0</MarketValue>
 				</value>
 			</li>
 			
@@ -95,6 +99,7 @@
 				<xpath>/Defs/TerrainDef[defName = "Ice"]/statBases</xpath>
 				<value>
 					<WorkToBuild>200</WorkToBuild>
+					<MarketValue>0</MarketValue>
 				</value>
 			</li>
 		</operations>
