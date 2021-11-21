@@ -29,7 +29,7 @@ namespace SR
 		{
 			get
 			{
-				return StatDefOf.ConstructionSpeed;
+				return StatDefOf.MiningSpeed;
 			}
 		}
 
