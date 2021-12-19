@@ -5,7 +5,7 @@
 	<defName>SR_Dig</defName>
 	<label>dig soil</label>
 	<giverClass>SR.WorkGiver_Dig</giverClass>
-	<workType>Construction</workType>
+	<workType>Mining</workType>
 	<priorityInType>70</priorityInType>
 	<verb>dig soil</verb>
 	<gerund>digging soil</gerund>

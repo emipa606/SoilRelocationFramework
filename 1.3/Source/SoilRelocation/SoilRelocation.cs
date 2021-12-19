@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using RimWorld;
 using Verse;
+using RimWorld.Planet;
+using UnityEngine;
 
 namespace SR
 {
@@ -13,7 +15,7 @@ namespace SR
     {
         static SoilRelocation()
         {
-
+            
         }
     }
 }

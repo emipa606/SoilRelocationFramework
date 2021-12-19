@@ -8,21 +8,6 @@
   <packageId>UdderlyEvelyn.SoilRelocation</packageId>
   <description>
 With SoilRelocation, you can dig and relocate soil!
-
-With this mod you can:
-- Move bits of fertile soil into a nice square to farm on instead of having disparate patches.
-- Remove soil from mountain bases to get a consistent smoothable stone floor.
-- Bring soil home to the desert or ice from other maps and farm.
-- Make a greenhouse or other farm within your mountain base.
-- Bring fertile soil home to plentifully farm from other maps.
-
-Specifically, this mod adds a "Dig" order that works on Soil, Rich Soil, Stony Soil, Sand, and Lichen-covered Soil (which becomes regular soil when dug). Other forms of soil need to have the moisture extractor used on them first and can then be dug up (it's hard to dig up wet soil). You can then, in the floors menu, place it down and it will behave precisely like the actual soils - because it is!
-
-Compatibility:
-- This should be compatible with almost any mod unless it tries to patch the same bits of the soil TerrainDefs or patches RockNoises.Init.
-- Mods that let you do more stuff to soil *will work*, including things like tilling soil in VFE Farming, etc..
-
-Depends on my Consistent Map Stone mod.
   </description>
   <loadAfter>
     <li>Ludeon.RimWorld</li>

@@ -2,12 +2,15 @@
 using Verse;
 using RimWorld;
 using System.Collections.Generic;
+using Verse.AI;
 
 namespace SR
 {
 	public class JobDriver_Dig : JobDriver_AffectFloor
 	{
-		private Dictionary<TerrainDef, ThingDef> _noCostItemGuessCache = new Dictionary<TerrainDef, ThingDef>();
+		protected Dictionary<TerrainDef, ThingDef> _noCostItemGuessCache = new Dictionary<TerrainDef, ThingDef>();
+
+		protected float workLeft = -1000f;
 
 		protected override int BaseWorkAmount
 		{
@@ -32,6 +35,14 @@ namespace SR
 				return StatDefOf.MiningSpeed;
 			}
 		}
+
+		protected virtual SkillDef Skill
+        {
+			get
+            {
+				return SkillDefOf.Mining;
+            }
+        }
 
 		public JobDriver_Dig()
 		{
@@ -66,7 +77,7 @@ namespace SR
 						_noCostItemGuessCache.Add(ot, toDrop);
 				}
 				if (toDrop != null)
-					Utilities.DropThing(Map, c, toDrop, Rand.Range(73, 76)); //Drop regular sand, assume the item is supposed to yield that.
+					Utilities.DropThing(Map, c, toDrop, Rand.Range(6, 10)); //Drop the item
 			}
 			else
 				Utilities.DropThings(Map, c, ot.costList, 2, 1);
@@ -82,6 +93,45 @@ namespace SR
 				Map.terrainGrid.SetTerrain(TargetLocA, st); //Set the terrain to the natural stone for this area to represent bedrock
 			}
 			FilthMaker.RemoveAllFilth(TargetLocA, Map);
+		}
+
+		//Tynan thought it was a good idea to accept a SpeedStat but not accept a SkillDef, so now I have to copy this just to change the hardcoded references.
+		//Oh and also it used a private variable for workLeft even though the method is protected and overrideable so I have to reproduce that too. Mine will be protected, as it should be.
+		//Come on..
+		protected override IEnumerable<Toil> MakeNewToils()
+		{
+			this.FailOn(() => (!job.ignoreDesignations && base.Map.designationManager.DesignationAt(base.TargetLocA, DesDef) == null) ? true : false);
+			yield return Toils_Goto.GotoCell(TargetIndex.A, PathEndMode.Touch);
+			Toil doWork = new Toil();
+			doWork.initAction = delegate
+			{
+				workLeft = BaseWorkAmount;
+			};
+			doWork.tickAction = delegate
+			{
+				float num = ((SpeedStat != null) ? doWork.actor.GetStatValue(SpeedStat) : 1f);
+				num *= 1.7f;
+				workLeft -= num;
+				if (doWork.actor.skills != null)
+				{
+					doWork.actor.skills.Learn(Skill, 0.1f);
+				}
+				if (clearSnow)
+				{
+					base.Map.snowGrid.SetDepth(base.TargetLocA, 0f);
+				}
+				if (workLeft <= 0f)
+				{
+					DoEffect(base.TargetLocA);
+					base.Map.designationManager.DesignationAt(base.TargetLocA, DesDef)?.Delete();
+					ReadyForNextToil();
+				}
+			};
+			doWork.FailOnCannotTouch(TargetIndex.A, PathEndMode.Touch);
+			doWork.WithProgressBar(TargetIndex.A, () => 1f - workLeft / (float)BaseWorkAmount);
+			doWork.defaultCompleteMode = ToilCompleteMode.Never;
+			doWork.activeSkill = () => Skill;
+			yield return doWork;
 		}
 	}
 }

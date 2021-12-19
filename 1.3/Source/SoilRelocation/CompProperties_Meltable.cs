@@ -15,8 +15,6 @@ namespace SR
 
 		public float MeltDamagePerHour = 10f;
 
-		public bool MeltingDestroys = true;
-
 		public int TicksToMeltStart => Mathf.RoundToInt(hoursToMeltStart * 2500f);
 
 		public CompProperties_Meltable()
@@ -41,5 +39,4 @@ namespace SR
             }
         }
 	}
-
 }

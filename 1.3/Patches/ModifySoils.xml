@@ -11,7 +11,7 @@
 				<xpath>/Defs/TerrainDef[defName = "Soil"]</xpath>
 				<value>
 					<costList>
-						<SR_Soil>75</SR_Soil>
+						<SR_Soil>10</SR_Soil>
 					</costList>
 					<designatorDropdown>SR</designatorDropdown>
 					<designationCategory>Floors</designationCategory>
@@ -22,7 +22,7 @@
 				<xpath>/Defs/TerrainDef[defName = "Sand"]</xpath>
 				<value>
 					<costList>
-						<SR_Sand>75</SR_Sand>
+						<SR_Sand>10</SR_Sand>
 					</costList>
 					<designatorDropdown>SR</designatorDropdown>
 					<designationCategory>Floors</designationCategory>
@@ -33,7 +33,7 @@
 				<xpath>/Defs/TerrainDef[defName = "SoilRich"]</xpath>
 				<value>
 					<costList>
-						<SR_RichSoil>75</SR_RichSoil>
+						<SR_RichSoil>10</SR_RichSoil>
 					</costList>
 					<designatorDropdown>SR</designatorDropdown>
 					<designationCategory>Floors</designationCategory>
@@ -44,7 +44,7 @@
 				<xpath>/Defs/TerrainDef[defName = "Gravel"]</xpath>
 				<value>
 					<costList>
-						<SR_Gravel>75</SR_Gravel>
+						<SR_Gravel>10</SR_Gravel>
 					</costList>
 					<designatorDropdown>SR</designatorDropdown>
 					<designationCategory>Floors</designationCategory>
@@ -55,7 +55,7 @@
 				<xpath>/Defs/TerrainDef[defName = "Ice"]</xpath>
 				<value>
 					<costList>
-						<SR_Ice>75</SR_Ice>
+						<SR_Ice>10</SR_Ice>
 					</costList>
 					<designatorDropdown>SR</designatorDropdown>
 					<designationCategory>Floors</designationCategory>

@@ -11,58 +11,16 @@ namespace SR
 {
     public class CompMeltable : ThingComp
 	{
-		private float MeltProgressInt;
+		private float meltRate = 0;
 
         public CompProperties_Meltable PropsMelt => (CompProperties_Meltable)props;
-
-		public float MeltProgressPct => MeltProgress / (float)PropsMelt.TicksToMeltStart;
-
-		public float MeltProgress
-		{
-			get
-			{
-				return MeltProgressInt;
-			}
-			set
-			{
-				MeltProgressInt = value;
-			}
-		}
 
 		public MeltStage Stage
 		{
 			get
 			{
-				if (PropsMelt.MeltingDestroys)
-				{
-					return parent.AmbientTemperature <= 0 ? MeltStage.Solid: MeltStage.Melting;
-				}
-				else
-				{
-					return MeltProgress < PropsMelt.TicksToMeltStart ? MeltStage.Solid : MeltStage.Melting;
-				}
+				return parent.AmbientTemperature <= 0 ? MeltStage.Solid: MeltStage.Melting;
 			}
-		}
-
-		public int TicksUntilMeltAtCurrentTemp
-		{
-			get
-			{
-				float ambientTemperature = parent.AmbientTemperature;
-				ambientTemperature = Mathf.RoundToInt(ambientTemperature);
-				return TicksUntilMeltAtTemp(ambientTemperature);
-			}
-		}
-
-		public override void PostSpawnSetup(bool respawningAfterLoad)
-		{
-			base.PostSpawnSetup(respawningAfterLoad);
-		}
-
-		public override void PostExposeData()
-		{
-			base.PostExposeData();
-			Scribe_Values.Look(ref MeltProgressInt, "MeltProg", 0f);
 		}
 
 		public override void CompTick()
@@ -77,49 +35,26 @@ namespace SR
 
 		private void Tick(int interval)
 		{
-			float meltProgress = MeltProgress;
-			float num = GenTemperature.RotRateAtTemperature(parent.AmbientTemperature);
-			MeltProgress += num * (float)interval;
 			if (Stage == MeltStage.Melting)
 			{
-				if (PropsMelt.MeltDamagePerHour > 0f)
+				meltRate = GenTemperature.RotRateAtTemperature(parent.AmbientTemperature); //Update melt rate.
+				var damage = GenMath.RoundRandom(meltRate * interval); //Calculate damage as melt rate times amount of ticks.
+				GenTemperature.PushHeat(parent.PositionHeld, parent.MapHeld, -damage); //Cool area by damage amount.
+				if (parent.stackCount > 1 && parent.HitPoints <= damage) //If it's a stack and we're about to run out of HP..
 				{
-					if (Mathf.FloorToInt(meltProgress / 2500f) != Mathf.FloorToInt(MeltProgress / 2500f) && ShouldTakeMeltDamage())
-					{
-						if (/*parent.HitPoints <= PropsMelt.MeltDamagePerHour && */PropsMelt.MeltingDestroys)
-                        {
-							if (parent.IsInAnyStorage() && parent.SpawnedOrAnyParentSpawned)
-							{
-								Messages.Message("MessageMeltedAway".Translate(parent.def.label, parent).CapitalizeFirst(), new TargetInfo(parent.PositionHeld, parent.MapHeld), MessageTypeDefOf.NegativeEvent);
-							}
-							parent.Destroy();
-						}
-						else
-							parent.TakeDamage(new DamageInfo(DamageDefOf.Rotting, GenMath.RoundRandom(PropsMelt.MeltDamagePerHour)));	
-					}
+					parent.stackCount--; //Decrement stack.
+					damage -= parent.HitPoints; //Reduce damage by hitpoints to not be kind, we want to reserve it and apply it still.
+					parent.HitPoints = parent.MaxHitPoints; //Reset HP instead.
 				}
+				else //Not about to run out of HP..
+					parent.TakeDamage(new DamageInfo(DamageDefOf.Rotting, damage)); //Do damage.
 			}
-		}
-
-		private bool ShouldTakeMeltDamage()
-		{
-			if (parent.ParentHolder is Thing thing && thing.def.category == ThingCategory.Building && thing.def.building.preventDeteriorationInside)
-			{
-				return false;
-			}
-			return true;
 		}
 
 		public override void PreAbsorbStack(Thing otherStack, int count)
 		{
 			float t = (float)count / (float)(parent.stackCount + count);
-			float MeltProgress = ((ThingWithComps)otherStack).GetComp<CompMeltable>().MeltProgress;
-			MeltProgress = Mathf.Lerp(MeltProgress, MeltProgress, t);
-		}
-
-		public override void PostSplitOff(Thing piece)
-		{
-			((ThingWithComps)piece).GetComp<CompMeltable>().MeltProgress = MeltProgress;
+			parent.HitPoints = GenMath.RoundRandom(Mathf.Lerp((float)parent.HitPoints, (float)parent.MaxHitPoints, t));
 		}
 
 		public override string CompInspectStringExtra()
@@ -131,57 +66,10 @@ namespace SR
 					stringBuilder.Append("MeltStateSolid".Translate() + ".");
 					break;
 				case MeltStage.Melting:
-					stringBuilder.Append("MeltStateMelting".Translate() + ".");
+					stringBuilder.Append("MeltStateMelting".Translate() + ".\n" + (meltRate > 0 ? ("Melt rate: " + Math.Round(meltRate, 2) + " / tick") : ""));
 					break;
 			}
-			if ((float)PropsMelt.TicksToMeltStart - MeltProgress > 0f)
-			{
-				float num = GenTemperature.RotRateAtTemperature(Mathf.RoundToInt(parent.AmbientTemperature));
-				int ticksUntilMeltAtCurrentTemp = TicksUntilMeltAtCurrentTemp;
-				stringBuilder.AppendLine();
-				if (num < 0.001f)
-				{
-					stringBuilder.Append("MeltableCurrentlyFrozen".Translate() + ".");
-				}
-				else if (num < 0.999f)
-				{
-					stringBuilder.Append("MeltableCurrentlyRefrigerated".Translate(ticksUntilMeltAtCurrentTemp.ToStringTicksToPeriod()) + ".");
-				}
-				else
-				{
-					stringBuilder.Append("MeltableNotRefrigerated".Translate(ticksUntilMeltAtCurrentTemp.ToStringTicksToPeriod()) + ".");
-				}
-			}
 			return stringBuilder.ToString();
-		}
-
-		public int ApproxTicksUntilMeltWhenAtTempOfTile(int tile, int ticksAbs)
-		{
-			float temperatureFromSeasonAtTile = GenTemperature.GetTemperatureFromSeasonAtTile(ticksAbs, tile);
-			return TicksUntilMeltAtTemp(temperatureFromSeasonAtTile);
-		}
-
-		public int TicksUntilMeltAtTemp(float temp)
-		{
-			float num = GenTemperature.RotRateAtTemperature(temp);
-			if (num <= 0f)
-			{
-				return 72000000;
-			}
-			float num2 = (float)PropsMelt.TicksToMeltStart - MeltProgress;
-			if (num2 <= 0f)
-			{
-				return 0;
-			}
-			return Mathf.RoundToInt(num2 / num);
-		}
-
-        public void MeltImmediately()
-		{
-			if (MeltProgress < (float)PropsMelt.TicksToMeltStart)
-			{
-				MeltProgress = PropsMelt.TicksToMeltStart;
-			}
 		}
 	}
 }

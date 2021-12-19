@@ -11,12 +11,12 @@
     </graphicData>
     <statBases>
       <MarketValue>.01</MarketValue>
-      <Mass>0.008</Mass>
+      <Mass>0.6</Mass>
     </statBases>
     <thingCategories>
       <li>Soils</li>
     </thingCategories>
-    <stackLimit>500</stackLimit>
+    <stackLimit>75</stackLimit>
   </ThingDef>
   
     <ThingDef ParentName="ResourceBase">
@@ -29,12 +29,12 @@
     </graphicData>
     <statBases>
       <MarketValue>.1</MarketValue>
-      <Mass>0.008</Mass>
+      <Mass>0.6</Mass>
     </statBases>
     <thingCategories>
       <li>Soils</li>
     </thingCategories>
-    <stackLimit>500</stackLimit>
+    <stackLimit>75</stackLimit>
   </ThingDef>
   
 <ThingDef ParentName="ResourceBase">
@@ -47,12 +47,12 @@
     </graphicData>
     <statBases>
       <MarketValue>.01</MarketValue>
-      <Mass>0.008</Mass>
+      <Mass>0.6</Mass>
     </statBases>
     <thingCategories>
       <li>Soils</li>
     </thingCategories>
-    <stackLimit>500</stackLimit>
+    <stackLimit>75</stackLimit>
   </ThingDef>
   
   <ThingDef ParentName="ResourceBase">
@@ -65,12 +65,12 @@
     </graphicData>
     <statBases>
       <MarketValue>.005</MarketValue>
-      <Mass>0.008</Mass>
+      <Mass>0.6</Mass>
     </statBases>
     <thingCategories>
       <li>Soils</li>
     </thingCategories>
-    <stackLimit>500</stackLimit>
+    <stackLimit>75</stackLimit>
   </ThingDef>
   
   <ThingDef ParentName="ResourceBase">
@@ -84,12 +84,12 @@
     <statBases>
       <MaxHitPoints>50</MaxHitPoints>
       <MarketValue>.005</MarketValue>
-      <Mass>0.008</Mass>
+      <Mass>0.6</Mass>
     </statBases>
     <thingCategories>
       <li>Soils</li>
     </thingCategories>
-    <stackLimit>500</stackLimit>
+    <stackLimit>75</stackLimit>
     <comps>
 	<li Class="SR.CompProperties_Meltable"/>
     </comps>
