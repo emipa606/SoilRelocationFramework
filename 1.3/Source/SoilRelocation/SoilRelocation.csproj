@@ -63,6 +63,8 @@
     <Compile Include="DesignationDefOf.cs" />
     <Compile Include="Designator_Dig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SoilRelocationSettings.cs" />
+    <Compile Include="ToggleablePatch.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="WorkGiver_Dig.cs" />
   </ItemGroup>

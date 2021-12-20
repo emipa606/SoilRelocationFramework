@@ -72,7 +72,7 @@ namespace SR
 					else if (ot.defName.Contains("sand") || ot.label.Contains("sand"))
 						toDrop = SoilDefs.SR_Sand;
 					else
-						Log.Warning("Unsupported soil \"" + ot.defName + "\" AKA \"" + ot.label + "\" being dug, was not able to guess what to drop, report this to the creator of the mod it came from or Evelyn from SR to fix this.");
+						Log.Warning("Unsupported soil \"" + ot.defName + "\" AKA \"" + ot.label + "\" being dug, was not able to guess what to drop, report this to the creator of the mod it came from or UdderlyEvelyn from SR to fix this.");
 					if (newKey)
 						_noCostItemGuessCache.Add(ot, toDrop);
 				}
