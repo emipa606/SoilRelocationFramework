@@ -53,7 +53,6 @@ namespace SR
 		{
 			TerrainDef ot = c.GetTerrain(Map);
 			//Spawn item based on old terrain (ot)..
-			//cache Soil/Ice/Sand
 			if (ot.costList == null || ot.costList.Count == 0)
 			{
 				bool newKey = true;
@@ -65,11 +64,11 @@ namespace SR
 				}
 				else
 				{
-					if (ot.defName.Contains("soil") || ot.defName.Contains("dirt") || ot.label.Contains("soil") || ot.label.Contains("dirt"))
+					if (ot.defName.ToLowerInvariant().Contains("soil") || ot.defName.ToLowerInvariant().Contains("dirt") || ot.label.ToLowerInvariant().Contains("soil") || ot.label.ToLowerInvariant().Contains("dirt"))
 						toDrop = SoilDefs.SR_Soil;
-					else if (ot.defName.Contains("ice") || ot.label.Contains("ice"))
+					else if (ot.defName.ToLowerInvariant().Contains("ice") || ot.label.ToLowerInvariant().Contains("ice"))
 						toDrop = SoilDefs.SR_Ice;
-					else if (ot.defName.Contains("sand") || ot.label.Contains("sand"))
+					else if (ot.defName.ToLowerInvariant().Contains("sand") || ot.label.ToLowerInvariant().Contains("sand"))
 						toDrop = SoilDefs.SR_Sand;
 					else
 						Log.Warning("Unsupported soil \"" + ot.defName + "\" AKA \"" + ot.label + "\" being dug, was not able to guess what to drop, report this to the creator of the mod it came from or UdderlyEvelyn from SR to fix this.");
