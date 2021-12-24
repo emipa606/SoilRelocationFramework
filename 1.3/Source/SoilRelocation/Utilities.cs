@@ -10,38 +10,27 @@ namespace SR
 {
     public static class Utilities
     {
-		public static void DropThing(Map map, IntVec3 cell, ThingDef thingDef, int count)
+		public static void DropThing(Map map, IntVec3 cell, ThingDef thingDef, int count, ThingPlaceMode tpm = ThingPlaceMode.Direct)
 		{
 			ThingOwner<Thing> thingOwner = new ThingOwner<Thing>();
 			Thing thing = ThingMaker.MakeThing(thingDef);
 			thing.stackCount = count;
-			thingOwner.TryAdd(thing, true);
-			Thing item;
-			thingOwner.TryDrop(thing, cell, map, ThingPlaceMode.Direct, out item);
+			GenPlace.TryPlaceThing(thing, cell, map, tpm);
 		}
 
-		public static void DropThingFromOwner(ThingOwner thingOwner, Map map, IntVec3 cell, ThingDef thingDef, int count, ThingPlaceMode tpm = ThingPlaceMode.Direct)
-		{
-			Thing thing = ThingMaker.MakeThing(thingDef);
-			thing.stackCount = count;
-			thingOwner.TryAdd(thing, true);
-			Thing item;
-			thingOwner.TryDrop(thing, cell, map, tpm, out item);
-		}
-
-		public static void DropThings(Map map, IntVec3 cell, List<ThingDefCountClass> thingCountList)
+		public static void DropThings(Map map, IntVec3 cell, List<ThingDefCountClass> thingCountList, ThingPlaceMode tpm = ThingPlaceMode.Near)
         {
 			ThingOwner<Thing> thingOwner = new ThingOwner<Thing>();
 			foreach (var thingCount in thingCountList)
-				DropThingFromOwner(thingOwner, map, cell, thingCount.thingDef, thingCount.count, ThingPlaceMode.Near);
+				DropThing(map, cell, thingCount.thingDef, thingCount.count);
         }
 
 
-		public static void DropThings(Map map, IntVec3 cell, List<ThingDefCountClass> thingCountList, int downwardCountVariance, int upwardCountVariance)
+		public static void DropThings(Map map, IntVec3 cell, List<ThingDefCountClass> thingCountList, int downwardCountVariance, int upwardCountVariance, ThingPlaceMode tpm = ThingPlaceMode.Near)
 		{
 			ThingOwner<Thing> thingOwner = new ThingOwner<Thing>();
 			foreach (var thingCount in thingCountList)
-				DropThingFromOwner(thingOwner, map, cell, thingCount.thingDef, Rand.Range(thingCount.count - downwardCountVariance, thingCount.count + upwardCountVariance), ThingPlaceMode.Near);
+				DropThing(map, cell, thingCount.thingDef, Rand.Range(thingCount.count - downwardCountVariance, thingCount.count + upwardCountVariance), tpm);
 		}
 	}
 }
