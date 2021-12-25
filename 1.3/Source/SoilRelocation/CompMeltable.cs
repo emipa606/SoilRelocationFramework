@@ -11,7 +11,7 @@ namespace SR
 {
     public class CompMeltable : ThingComp
 	{
-		private float meltRate = 0;
+		protected float meltRate = 0;
 
         public CompProperties_Meltable PropsMelt => (CompProperties_Meltable)props;
 
@@ -38,8 +38,10 @@ namespace SR
 			if (Stage == MeltStage.Melting)
 			{
 				meltRate = GenTemperature.RotRateAtTemperature(parent.AmbientTemperature); //Update melt rate.
-				var damage = GenMath.RoundRandom(meltRate * interval); //Calculate damage as melt rate times amount of ticks.
-				GenTemperature.PushHeat(parent.PositionHeld, parent.MapHeld, -damage); //Cool area by damage amount.
+				var meltRateOverInterval = meltRate * interval;
+				var damage = Mathf.RoundToInt(meltRateOverInterval); //Damage must be int.
+				Log.Message("Melting Item Releasing " + -meltRateOverInterval + " heat at ambient temperature " + parent.AmbientTemperature + " for an interval of " + interval + ", taking " + damage + " damage.");
+				GenTemperature.PushHeat(parent.PositionHeld, parent.MapHeld, -meltRateOverInterval); //Cool area by damage amount.
 				if (parent.stackCount > 1 && parent.HitPoints <= damage) //If it's a stack and we're about to run out of HP..
 				{
 					parent.stackCount--; //Decrement stack.
