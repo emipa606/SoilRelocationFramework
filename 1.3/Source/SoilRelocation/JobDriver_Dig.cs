@@ -57,18 +57,18 @@ namespace SR
 			if (!ot.affordances.Contains(TerrainAffordanceDefOf.Diggable)) //If the terrain isn't diggable (maybe the terrain was swapped out dynamically, e.g., LakesCanFreeze)..
 				return; //Abort.
 			TerrainDef ut;
-			//Spawn item based on old terrain (ot)..
-			if (ot.costList == null || ot.costList.Count == 0)
+			//Generic mod compatibility support (go by costList, else guess by defName/label (and cache guess for performance), else warn user in log)
+			if (ot.costList == null || ot.costList.Count == 0) //No costList..
 			{
 				bool newKey = true;
 				ThingDef toDrop = null;
 				int toDropAmount = Rand.Range(6, 10);
-				if (_noCostItemGuessCache.ContainsKey(ot))
+				if (_noCostItemGuessCache.ContainsKey(ot)) //Check cache.
 				{
-					toDrop = _noCostItemGuessCache[ot];
+					toDrop = _noCostItemGuessCache[ot]; //Get from cache.
 					newKey = false;
 				}
-				else
+				else //Wasn't cached, we'll make a new guess..
 				{
 					var defNameLowerInvariant = ot.defName.ToLowerInvariant();
 					var labelLowerInvariant = ot.label.ToLowerInvariant();
@@ -90,10 +90,11 @@ namespace SR
 					else
 						Log.Warning("[Soil Relocation] Unsupported soil \"" + ot.defName + "\" AKA \"" + ot.label + "\" being dug, was not able to guess what to drop, report this to the creator of the mod it came from or UdderlyEvelyn to fix this.");
 					if (newKey)
-						_noCostItemGuessCache.Add(ot, toDrop);
+						_noCostItemGuessCache.Add(ot, toDrop); //Cache it for later.
 				}
-				if (toDrop != null)
+				if (toDrop != null) //If we have drops..
 				{
+					#region LakesCanFreezeHandling
 					//Handle LakesCanFreeze Ice..
 					if (ot.defName == "LCF_LakeIceThin" || ot.defName == "LCF_LakeIce" || ot.defName == "LCF_LakeIceThick")
 					{
@@ -119,10 +120,11 @@ namespace SR
 						Utilities.DropThing(Map, c, toDrop, toDropAmount); //Drop the item
 						return; //Don't need to run the rest of the code, LCF has special handling above.
 					}
+					#endregion //Handle LakesCanFreeze special support..
 					Utilities.DropThing(Map, c, toDrop, toDropAmount); //Drop the item
 				}
 			}
-			else
+			else //costList present, use that.
 				Utilities.DropThings(Map, c, ot.costList, 2, 1);
 			ut = Map.terrainGrid.UnderTerrainAt(c); //Get under-terrain
 			if (ut != null) //If there was under-terrain..
