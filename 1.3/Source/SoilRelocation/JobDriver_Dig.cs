@@ -11,11 +11,6 @@ namespace SR
 	public class JobDriver_Dig : JobDriver_AffectFloor
 	{
 		protected Dictionary<TerrainDef, ThingDef> _noCostItemGuessCache = new Dictionary<TerrainDef, ThingDef>();
-		protected Func<IntVec3, float> _takeCellIceDelegate;
-		protected Func<IntVec3, float> _queryCellIceDelegate;
-		protected Func<IntVec3, float> _queryCellWaterDelegate;
-		protected Func<IntVec3, TerrainDef> _queryCellNaturalWaterDelegate;
-		protected Type _lakesCanFreezeMapComponentType = Type.GetType("LCF.MapComponent_LakesCanFreeze, UdderlyEvelyn.LakesCanFreeze");
 		protected float workLeft = -1000f;
 		protected float workTotal = 0;
 
@@ -75,12 +70,23 @@ namespace SR
 				}
 				else
 				{
-					if (ot.defName.ToLowerInvariant().Contains("soil") || ot.defName.ToLowerInvariant().Contains("dirt") || ot.label.ToLowerInvariant().Contains("soil") || ot.label.ToLowerInvariant().Contains("dirt"))
-						toDrop = SoilDefs.SR_Soil;
-					else if (ot.defName.ToLowerInvariant().Contains("ice") || ot.label.ToLowerInvariant().Contains("ice"))
+					var defNameLowerInvariant = ot.defName.ToLowerInvariant();
+					var labelLowerInvariant = ot.label.ToLowerInvariant();
+					if (defNameLowerInvariant.Contains("soil") || defNameLowerInvariant.Contains("dirt") || labelLowerInvariant.Contains("soil") || labelLowerInvariant.Contains("dirt"))
+					{
+						if (defNameLowerInvariant.Contains("fertile") || defNameLowerInvariant.Contains("rich") || labelLowerInvariant.Contains("fertile") || labelLowerInvariant.Contains("rich"))
+							toDrop = SoilDefs.SR_RichSoil;
+						else if (defNameLowerInvariant.Contains("stony") || defNameLowerInvariant.Contains("rocky") || labelLowerInvariant.Contains("stony") || labelLowerInvariant.Contains("rocky"))
+							toDrop = SoilDefs.SR_Gravel;
+						else
+							toDrop = SoilDefs.SR_Soil;
+					}
+					else if (defNameLowerInvariant.Contains("ice") || labelLowerInvariant.Contains("ice"))
 						toDrop = SoilDefs.SR_Ice;
-					else if (ot.defName.ToLowerInvariant().Contains("sand") || ot.label.ToLowerInvariant().Contains("sand"))
+					else if (defNameLowerInvariant.Contains("sand") || labelLowerInvariant.Contains("sand"))
 						toDrop = SoilDefs.SR_Sand;
+					else if (defNameLowerInvariant.Contains("gravel") || labelLowerInvariant.Contains("gravel"))
+						toDrop = SoilDefs.SR_Gravel;
 					else
 						Log.Warning("[Soil Relocation] Unsupported soil \"" + ot.defName + "\" AKA \"" + ot.label + "\" being dug, was not able to guess what to drop, report this to the creator of the mod it came from or UdderlyEvelyn to fix this.");
 					if (newKey)
@@ -91,12 +97,12 @@ namespace SR
 					//Handle LakesCanFreeze Ice..
 					if (ot.defName == "LCF_LakeIceThin" || ot.defName == "LCF_LakeIce" || ot.defName == "LCF_LakeIceThick")
 					{
-						toDropAmount = Math.Max(1, Mathf.RoundToInt(LakesCanFreeze_TakeCellIce(c).Value / 25 * toDropAmount));
+						toDropAmount = Math.Max(1, Mathf.RoundToInt(LakesCanFreeze_Interop.TakeCellIce(Map, c).Value / 25 * toDropAmount));
 						ut = Map.terrainGrid.UnderTerrainAt(c); //Get under-terrain
 						var utIsWater = ut == TerrainDefOf.WaterDeep || ut == TerrainDefOf.WaterShallow;
-						var naturalWater = LakesCanFreeze_QueryCellNaturalWater(c);
+						var naturalWater = LakesCanFreeze_Interop.QueryCellNaturalWater(Map, c);
 						var isNaturalWater = naturalWater != null;
-						var water = LakesCanFreeze_QueryCellWater(c);
+						var water = LakesCanFreeze_Interop.QueryCellWater(Map, c);
 						//Log.Message("[Soil Relocation] LCF Compat.. utIsWater: " + utIsWater + ", naturalWater: " + naturalWater?.defName + ", isNaturalWater: " + isNaturalWater + ", water: " + water);
 						if ((isNaturalWater || utIsWater) && water <= 0) //If natural water isn't null or under-terrain is water but there's no water at that tile..
 							Map.terrainGrid.SetTerrain(c, Map.GetComponent<CMS.MapComponent_StoneGrid>().StoneTerrainAt(c)); //Set the terrain to the natural stone for this area to represent bedrock
@@ -129,94 +135,6 @@ namespace SR
 			FilthMaker.RemoveAllFilth(c, Map);
 		}
 
-		/// <summary>
-		/// Call MapComponent_LakesCanFreeze.QueryCellNaturalWater without needing to reference the assembly.
-		/// </summary>
-		/// <param name="cell">cell to get the natural water def for</param>
-		/// <returns>TerrainDef of natural water at cell, null if none</returns>
-		public TerrainDef LakesCanFreeze_QueryCellNaturalWater(IntVec3 cell)
-		{
-			if (_lakesCanFreezeMapComponentType != null)
-			{
-				if (_queryCellNaturalWaterDelegate == null) //Everything in here should only execute once if the mod is present.
-				{
-					MapComponent lcfComp = Map.GetComponent(_lakesCanFreezeMapComponentType); //Try to get it.
-					if (lcfComp != null) //It was found.
-						_queryCellNaturalWaterDelegate = (Func<IntVec3, TerrainDef>)_lakesCanFreezeMapComponentType.GetMethod("QueryCellNaturalWater").CreateDelegate(typeof(Func<IntVec3, TerrainDef>), lcfComp); //Cache it..
-					else
-						Log.Error("[Soil Relocation] Lakes Can Freeze was detected but MapComponent_LakesCanFreeze could not be retrieved for this map.");
-				}
-				return _queryCellNaturalWaterDelegate(cell);
-			}
-			return null; //Mod not loaded, return null.
-		}
-
-		/// <summary>
-		/// Call MapComponent_LakesCanFreeze.QueryCellWater without needing to reference the assembly.
-		/// </summary>
-		/// <param name="cell">cell to get the water depth for</param>
-		/// <returns>water depth at cell</returns>
-		public float? LakesCanFreeze_QueryCellWater(IntVec3 cell)
-		{
-			if (_lakesCanFreezeMapComponentType != null)
-			{
-				if (_queryCellWaterDelegate == null) //Everything in here should only execute once if the mod is present.
-				{
-					MapComponent lcfComp = Map.GetComponent(_lakesCanFreezeMapComponentType); //Try to get it.
-					if (lcfComp != null) //It was found.
-						_queryCellWaterDelegate = (Func<IntVec3, float>)_lakesCanFreezeMapComponentType.GetMethod("QueryCellWater").CreateDelegate(typeof(Func<IntVec3, float>), lcfComp); //Cache it..
-					else
-						Log.Error("[Soil Relocation] Lakes Can Freeze was detected but MapComponent_LakesCanFreeze could not be retrieved for this map.");
-				}
-				return _queryCellWaterDelegate(cell);
-			}
-			return null; //Mod not loaded, return null.
-		}
-
-		/// <summary>
-		/// Call MapComponent_LakesCanFreeze.TakeCellIce without needing to reference the assembly.
-		/// </summary>
-		/// <param name="cell">cell to get the ice thickness for and clear the ice at</param>
-		/// <returns>ice thickness at cell prior to clearing</returns>
-		public float? LakesCanFreeze_TakeCellIce(IntVec3 cell)
-        {
-			if (_lakesCanFreezeMapComponentType != null)
-			{
-				if (_takeCellIceDelegate == null) //Everything in here should only execute once if the mod is present.
-				{
-					MapComponent lcfComp = Map.GetComponent(_lakesCanFreezeMapComponentType); //Try to get it.
-					if (lcfComp != null) //It was found.
-						_takeCellIceDelegate = (Func<IntVec3, float>)_lakesCanFreezeMapComponentType.GetMethod("TakeCellIce").CreateDelegate(typeof(Func<IntVec3, float>), lcfComp); //Cache it..
-					else
-						Log.Error("[Soil Relocation] Lakes Can Freeze was detected but MapComponent_LakesCanFreeze could not be retrieved for this map.");
-				}
-				return _takeCellIceDelegate(cell);
-			}
-			return null; //Mod not loaded, return null.
-		}
-
-		/// <summary>
-		/// Call MapComponent_LakesCanFreeze.QueryCellIce without needing to reference the assembly.
-		/// </summary>
-		/// <param name="cell">cell to get the ice thickness for</param>
-		/// <returns>ice thickness at cell</returns>
-		public float? LakesCanFreeze_QueryCellIce(IntVec3 cell)
-		{
-			if (_lakesCanFreezeMapComponentType != null)
-			{
-				if (_queryCellIceDelegate == null) //Everything in here should only execute once if the mod is present.
-				{
-					MapComponent lcfComp = Map.GetComponent(_lakesCanFreezeMapComponentType); //Try to get it.
-					if (lcfComp != null) //It was found.
-						_queryCellIceDelegate = (Func<IntVec3, float>)_lakesCanFreezeMapComponentType.GetMethod("QueryCellIce").CreateDelegate(typeof(Func<IntVec3, float>), lcfComp); //Cache it..
-					else
-						Log.Error("[Soil Relocation] Lakes Can Freeze was detected but MapComponent_LakesCanFreeze could not be retrieved for this map.");
-				}
-				return _queryCellIceDelegate(cell);
-			}
-			return null; //Mod not loaded, return null.
-		}
-
 		protected override IEnumerable<Toil> MakeNewToils()
 		{
 			this.FailOn(() => (!job.ignoreDesignations && base.Map.designationManager.DesignationAt(base.TargetLocA, DesDef) == null) ? true : false);
@@ -232,7 +150,7 @@ namespace SR
 					ReadyForNextToil(); //Don't keep trying to do this job.
 				}
 				if (currentTerrain.defName == "LCF_LakeIceThin" || currentTerrain.defName == "LCF_LakeIce" || currentTerrain.defName == "LCF_LakeIceThick")
-					workTotal = (BaseWorkAmount / 2) + (LakesCanFreeze_QueryCellIce(base.TargetLocA).Value / 100) * (BaseWorkAmount / 2);
+					workTotal = (BaseWorkAmount / 2) + (LakesCanFreeze_Interop.QueryCellIce(Map, base.TargetLocA).Value / 100) * (BaseWorkAmount / 2);
 				else
 					workTotal = BaseWorkAmount;
 				workLeft = workTotal;
