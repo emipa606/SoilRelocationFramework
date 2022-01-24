@@ -12,7 +12,6 @@ namespace SR
     {
 		public static void DropThing(Map map, IntVec3 cell, ThingDef thingDef, int count, ThingPlaceMode tpm = ThingPlaceMode.Direct)
 		{
-			ThingOwner<Thing> thingOwner = new ThingOwner<Thing>();
 			Thing thing = ThingMaker.MakeThing(thingDef);
 			thing.stackCount = count;
 			GenPlace.TryPlaceThing(thing, cell, map, tpm);
@@ -20,7 +19,6 @@ namespace SR
 
 		public static void DropThings(Map map, IntVec3 cell, List<ThingDefCountClass> thingCountList, ThingPlaceMode tpm = ThingPlaceMode.Near)
         {
-			ThingOwner<Thing> thingOwner = new ThingOwner<Thing>();
 			foreach (var thingCount in thingCountList)
 				DropThing(map, cell, thingCount.thingDef, thingCount.count);
         }
@@ -28,7 +26,6 @@ namespace SR
 
 		public static void DropThings(Map map, IntVec3 cell, List<ThingDefCountClass> thingCountList, int downwardCountVariance, int upwardCountVariance, ThingPlaceMode tpm = ThingPlaceMode.Near)
 		{
-			ThingOwner<Thing> thingOwner = new ThingOwner<Thing>();
 			foreach (var thingCount in thingCountList)
 				DropThing(map, cell, thingCount.thingDef, Rand.Range(thingCount.count - downwardCountVariance, thingCount.count + upwardCountVariance), tpm);
 		}

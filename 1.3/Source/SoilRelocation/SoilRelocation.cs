@@ -99,30 +99,32 @@ namespace SR
                 }
         };
         //Really needs a PlaceWorker attached to it, no time for this release.
-        //public static ToggleablePatch<BuildableDef> vfeArchitectPackedDirtCostsDirt = new ToggleablePatch<BuildableDef>
-        //{
-        //    Name = "VFE Architect Packed Dirt Costs Dirt",
-        //    Enabled = SoilRelocationSettings.VFEArchitectPackedDirtCostsDirtEnabled,
-        //    TargetDefName = "VFEArch_PlayerPackedDirt",
-        //    Patch = def =>
-        //    {
-        //        if (def.costList == null)
-        //            def.costList = new List<ThingDefCountClass>();
-        //        def.costList.Add(new ThingDefCountClass { count = 1, thingDef = SoilDefs.SR_Soil }); //Add an additional cost of 1 soil just to remove the exploit of free dirt.
-        //    },
-        //    Unpatch = def =>
-        //    {
-        //        var costListItems = def.costList.Where(tdcc => tdcc.thingDef == SoilDefs.SR_Sand); //Try to find our patch..
-        //        if (costListItems.Any()) //If we find it..
-        //            def.CostList.Remove(costListItems.First()); //Yeet!
-        //    },
-        //};
+        public static ToggleablePatch<BuildableDef> VFEArchitectPackedDirtCostsDirt = new ToggleablePatch<BuildableDef>
+        {
+            Name = "VFE Architect Packed Dirt Costs Dirt",
+            Enabled = SoilRelocationSettings.VFEArchitectPackedDirtCostsDirtEnabled,
+            TargetDefName = "VFEArch_PlayerPackedDirt",
+            TargetModID = "VanillaExpanded.VFEArchitect",
+            Patch = def =>
+            {
+                if (def.costList == null)
+                    def.costList = new List<ThingDefCountClass>();
+                def.costList.Add(new ThingDefCountClass { count = 1, thingDef = SoilDefs.SR_Soil }); //Add an additional cost of 1 soil just to remove the exploit of free dirt.
+            },
+            Unpatch = def =>
+            {
+                var costListItems = def.costList.Where(tdcc => tdcc.thingDef == SoilDefs.SR_Soil); //Try to find our patch..
+                if (costListItems.Any()) //If we find it..
+                    def.CostList.Remove(costListItems.First()); //Yeet!
+            },
+        };
 
         static SoilRelocation()
         {
             Log.Message("[Soil Relocation] Initializing..");
             Patches.Add(SandbagsUseSandPatch);
             Patches.Add(DubsSkylightsGlassUsesSandPatch);
+            Patches.Add(VFEArchitectPackedDirtCostsDirt);
             ProcessPatches();
         }
 
@@ -159,6 +161,7 @@ namespace SR
             listingStandard.Label("The below settings take effect immediately, no restart required.");
             listingStandard.CheckboxLabeled("Sandbags Use Sand", ref SoilRelocationSettings.SandbagsUseSandEnabled, "Patch vanilla sandbags so they use sand in addition to cloth.");
             listingStandard.CheckboxLabeled("Dubs Skylights Glass Uses Sand", ref SoilRelocationSettings.DubsSkylightsGlassUsesSandEnabled, "Patch Dubs Skylights glass recipes so that they use sand instead of steel.");
+            listingStandard.CheckboxLabeled("VFE Architect Packed Dirt Costs Dirt", ref SoilRelocationSettings.VFEArchitectPackedDirtCostsDirtEnabled, "Patches VFE Architect's packed dirt recipe to cost one soil to avoid an exploit that gives you free soil.");
             listingStandard.End();
             base.DoSettingsWindowContents(inRect);
         }
@@ -167,6 +170,7 @@ namespace SR
         {
             SoilRelocation.SandbagsUseSandPatch.Enabled = SoilRelocationSettings.SandbagsUseSandEnabled;
             SoilRelocation.DubsSkylightsGlassUsesSandPatch.Enabled = SoilRelocationSettings.DubsSkylightsGlassUsesSandEnabled;
+            SoilRelocation.VFEArchitectPackedDirtCostsDirt.Enabled = SoilRelocationSettings.VFEArchitectPackedDirtCostsDirtEnabled;
             SoilRelocation.ProcessPatches("settings were updated");
                 
             base.WriteSettings();

@@ -98,22 +98,19 @@ namespace SR
 					//Handle LakesCanFreeze Ice..
 					if (ot.defName == "LCF_LakeIceThin" || ot.defName == "LCF_LakeIce" || ot.defName == "LCF_LakeIceThick")
 					{
-						toDropAmount = Math.Max(1, Mathf.RoundToInt(LakesCanFreeze_Interop.TakeCellIce(Map, c).Value / 25 * toDropAmount));
+						toDropAmount = Math.Max(1, Mathf.RoundToInt(WaterFreezes_Interop.TakeCellIce(Map, c).Value / 25 * toDropAmount));
 						ut = Map.terrainGrid.UnderTerrainAt(c); //Get under-terrain
 						var utIsWater = ut == TerrainDefOf.WaterDeep || ut == TerrainDefOf.WaterShallow;
-						var naturalWater = LakesCanFreeze_Interop.QueryCellNaturalWater(Map, c);
+						var naturalWater = WaterFreezes_Interop.QueryCellNaturalWater(Map, c);
 						var isNaturalWater = naturalWater != null;
-						var water = LakesCanFreeze_Interop.QueryCellWater(Map, c);
+						var water = WaterFreezes_Interop.QueryCellWater(Map, c);
 						//Log.Message("[Soil Relocation] LCF Compat.. utIsWater: " + utIsWater + ", naturalWater: " + naturalWater?.defName + ", isNaturalWater: " + isNaturalWater + ", water: " + water);
 						if ((isNaturalWater || utIsWater) && water <= 0) //If natural water isn't null or under-terrain is water but there's no water at that tile..
 							Map.terrainGrid.SetTerrain(c, Map.GetComponent<CMS.MapComponent_StoneGrid>().StoneTerrainAt(c)); //Set the terrain to the natural stone for this area to represent bedrock
 						else if (isNaturalWater && water > 0) //If it's natural water and there's more than 0 water..
 							Map.terrainGrid.SetTerrain(c, naturalWater); //Set it to its natural water type.
 						else if (ut != null) //It's got water at the cell but the cell isn't set to water, but water is in the under-terrain..
-						{
 							Map.terrainGrid.SetTerrain(c, ut); //Set the top layer to the under-terrain
-							Map.terrainGrid.SetUnderTerrain(c, null); //Clear the under-terrain
-						}
 						else
 							Log.Error("[Soil Relocation] Attempted to dig LakesCanFreeze ice but there was no under-terrain, it was not natural water with water depth, and it wasn't zero-depth natural or under-terrain water.");
 
@@ -128,10 +125,7 @@ namespace SR
 				Utilities.DropThings(Map, c, ot.costList, 2, 1);
 			ut = Map.terrainGrid.UnderTerrainAt(c); //Get under-terrain
 			if (ut != null) //If there was under-terrain..
-			{
 				Map.terrainGrid.SetTerrain(c, ut); //Set the top layer to the under-terrain
-				Map.terrainGrid.SetUnderTerrain(c, null); //Clear the under-terrain
-			}
 			else //No under-terrain
 				Map.terrainGrid.SetTerrain(c, Map.GetComponent<CMS.MapComponent_StoneGrid>().StoneTerrainAt(c)); //Set the terrain to the natural stone for this area to represent bedrock
 			FilthMaker.RemoveAllFilth(c, Map);
@@ -152,7 +146,7 @@ namespace SR
 					ReadyForNextToil(); //Don't keep trying to do this job.
 				}
 				if (currentTerrain.defName == "LCF_LakeIceThin" || currentTerrain.defName == "LCF_LakeIce" || currentTerrain.defName == "LCF_LakeIceThick")
-					workTotal = (BaseWorkAmount / 2) + (LakesCanFreeze_Interop.QueryCellIce(Map, base.TargetLocA).Value / 100) * (BaseWorkAmount / 2);
+					workTotal = (BaseWorkAmount / 2) + (WaterFreezes_Interop.QueryCellIce(Map, base.TargetLocA).Value / 100) * (BaseWorkAmount / 2);
 				else
 					workTotal = BaseWorkAmount;
 				workLeft = workTotal;
