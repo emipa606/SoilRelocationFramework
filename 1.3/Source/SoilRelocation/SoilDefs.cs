@@ -15,6 +15,5 @@ namespace SR
         public static ThingDef SR_Ice = DefDatabase<ThingDef>.GetNamed("SR_Ice");
         public static ThingDef SR_RichSoil = DefDatabase<ThingDef>.GetNamed("SR_RichSoil");
         public static ThingDef SR_Gravel = DefDatabase<ThingDef>.GetNamed("SR_Gravel");
-        public static TerrainDef Mud = DefDatabase<TerrainDef>.GetNamed("Mud");
     }
 }

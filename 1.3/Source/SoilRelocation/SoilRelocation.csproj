@@ -57,6 +57,7 @@
     <Compile Include="CompMeltable.cs" />
     <Compile Include="JobDefOf.cs" />
     <Compile Include="JobDriver_Dig.cs" />
+    <Compile Include="TerrainDefs.cs" />
     <Compile Include="WaterFreezes_Interop.cs" />
     <Compile Include="MeltStage.cs" />
     <Compile Include="SoilDefs.cs" />
