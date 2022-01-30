@@ -94,9 +94,9 @@ namespace SR
 				}
 				if (toDrop != null) //If we have drops..
 				{
-					#region LakesCanFreezeHandling
-					//Handle LakesCanFreeze Ice..
-					if (ot.defName == "LCF_LakeIceThin" || ot.defName == "LCF_LakeIce" || ot.defName == "LCF_LakeIceThick")
+					#region WaterFreezesHandling
+					//Handle WaterFreezes Ice..
+					if (ot.defName == "WF_LakeIceThin" || ot.defName == "WF_LakeIce" || ot.defName == "WF_LakeIceThick")
 					{
 						toDropAmount = Math.Max(1, Mathf.RoundToInt(WaterFreezes_Interop.TakeCellIce(Map, c).Value / 25 * toDropAmount));
 						ut = Map.terrainGrid.UnderTerrainAt(c); //Get under-terrain
@@ -104,20 +104,20 @@ namespace SR
 						var naturalWater = WaterFreezes_Interop.QueryCellNaturalWater(Map, c);
 						var isNaturalWater = naturalWater != null;
 						var water = WaterFreezes_Interop.QueryCellWater(Map, c);
-						//Log.Message("[Soil Relocation] LCF Compat.. utIsWater: " + utIsWater + ", naturalWater: " + naturalWater?.defName + ", isNaturalWater: " + isNaturalWater + ", water: " + water);
+						//Log.Message("[Soil Relocation] WF Compat.. utIsWater: " + utIsWater + ", naturalWater: " + naturalWater?.defName + ", isNaturalWater: " + isNaturalWater + ", water: " + water);
 						if ((isNaturalWater || utIsWater) && water <= 0) //If natural water isn't null or under-terrain is water but there's no water at that tile..
-							Map.terrainGrid.SetTerrain(c, Map.GetComponent<CMS.MapComponent_StoneGrid>().StoneTerrainAt(c)); //Set the terrain to the natural stone for this area to represent bedrock
+							Map.terrainGrid.SetTerrain(c, SoilDefs.Mud); //Set the terrain to mud to represent the sediment under the water normally.
 						else if (isNaturalWater && water > 0) //If it's natural water and there's more than 0 water..
 							Map.terrainGrid.SetTerrain(c, naturalWater); //Set it to its natural water type.
 						else if (ut != null) //It's got water at the cell but the cell isn't set to water, but water is in the under-terrain..
 							Map.terrainGrid.SetTerrain(c, ut); //Set the top layer to the under-terrain
 						else
-							Log.Error("[Soil Relocation] Attempted to dig LakesCanFreeze ice but there was no under-terrain, it was not natural water with water depth, and it wasn't zero-depth natural or under-terrain water.");
+							Log.Error("[Soil Relocation] Attempted to dig WaterFreezes ice but there was no under-terrain, it was not natural water with water depth, and it wasn't zero-depth natural or under-terrain water.");
 
 						Utilities.DropThing(Map, c, toDrop, toDropAmount); //Drop the item
-						return; //Don't need to run the rest of the code, LCF has special handling above.
+						return; //Don't need to run the rest of the code, WF has special handling above.
 					}
-					#endregion //Handle LakesCanFreeze special support..
+					#endregion //Handle WaterFreezes special support..
 					Utilities.DropThing(Map, c, toDrop, toDropAmount); //Drop the item
 				}
 			}

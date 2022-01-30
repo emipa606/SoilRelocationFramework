@@ -87,16 +87,34 @@ namespace SR
         public Action<T> Unpatch;
 
         /// <summary>
+        /// Returns the target as a string in the form of ModID.DefName (DefType.FullName) with the "ModID." missing if no Mod ID is assigned (e.g., it's Vanilla or unconditional).
+        /// </summary>
+        public string TargetDescriptionString
+        {
+            get
+            {
+                return (TargetModID != null ? TargetModID + "." : "") + TargetDefName + " (" + typeof(T).FullName + ")";
+            }
+        }
+
+        /// <summary>
         /// Apply the patch if possible and necessary.
         /// </summary>
         public void Apply()
         {
             if (CanPatch && !Applied)
             {
-                Log.Message("[Soil Relocation] " + (Name != null ? ("Applying patch \"" + Name + "\", patching ") : "Patching ") + (TargetModID != null ? TargetModID + "." : "") + TargetDefName + " (" + typeof(T).FullName + ")..");
+                Log.Message("[Soil Relocation] " + (Name != null ? ("Applying patch \"" + Name + "\", patching ") : "Patching ") + TargetDescriptionString + "..");
                 if (targetDef == null)
                     targetDef = DefDatabase<T>.GetNamed(TargetDefName);
-                Patch(targetDef);
+                try
+                {
+                    Patch(targetDef);
+                }
+                catch (Exception ex)
+                {
+                    Log.Warning("[Soil Relocation] Error " + (Name != null ? ("applying patch \"" + Name + "\"") : "patching ") + ". Most likely you have another mod that already patches " + TargetDescriptionString + ". Remove that mod or disable this patch in the mod options.\n\n" + ex.ToString());
+                }
                 Applied = true; //Set it as applied.
             }
         }
@@ -108,10 +126,17 @@ namespace SR
         {
             if (Applied) //If it's been applied already.
             {
-                Log.Message("[Soil Relocation] " + (Name != null ? ("Removing patch \"" + Name + "\", unpatching ") : "Unpatching ") + (TargetModID != null ? TargetModID + "." : "") + TargetDefName + " (" + typeof(T).FullName + ")..");
+                Log.Message("[Soil Relocation] " + (Name != null ? ("Removing patch \"" + Name + "\", unpatching ") : "Unpatching ") + TargetDescriptionString + "..");
                 if (targetDef == null)
                     targetDef = DefDatabase<T>.GetNamed(TargetDefName);
-                Unpatch(targetDef);
+                try
+                {
+                    Unpatch(targetDef);
+                }
+                catch (Exception ex)
+                {
+                    Log.Warning("[Soil Relocation] Error " + (Name != null ? ("removing patch \"" + Name + "\"") : "unpatching ") + ". Most likely you have another mod that already patches " + TargetDescriptionString + ", and it failed to patch in the first place. Remove that mod or disable this patch in the mod options.\n\n" + ex.ToString());
+                }
                 Applied = false; //Set it as not applied anymore.
             }
         }

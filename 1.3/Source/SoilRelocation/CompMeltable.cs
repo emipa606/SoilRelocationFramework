@@ -11,9 +11,13 @@ namespace SR
 {
     public class CompMeltable : ThingComp
 	{
+		public float? floatHealth = 0;
+		protected static int hoursToMeltStart = 1;
+		protected float meltMultiplier = .01f;
 		protected float meltRate = 0;
-
-        public CompProperties_Meltable PropsMelt => (CompProperties_Meltable)props;
+		protected float meltRatePerHour = 0;
+		protected int meltBufferTicks = 0;
+		protected int meltBufferTicksMax = Mathf.RoundToInt(hoursToMeltStart * 2500f);
 
 		public MeltStage Stage
 		{
@@ -35,28 +39,50 @@ namespace SR
 
 		private void Tick(int interval)
 		{
+			UpdateFloatHealthToRealHealth();
 			if (Stage == MeltStage.Melting)
 			{
-				meltRate = GenTemperature.RotRateAtTemperature(parent.AmbientTemperature); //Update melt rate.
+				if (meltBufferTicks < meltBufferTicksMax) //If the buffer hasn't expired..
+					meltBufferTicks++; //Progress the buffer..
+				var coolingRate = GenTemperature.RotRateAtTemperature(parent.AmbientTemperature);
+				meltRate = coolingRate * meltMultiplier / (parent.stackCount / 2) ; //Update melt rate.
+				meltRatePerHour = meltRate * 2500f;
 				var meltRateOverInterval = meltRate * interval;
-				var damage = Mathf.RoundToInt(meltRateOverInterval); //Damage must be int.
-				Log.Message("Melting Item Releasing " + -meltRateOverInterval + " heat at ambient temperature " + parent.AmbientTemperature + " for an interval of " + interval + ", taking " + damage + " damage.");
-				GenTemperature.PushHeat(parent.PositionHeld, parent.MapHeld, -meltRateOverInterval); //Cool area by damage amount.
-				if (parent.stackCount > 1 && parent.HitPoints <= damage) //If it's a stack and we're about to run out of HP..
+				var coolingRateOverInterval = coolingRate * interval;
+				GenTemperature.PushHeat(parent.PositionHeld, parent.MapHeld, -coolingRateOverInterval); //Cool area, ceiling round it so that it's never by zero.
+				if (parent.stackCount > 1 && floatHealth <= meltRateOverInterval) //If it's a stack and we're about to run out of HP..
 				{
 					parent.stackCount--; //Decrement stack.
-					damage -= parent.HitPoints; //Reduce damage by hitpoints to not be kind, we want to reserve it and apply it still.
-					parent.HitPoints = parent.MaxHitPoints; //Reset HP instead.
+					meltRateOverInterval -= floatHealth.Value; //Reduce damage by hitpoints to not be kind, we want to reserve it and apply it still.
+					floatHealth = parent.MaxHitPoints; //Reset HP instead.
 				}
 				else //Not about to run out of HP..
-					parent.TakeDamage(new DamageInfo(DamageDefOf.Rotting, damage)); //Do damage.
+					floatHealth -= meltRateOverInterval; //Do damage.
+				UpdateRealHealthToFloatHealth();
 			}
+			else
+				meltBufferTicks = 0; //Reset the buffer.
+		}
+
+		public void UpdateFloatHealthToRealHealth()
+        {
+			if (floatHealth == null || parent.HitPoints < floatHealth)
+				floatHealth = parent.HitPoints;
+		}
+
+		public void UpdateRealHealthToFloatHealth()
+		{
+			parent.HitPoints = Mathf.RoundToInt(floatHealth.Value);
+			if (parent.HitPoints <= 0)
+				parent.Destroy(DestroyMode.Vanish);
 		}
 
 		public override void PreAbsorbStack(Thing otherStack, int count)
 		{
+			UpdateFloatHealthToRealHealth();
 			float t = (float)count / (float)(parent.stackCount + count);
-			parent.HitPoints = GenMath.RoundRandom(Mathf.Lerp((float)parent.HitPoints, (float)parent.MaxHitPoints, t));
+			floatHealth = Mathf.Lerp(floatHealth.Value, (float)parent.MaxHitPoints, t);
+			UpdateRealHealthToFloatHealth();
 		}
 
 		public override string CompInspectStringExtra()
@@ -68,7 +94,7 @@ namespace SR
 					stringBuilder.Append("MeltStateSolid".Translate() + ".");
 					break;
 				case MeltStage.Melting:
-					stringBuilder.Append("MeltStateMelting".Translate() + ".\n" + (meltRate > 0 ? ("Melt rate: " + Math.Round(meltRate, 2) + " / tick") : ""));
+					stringBuilder.Append("MeltStateMelting".Translate() + "." + (meltRate > 0 ? ("\nMelt rate: " + Math.Round(meltRatePerHour, 2) + " / hour") : ""));
 					break;
 			}
 			return stringBuilder.ToString();

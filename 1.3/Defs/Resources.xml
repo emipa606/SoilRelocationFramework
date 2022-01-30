@@ -82,7 +82,7 @@
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <statBases>
-      <MaxHitPoints>50</MaxHitPoints>
+      <MaxHitPoints>100</MaxHitPoints>
       <MarketValue>.005</MarketValue>
       <Mass>0.6</Mass>
     </statBases>
