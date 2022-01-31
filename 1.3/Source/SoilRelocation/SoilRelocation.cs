@@ -151,7 +151,7 @@ namespace SR
 
         public override string SettingsCategory()
         {
-            return "Soil Relocation";
+            return "SoilRelocation";
         }
 
         public override void DoSettingsWindowContents(Rect inRect)
