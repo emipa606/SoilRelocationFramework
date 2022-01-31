@@ -134,7 +134,7 @@ namespace SR
 				Map.terrainGrid.SetTerrain(c, ut); //Set the top layer to the under-terrain
 			else //No under-terrain
 			{
-				if (Map.Biome.defName == "SeaIce") //Special case for sea ice biomes, can't have it giving stone to work with and allowing deep drilling!
+				if (Map.Biome.defName == "SeaIce" && ot == TerrainDefOf.Ice) //Special case for sea ice biomes, can't have it giving stone to work with and allowing deep drilling!
 					Map.terrainGrid.SetTerrain(c, TerrainDefOf.WaterOceanDeep);
 				else //All other cases..
 					Map.terrainGrid.SetTerrain(c, Map.GetComponent<CMS.MapComponent_StoneGrid>().StoneTerrainAt(c)); //Set the terrain to the natural stone for this area to represent bedrock
