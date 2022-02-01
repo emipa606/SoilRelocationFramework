@@ -100,13 +100,18 @@ namespace SR
 						ot.defName == "WF_LakeIce" || 
 						ot.defName == "WF_LakeIceThick" || 
 						ot.defName == "WF_MarshIceThin" || 
-						ot.defName == "WF_MarshIce")
+						ot.defName == "WF_MarshIce" ||
+						ot.defName == "WF_RiverIceThin" ||
+						ot.defName == "WF_RiverIce" ||
+						ot.defName == "WF_RiverIceThick")
 					{
 						toDropAmount = Math.Max(1, Mathf.RoundToInt(WaterFreezes_Interop.TakeCellIce(Map, c).Value / 25 * toDropAmount));
 						ut = Map.terrainGrid.UnderTerrainAt(c); //Get under-terrain
 						var utIsWater = ut == TerrainDefOf.WaterDeep || 
 											ut == TerrainDefOf.WaterShallow ||
-											ut == TerrainDefs.Marsh;
+											ut == TerrainDefs.Marsh ||
+											ut == TerrainDefOf.WaterMovingShallow ||
+											ut == TerrainDefOf.WaterMovingChestDeep;
 						var naturalWater = WaterFreezes_Interop.QueryCellNaturalWater(Map, c);
 						var isNaturalWater = naturalWater != null;
 						var water = WaterFreezes_Interop.QueryCellWater(Map, c);
