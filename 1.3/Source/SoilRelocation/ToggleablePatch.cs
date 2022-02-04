@@ -78,6 +78,10 @@ namespace SR
         /// </summary>
         public bool Applied { get; protected set; }
         /// <summary>
+        /// List of conflicting mod IDs that this patch will not be applied if are present.
+        /// </summary>
+        public List<string> ConflictingModIDs = new();
+        /// <summary>
         /// The patch code.
         /// </summary>
         public Action<T> Patch;
@@ -148,15 +152,19 @@ namespace SR
         {
             get
             {
-                if (TargetModID != null)
-                {
-                    if (!modInstalled.HasValue)
+                foreach (var modID in ConflictingModIDs)
+                    if (ModLister.GetActiveModWithIdentifier(modID) != null) //If mod present..
                     {
-                        modInstalled = ModLister.GetActiveModWithIdentifier(TargetModID) != null;
+                        Log.Message("[Soil Relocation] Skipping patch \"" + Name + "\" because conflicting mod with ID \"" + modID + "\" was found.");
+                        return false; //Can't patch.
                     }
-                    return modInstalled.Value;
+                if (TargetModID != null) //If it has a target mod..
+                {
+                    if (!modInstalled.HasValue) //If mod presence is unknown..
+                        modInstalled = ModLister.GetActiveModWithIdentifier(TargetModID) != null; //Check presence..
+                    return modInstalled.Value; //Return true if it is installed, false if not..
                 }
-                return true;
+                return true; //Return true if it had no target mod ID and no conflicting mods stopped it before now.
             }
         }
     }
