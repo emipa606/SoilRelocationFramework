@@ -49,7 +49,8 @@ namespace SR
 				meltRatePerHour = meltRate * 2500f;
 				var meltRateOverInterval = meltRate * interval;
 				var coolingRateOverInterval = coolingRate * interval;
-				GenTemperature.PushHeat(parent.PositionHeld, parent.MapHeld, -coolingRateOverInterval); //Cool area, ceiling round it so that it's never by zero.
+				if (parent.MapHeld != null) //Don't push heat if we're not on a map (caravans).
+					GenTemperature.PushHeat(parent.PositionHeld, parent.MapHeld, -coolingRateOverInterval); //Cool area, ceiling round it so that it's never by zero.
 				if (parent.stackCount > 1 && floatHealth <= meltRateOverInterval) //If it's a stack and we're about to run out of HP..
 				{
 					parent.stackCount--; //Decrement stack.
