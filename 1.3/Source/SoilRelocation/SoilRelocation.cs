@@ -14,190 +14,15 @@ namespace SR
     public static class SoilRelocation
     {
         public static List<IToggleablePatch> Patches = new List<IToggleablePatch>();
-        public static ToggleablePatch<BuildableDef> SandbagsUseSandPatch = new ToggleablePatch<BuildableDef>
-        {
-            Name = "Sandbags Use Sand",
-            Enabled = SoilRelocationSettings.SandbagsUseSandEnabled,
-            TargetDefName = "Sandbags",
-            Patch = def =>
-            {
-                if (def.costList == null)
-                    def.costList = new List<ThingDefCountClass>();
-                def.costList.Add(new ThingDefCountClass { count = 5, thingDef = SoilDefs.SR_Sand }); //Add an additional cost of 5 sand.
-            },
-            Unpatch = def =>
-            {
-                var costListItems = def.costList.Where(tdcc => tdcc.thingDef == SoilDefs.SR_Sand); //Try to find our patch..
-                if (costListItems.Any()) //If we find it..
-                    def.CostList.Remove(costListItems.First()); //Yeet!
-            },
-        };
-
-        public static ToggleablePatchGroup DubsSkylightsGlassUsesSandPatch = new ToggleablePatchGroup
-        {
-            Name = "Dubs Skylights Glass Uses Sand",
-            Enabled = SoilRelocationSettings.DubsSkylightsGlassUsesSandEnabled,
-            Patches = new List<IToggleablePatch>
-                {
-                    new ToggleablePatch<RecipeDef>
-                    {
-                        TargetDefName = "SmeltGlass",
-                        TargetModID = "Dubwise.DubsSkylights",
-                        ConflictingModIDs = new()
-                        {
-                            "Maaxar.DubsSkylights.glasslights.patch",
-                        },
-                        Patch = def =>
-                        {
-                            def.fixedIngredientFilter = new ThingFilter();
-                            def.fixedIngredientFilter.SetAllow(SoilDefs.SR_Sand, true);
-                            def.ingredients.Clear();
-                            var ingredient = new IngredientCount
-                            {
-                                filter = def.fixedIngredientFilter,
-                            };
-                            ingredient.SetBaseCount(10);
-                            def.ingredients.Add(ingredient);
-                        },
-                        Unpatch = def =>
-                        {
-                            def.fixedIngredientFilter = new ThingFilter();
-                            def.fixedIngredientFilter.SetAllow(ThingDefOf.Steel, true);
-                            def.ingredients.Clear();
-                            var ingredient = new IngredientCount
-                            {
-                                filter = def.fixedIngredientFilter,
-                            };
-                            ingredient.SetBaseCount(4);
-                            def.ingredients.Add(ingredient);
-                        },
-                    },
-                    new ToggleablePatch<RecipeDef>
-                    {
-                        TargetDefName = "SmeltGlass4x",
-                        TargetModID = "Dubwise.DubsSkylights",
-                        ConflictingModIDs = new()
-                        {
-                            "Maaxar.DubsSkylights.glasslights.patch",
-                        },
-                        Patch = def =>
-                        {
-                            def.fixedIngredientFilter = new ThingFilter();
-                            def.fixedIngredientFilter.SetAllow(SoilDefs.SR_Sand, true);
-                            def.ingredients.Clear();
-                            var ingredient = new IngredientCount
-                            {
-                                filter = def.fixedIngredientFilter,
-                            };
-                            ingredient.SetBaseCount(40);
-                            def.ingredients.Add(ingredient);
-                        },
-                        Unpatch = def =>
-                        {
-                            def.fixedIngredientFilter = new ThingFilter();
-                            def.fixedIngredientFilter.SetAllow(ThingDefOf.Steel, true);
-                            def.ingredients.Clear();
-                            var ingredient = new IngredientCount
-                            {
-                                filter = def.fixedIngredientFilter,
-                            };
-                            ingredient.SetBaseCount(16);
-                            def.ingredients.Add(ingredient);
-                        },
-                    }
-                }
-        };
-
-        public static ToggleablePatch<RecipeDef> JustGlassGlassUsesSandPatch = new ToggleablePatch<RecipeDef>
-        {
-            Name = "Just Glass Glass Uses Sand",
-            Enabled = SoilRelocationSettings.JustGlassGlassUsesSandEnabled,
-            TargetDefName = "MakeGlass",
-            TargetModID = "spoden.JustGlass",
-            Patch = def =>
-            {
-                def.fixedIngredientFilter = new ThingFilter();
-                def.fixedIngredientFilter.SetAllow(SoilDefs.SR_Sand, true);
-                def.ingredients.Clear();
-                var ingredient = new IngredientCount
-                {
-                    filter = def.fixedIngredientFilter,
-                };
-                ingredient.SetBaseCount(10);
-                def.ingredients.Add(ingredient);
-            },
-            Unpatch = def =>
-            {
-                def.fixedIngredientFilter = new ThingFilter();
-                def.fixedIngredientFilter.SetAllow(ThingCategoryDefOf.StoneChunks, true);
-                def.ingredients.Clear();
-                var ingredient = new IngredientCount
-                {
-                    filter = def.fixedIngredientFilter,
-                };
-                ingredient.SetBaseCount(1);
-                def.ingredients.Add(ingredient);
-            },
-        };
-        
-        public static ToggleablePatch<RecipeDef> GlassPlusLightsGlassUsesSandPatch = new ToggleablePatch<RecipeDef>
-        {
-            Name = "Glass+Lights Glass Uses Sand",
-            Enabled = SoilRelocationSettings.GlassPlusLightsGlassUsesSandEnabled,
-            TargetDefName = "MakeGlass",
-            TargetModID = "NanoCE.GlassLights",
-            Patch = def =>
-            {
-                def.fixedIngredientFilter = new ThingFilter();
-                def.fixedIngredientFilter.SetAllow(SoilDefs.SR_Sand, true);
-                def.ingredients.Clear();
-                var ingredient = new IngredientCount
-                {
-                    filter = def.fixedIngredientFilter,
-                };
-                ingredient.SetBaseCount(10);
-                def.ingredients.Add(ingredient);
-            },
-            Unpatch = def =>
-            {
-                def.fixedIngredientFilter = new ThingFilter();
-                def.fixedIngredientFilter.SetAllow(ThingCategoryDefOf.StoneChunks, true);
-                def.ingredients.Clear();
-                var ingredient = new IngredientCount
-                {
-                    filter = def.fixedIngredientFilter,
-                };
-                ingredient.SetBaseCount(1);
-                def.ingredients.Add(ingredient);
-            },
-        };
-
-        public static ToggleablePatch<BuildableDef> VFEArchitectPackedDirtCostsDirt = new ToggleablePatch<BuildableDef>
-        {
-            Name = "VFE Architect Packed Dirt Costs Dirt",
-            Enabled = SoilRelocationSettings.VFEArchitectPackedDirtCostsDirtEnabled,
-            TargetDefName = "VFEArch_PlayerPackedDirt",
-            TargetModID = "VanillaExpanded.VFEArchitect",
-            Patch = def =>
-            {
-                if (def.costList == null)
-                    def.costList = new List<ThingDefCountClass>();
-                def.costList.Add(new ThingDefCountClass { count = 1, thingDef = SoilDefs.SR_Soil }); //Add an additional cost of 1 soil just to remove the exploit of free dirt.
-            },
-            Unpatch = def =>
-            {
-                var costListItems = def.costList.Where(tdcc => tdcc.thingDef == SoilDefs.SR_Soil); //Try to find our patch..
-                if (costListItems.Any()) //If we find it..
-                    def.CostList.Remove(costListItems.First()); //Yeet!
-            },
-        };
 
         static SoilRelocation()
         {
             Log.Message("[Soil Relocation] Initializing..");
-            Patches.Add(SandbagsUseSandPatch);
-            Patches.Add(DubsSkylightsGlassUsesSandPatch);
-            Patches.Add(VFEArchitectPackedDirtCostsDirt);
+            Patches.Add(ToggleablePatches.Vanilla.SandbagsUseSandPatch);
+            Patches.Add(ToggleablePatches.DubsSkylights.GlassUsesSandPatch);
+            Patches.Add(ToggleablePatches.JustGlass.GlassUsesSandPatch);
+            Patches.Add(ToggleablePatches.GlassPlusLights.GlassUsesSandPatch);
+            Patches.Add(ToggleablePatches.VFEArchitect.PackedDirtCostsDirt);
             ProcessPatches();
         }
 
@@ -243,11 +68,11 @@ namespace SR
 
         public override void WriteSettings()
         {
-            SoilRelocation.SandbagsUseSandPatch.Enabled = SoilRelocationSettings.SandbagsUseSandEnabled;
-            SoilRelocation.DubsSkylightsGlassUsesSandPatch.Enabled = SoilRelocationSettings.DubsSkylightsGlassUsesSandEnabled;
-            SoilRelocation.JustGlassGlassUsesSandPatch.Enabled = SoilRelocationSettings.JustGlassGlassUsesSandEnabled;
-            SoilRelocation.GlassPlusLightsGlassUsesSandPatch.Enabled = SoilRelocationSettings.GlassPlusLightsGlassUsesSandEnabled;
-            SoilRelocation.VFEArchitectPackedDirtCostsDirt.Enabled = SoilRelocationSettings.VFEArchitectPackedDirtCostsDirtEnabled;
+            ToggleablePatches.Vanilla.SandbagsUseSandPatch.Enabled = SoilRelocationSettings.SandbagsUseSandEnabled;
+            ToggleablePatches.DubsSkylights.GlassUsesSandPatch.Enabled = SoilRelocationSettings.DubsSkylightsGlassUsesSandEnabled;
+            ToggleablePatches.JustGlass.GlassUsesSandPatch.Enabled = SoilRelocationSettings.JustGlassGlassUsesSandEnabled;
+            ToggleablePatches.GlassPlusLights.GlassUsesSandPatch.Enabled = SoilRelocationSettings.GlassPlusLightsGlassUsesSandEnabled;
+            ToggleablePatches.VFEArchitect.PackedDirtCostsDirt.Enabled = SoilRelocationSettings.VFEArchitectPackedDirtCostsDirtEnabled;
             SoilRelocation.ProcessPatches("settings were updated");
                 
             base.WriteSettings();

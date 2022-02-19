@@ -10,115 +10,126 @@ namespace SR
 {
     public static class WaterFreezes_Interop
 	{
-		private static Type _waterFreezesMapComponentType = Type.GetType("WF.MapComponent_WaterFreezes, UdderlyEvelyn.WaterFreezes");
-		private static Dictionary<int, MapComponent> _waterFreezesMapComponentCachePerMap = new Dictionary<int, MapComponent>();
-		private static Func<IntVec3, float> _takeCellIceDelegate;
-		private static Func<IntVec3, float> _queryCellIceDelegate;
-		private static Func<IntVec3, float> _queryCellWaterDelegate;
-		private static Func<IntVec3, TerrainDef> _queryCellNaturalWaterDelegate;
+		private static Type _waterFreezesAPIType = Type.GetType("WF.API, UdderlyEvelyn.WaterFreezes");
+		private static Func<Map, IntVec3, float> _takeCellIceDelegate;
+		private static Func<Map, IntVec3, float> _queryCellIceDelegate;
+		private static Func<Map, IntVec3, float> _queryCellWaterDelegate;
+		private static Func<Map, IntVec3, TerrainDef> _queryCellNaturalWaterDelegate;
+		private static Func<Map, IntVec3, TerrainDef> _queryCellAllWaterDelegate;
+		private static Action<Map, IntVec3> _clearCellNaturalWaterDelegate;
+		private static Action<Map, IntVec3> _clearCellWaterDelegate;
 
 		/// <summary>
-		/// Call MapComponent_WaterFreezes.QueryCellNaturalWater without needing to reference the assembly.
+		/// Returns true if the target type for interop was located.
+		/// </summary>
+		public static bool InteropTargetIsPresent = _waterFreezesAPIType != null;
+
+		/// <summary>
+		/// Call WF.API.QueryCellAllWater without needing to reference the assembly.
+		/// </summary>
+		/// <param name="cell">cell to get the water def for from the AllWaterTerrainGrid</param>
+		/// <returns>TerrainDef of water at cell from the AllWaterTerrainGrid, null if none</returns>
+		public static TerrainDef QueryCellAllWater(Map map, IntVec3 cell)
+		{
+			if (_waterFreezesAPIType != null)
+			{
+				if (_queryCellAllWaterDelegate == null) //Everything in here should only execute once if the mod is present.
+					_queryCellAllWaterDelegate = (Func<Map, IntVec3, TerrainDef>)_waterFreezesAPIType.GetMethod("QueryCellAllWater").CreateDelegate(typeof(Func<Map, IntVec3, TerrainDef>)); //Cache it..
+				return _queryCellAllWaterDelegate(map, cell);
+			}
+			return null; //Mod not loaded, return null.
+		}
+
+		/// <summary>
+		/// Call WF.API.QueryCellNaturalWater without needing to reference the assembly.
 		/// </summary>
 		/// <param name="cell">cell to get the natural water def for</param>
 		/// <returns>TerrainDef of natural water at cell, null if none</returns>
 		public static TerrainDef QueryCellNaturalWater(Map map, IntVec3 cell)
 		{
-			if (_waterFreezesMapComponentType != null)
+			if (_waterFreezesAPIType != null)
 			{
 				if (_queryCellNaturalWaterDelegate == null) //Everything in here should only execute once if the mod is present.
-				{
-					MapComponent wfComp; //Set up var.
-					if (!_waterFreezesMapComponentCachePerMap.ContainsKey(map.uniqueID)) //If not cached..
-						_waterFreezesMapComponentCachePerMap.Add(map.uniqueID, wfComp = map.GetComponent(_waterFreezesMapComponentType)); //Get and cache.
-					else
-						wfComp = _waterFreezesMapComponentCachePerMap[map.uniqueID]; //Get from cache.
-					if (wfComp != null) //It was found.
-						_queryCellNaturalWaterDelegate = (Func<IntVec3, TerrainDef>)_waterFreezesMapComponentType.GetMethod("QueryCellNaturalWater").CreateDelegate(typeof(Func<IntVec3, TerrainDef>), wfComp); //Cache it..
-					else
-						Log.Error("[Soil Relocation] Water Freezes was detected but MapComponent_WaterFreezes could not be retrieved for this map.");
-				}
-				return _queryCellNaturalWaterDelegate(cell);
+					_queryCellNaturalWaterDelegate = (Func<Map, IntVec3, TerrainDef>)_waterFreezesAPIType.GetMethod("QueryCellNaturalWater").CreateDelegate(typeof(Func<Map, IntVec3, TerrainDef>)); //Cache it..
+				return _queryCellNaturalWaterDelegate(map, cell);
 			}
 			return null; //Mod not loaded, return null.
 		}
 
 		/// <summary>
-		/// Call MapComponent_WaterFreezes.QueryCellWater without needing to reference the assembly.
+		/// Call WF.API.QueryCellWater without needing to reference the assembly.
 		/// </summary>
 		/// <param name="cell">cell to get the water depth for</param>
 		/// <returns>water depth at cell</returns>
 		public static float? QueryCellWater(Map map, IntVec3 cell)
 		{
-			if (_waterFreezesMapComponentType != null)
+			if (_waterFreezesAPIType != null)
 			{
 				if (_queryCellWaterDelegate == null) //Everything in here should only execute once if the mod is present.
-				{
-					MapComponent wfComp; //Set up var.
-					if (!_waterFreezesMapComponentCachePerMap.ContainsKey(map.uniqueID)) //If not cached..
-						_waterFreezesMapComponentCachePerMap.Add(map.uniqueID, wfComp = map.GetComponent(_waterFreezesMapComponentType)); //Get and cache.
-					else
-						wfComp = _waterFreezesMapComponentCachePerMap[map.uniqueID]; //Get from cache.
-					if (wfComp != null) //It was found.
-						_queryCellWaterDelegate = (Func<IntVec3, float>)_waterFreezesMapComponentType.GetMethod("QueryCellWater").CreateDelegate(typeof(Func<IntVec3, float>), wfComp); //Cache it..
-					else
-						Log.Error("[Soil Relocation] Water Freezes was detected but MapComponent_WaterFreezes could not be retrieved for this map.");
-				}
-				return _queryCellWaterDelegate(cell);
+					_queryCellWaterDelegate = (Func<Map, IntVec3, float>)_waterFreezesAPIType.GetMethod("QueryCellWater").CreateDelegate(typeof(Func<Map, IntVec3, float>)); //Cache it..
+				return _queryCellWaterDelegate(map, cell);
 			}
 			return null; //Mod not loaded, return null.
 		}
 
 		/// <summary>
-		/// Call MapComponent_WaterFreezes.TakeCellIce without needing to reference the assembly.
+		/// Call WF.API.TakeCellIce without needing to reference the assembly.
 		/// </summary>
 		/// <param name="cell">cell to get the ice thickness for and clear the ice at</param>
 		/// <returns>ice thickness at cell prior to clearing</returns>
 		public static float? TakeCellIce(Map map, IntVec3 cell)
 		{
-			if (_waterFreezesMapComponentType != null)
+			if (_waterFreezesAPIType != null)
 			{
 				if (_takeCellIceDelegate == null) //Everything in here should only execute once if the mod is present.
-				{
-					MapComponent wfComp; //Set up var.
-					if (!_waterFreezesMapComponentCachePerMap.ContainsKey(map.uniqueID)) //If not cached..
-						_waterFreezesMapComponentCachePerMap.Add(map.uniqueID, wfComp = map.GetComponent(_waterFreezesMapComponentType)); //Get and cache.
-					else
-						wfComp = _waterFreezesMapComponentCachePerMap[map.uniqueID]; //Get from cache.
-					if (wfComp != null) //It was found.
-						_takeCellIceDelegate = (Func<IntVec3, float>)_waterFreezesMapComponentType.GetMethod("TakeCellIce").CreateDelegate(typeof(Func<IntVec3, float>), wfComp); //Cache it..
-					else
-						Log.Error("[Soil Relocation] Water Freezes was detected but MapComponent_WaterFreezes could not be retrieved for this map.");
-				}
-				return _takeCellIceDelegate(cell);
+					_takeCellIceDelegate = (Func<Map, IntVec3, float>)_waterFreezesAPIType.GetMethod("TakeCellIce").CreateDelegate(typeof(Func<Map, IntVec3, float>)); //Cache it..
+				return _takeCellIceDelegate(map, cell);
 			}
 			return null; //Mod not loaded, return null.
 		}
 
 		/// <summary>
-		/// Call MapComponent_WaterFreezes.QueryCellIce without needing to reference the assembly.
+		/// Call WF.API.QueryCellIce without needing to reference the assembly.
 		/// </summary>
 		/// <param name="cell">cell to get the ice thickness for</param>
 		/// <returns>ice thickness at cell</returns>
 		public static float? QueryCellIce(Map map, IntVec3 cell)
 		{
-			if (_waterFreezesMapComponentType != null)
+			if (_waterFreezesAPIType != null)
 			{
 				if (_queryCellIceDelegate == null) //Everything in here should only execute once if the mod is present.
-				{
-					MapComponent wfComp; //Set up var.
-					if (!_waterFreezesMapComponentCachePerMap.ContainsKey(map.uniqueID)) //If not cached..
-						_waterFreezesMapComponentCachePerMap.Add(map.uniqueID, wfComp = map.GetComponent(_waterFreezesMapComponentType)); //Get and cache.
-					else
-						wfComp = _waterFreezesMapComponentCachePerMap[map.uniqueID]; //Get from cache.
-					if (wfComp != null) //It was found.
-						_queryCellIceDelegate = (Func<IntVec3, float>)_waterFreezesMapComponentType.GetMethod("QueryCellIce").CreateDelegate(typeof(Func<IntVec3, float>), wfComp); //Cache it..
-					else
-						Log.Error("[Soil Relocation] Water Freezes was detected but MapComponent_WaterFreezes could not be retrieved for this map.");
-				}
-				return _queryCellIceDelegate(cell);
+					_queryCellIceDelegate = (Func<Map, IntVec3, float>)_waterFreezesAPIType.GetMethod("QueryCellIce").CreateDelegate(typeof(Func<Map, IntVec3, float>)); //Cache it..
+				return _queryCellIceDelegate(map, cell);
 			}
 			return null; //Mod not loaded, return null.
+		}
+
+		/// <summary>
+		/// Call WF.API.ClearCellNaturalWater without needing to reference the assembly.
+		/// </summary>
+		/// <param name="cell">cell to clear natural water at</param>
+		public static void ClearCellNaturalWater(Map map, IntVec3 cell)
+		{
+			if (_waterFreezesAPIType != null)
+			{
+				if (_clearCellNaturalWaterDelegate == null) //Everything in here should only execute once if the mod is present.
+					_clearCellNaturalWaterDelegate = (Action<Map, IntVec3>)_waterFreezesAPIType.GetMethod("ClearCellNaturalWater").CreateDelegate(typeof(Action<Map, IntVec3>)); //Cache it..
+				_clearCellNaturalWaterDelegate(map, cell);
+			}
+		}
+
+		/// <summary>
+		/// Call WF.API.ClearCellWater without needing to reference the assembly.
+		/// </summary>
+		/// <param name="cell">cell to get the water depth for</param>
+		public static void ClearCellWater(Map map, IntVec3 cell)
+		{
+			if (_waterFreezesAPIType != null)
+			{
+				if (_clearCellWaterDelegate == null) //Everything in here should only execute once if the mod is present.
+					_clearCellWaterDelegate = (Action<Map, IntVec3>)_waterFreezesAPIType.GetMethod("ClearCellWater").CreateDelegate(typeof(Action<Map, IntVec3>)); //Cache it..
+				_clearCellWaterDelegate(map, cell);
+			}
 		}
 	}
 }

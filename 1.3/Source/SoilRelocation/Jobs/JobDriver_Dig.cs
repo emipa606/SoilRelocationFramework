@@ -115,7 +115,7 @@ namespace SR
 						var naturalWater = WaterFreezes_Interop.QueryCellNaturalWater(Map, c);
 						var isNaturalWater = naturalWater != null;
 						var water = WaterFreezes_Interop.QueryCellWater(Map, c);
-						//Log.Message("[Soil Relocation] WF Compat.. utIsWater: " + utIsWater + ", naturalWater: " + naturalWater?.defName + ", isNaturalWater: " + isNaturalWater + ", water: " + water);
+						Log.Message("[Soil Relocation] WF Compat.. utIsWater: " + utIsWater + ", naturalWater: " + naturalWater?.defName + ", isNaturalWater: " + isNaturalWater + ", water: " + water + ", toDropAmount: " + toDropAmount);
 						if ((isNaturalWater || utIsWater) && water <= 0) //If natural water isn't null or under-terrain is water but there's no water at that tile..
 							Map.terrainGrid.SetTerrain(c, TerrainDefs.Mud); //Set the terrain to mud to represent the sediment under the water normally.
 						else if (isNaturalWater && water > 0) //If it's natural water and there's more than 0 water..

@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-	<LangVersion>Preview</LangVersion>
+    <LangVersion>Preview</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\..\..\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
@@ -54,22 +58,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompProperties_Meltable.cs" />
-    <Compile Include="CompMeltable.cs" />
-    <Compile Include="JobDefOf.cs" />
-    <Compile Include="JobDriver_Dig.cs" />
+    <Compile Include="Comps\CompProperties_Meltable.cs" />
+    <Compile Include="Comps\CompMeltable.cs" />
+    <Compile Include="Harmony Patches\Frame_MaterialsNeeded.cs" />
+    <Compile Include="Harmony Patches\Blueprint_Build_MaterialsNeeded.cs" />
+    <Compile Include="Harmony Patches\Frame_WorkToBuild.cs" />
+    <Compile Include="Harmony Patches\Blueprint_Build_WorkTotal.cs" />
+    <Compile Include="Jobs\JobDefOf.cs" />
+    <Compile Include="Jobs\JobDriver_Dig.cs" />
+    <Compile Include="Reflected.cs" />
+    <Compile Include="TerrainDefExtensions.cs" />
     <Compile Include="TerrainDefs.cs" />
+    <Compile Include="ToggleablePatches\DubsSkylights.cs" />
+    <Compile Include="ToggleablePatches\GlassPlusLights.cs" />
+    <Compile Include="ToggleablePatches\JustGlass.cs" />
+    <Compile Include="ToggleablePatches\Vanilla.cs" />
+    <Compile Include="ToggleablePatches\VFEArchitect.cs" />
     <Compile Include="WaterFreezes_Interop.cs" />
-    <Compile Include="MeltStage.cs" />
+    <Compile Include="Comps\MeltStage.cs" />
     <Compile Include="SoilDefs.cs" />
     <Compile Include="SoilRelocation.cs" />
-    <Compile Include="DesignationDefOf.cs" />
-    <Compile Include="Designator_Dig.cs" />
+    <Compile Include="Jobs\DesignationDefOf.cs" />
+    <Compile Include="Jobs\Designator_Dig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SoilRelocationSettings.cs" />
     <Compile Include="ToggleablePatch.cs" />
     <Compile Include="Utilities.cs" />
-    <Compile Include="WorkGiver_Dig.cs" />
+    <Compile Include="Jobs\WorkGiver_Dig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
