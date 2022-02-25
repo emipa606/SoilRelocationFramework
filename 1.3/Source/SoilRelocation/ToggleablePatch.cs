@@ -108,7 +108,7 @@ namespace SR
         {
             if (CanPatch && !Applied)
             {
-                Log.Message("[Soil Relocation] " + (Name != null ? ("Applying patch \"" + Name + "\", patching ") : "Patching ") + TargetDescriptionString + "..");
+                SoilRelocation.Log("" + (Name != null ? ("Applying patch \"" + Name + "\", patching ") : "Patching ") + TargetDescriptionString + "..");
                 if (targetDef == null)
                     targetDef = DefDatabase<T>.GetNamed(TargetDefName);
                 try
@@ -117,7 +117,7 @@ namespace SR
                 }
                 catch (Exception ex)
                 {
-                    Log.Warning("[Soil Relocation] Error " + (Name != null ? ("applying patch \"" + Name + "\"") : "patching ") + ". Most likely you have another mod that already patches " + TargetDescriptionString + ". Remove that mod or disable this patch in the mod options.\n\n" + ex.ToString());
+                    SoilRelocation.Log("Error " + (Name != null ? ("applying patch \"" + Name + "\"") : "patching ") + ". Most likely you have another mod that already patches " + TargetDescriptionString + ". Remove that mod or disable this patch in the mod options.\n\n" + ex.ToString(), ErrorLevel.Warning);
                 }
                 Applied = true; //Set it as applied.
             }
@@ -130,7 +130,7 @@ namespace SR
         {
             if (Applied) //If it's been applied already.
             {
-                Log.Message("[Soil Relocation] " + (Name != null ? ("Removing patch \"" + Name + "\", unpatching ") : "Unpatching ") + TargetDescriptionString + "..");
+                SoilRelocation.Log("" + (Name != null ? ("Removing patch \"" + Name + "\", unpatching ") : "Unpatching ") + TargetDescriptionString + "..");
                 if (targetDef == null)
                     targetDef = DefDatabase<T>.GetNamed(TargetDefName);
                 try
@@ -139,7 +139,7 @@ namespace SR
                 }
                 catch (Exception ex)
                 {
-                    Log.Warning("[Soil Relocation] Error " + (Name != null ? ("removing patch \"" + Name + "\"") : "unpatching ") + ". Most likely you have another mod that already patches " + TargetDescriptionString + ", and it failed to patch in the first place. Remove that mod or disable this patch in the mod options.\n\n" + ex.ToString());
+                    SoilRelocation.Log("Error " + (Name != null ? ("removing patch \"" + Name + "\"") : "unpatching ") + ". Most likely you have another mod that already patches " + TargetDescriptionString + ", and it failed to patch in the first place. Remove that mod or disable this patch in the mod options.\n\n" + ex.ToString(), ErrorLevel.Warning);
                 }
                 Applied = false; //Set it as not applied anymore.
             }
@@ -155,7 +155,7 @@ namespace SR
                 foreach (var modID in ConflictingModIDs)
                     if (ModLister.GetActiveModWithIdentifier(modID) != null) //If mod present..
                     {
-                        Log.Message("[Soil Relocation] Skipping patch \"" + Name + "\" because conflicting mod with ID \"" + modID + "\" was found.");
+                        SoilRelocation.Log("Skipping patch \"" + Name + "\" because conflicting mod with ID \"" + modID + "\" was found.");
                         return false; //Can't patch.
                     }
                 if (TargetModID != null) //If it has a target mod..
@@ -198,7 +198,7 @@ namespace SR
         {
             if (!Applied)
             {
-                Log.Message("[Soil Relocation] Applying patches in patch group \"" + Name + "\"..");
+                SoilRelocation.Log("Applying patches in patch group \"" + Name + "\"..");
                 foreach (var patch in Patches)
                     patch.Apply();
                 Applied = true;
@@ -212,7 +212,7 @@ namespace SR
         {
             if (Applied)
             {
-                Log.Message("[Soil Relocation] Removing patches in patch group \"" + Name + "\"..");
+                SoilRelocation.Log("Removing patches in patch group \"" + Name + "\"..");
                 foreach (var patch in Patches)
                     patch.Remove();
                 Applied = false;

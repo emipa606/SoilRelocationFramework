@@ -19,7 +19,7 @@ namespace SR
 		public override Job JobOnCell(Pawn pawn, IntVec3 c, bool forced = false)
 		{
 			//Log.Message("Running WorkGiver_Dig.JobOnCell");
-			return JobMaker.MakeJob(JobDefOf.SR_Dig, c); 
+			return JobMaker.MakeJob(JobDefs.SR_Dig, c); 
 		}
 	}
 }

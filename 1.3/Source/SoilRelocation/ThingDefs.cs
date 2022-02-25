@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RimWorld;
 using Verse;
+using RimWorld;
 
 namespace SR
 {
     [DefOf]
-    public static class TerrainDefs
+    public static class ThingDefs
     {
-        public static TerrainDef Marsh;
-        public static TerrainDef Mud;
+        public static ThingDef RawFungus;
     }
 }

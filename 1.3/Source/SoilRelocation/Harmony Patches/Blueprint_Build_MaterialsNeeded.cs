@@ -7,40 +7,32 @@ using Verse;
 using RimWorld;
 using HarmonyLib;
 using System.Reflection;
+using UnityEngine;
 
-namespace SR.Harmony_Patches
+namespace SR
 {
     [HarmonyPatch(typeof(Blueprint_Build), "MaterialsNeeded")]
-    internal class Blueprint_Build_MaterialsNeeded
+    internal static class Blueprint_Build_MaterialsNeeded
     {
-        float shallowMultiplier = 4;
-        float deepMultiplier = 32;
-        float marshMultiplier = 2.8f;
-        float deepOceanMultiplier = 64;
-
-        internal void Postfix(Blueprint_Build __instance, List<ThingDefCount> __result)
+        internal static void Postfix(Blueprint_Build __instance, ref List<ThingDefCountClass> __result)
         {
+            var newTerrain = __instance.def.entityDefToBuild as TerrainDef;
+            if (newTerrain == null) //If it's not a TerrainDef
+                return; //We don't need to touch it.
             var map = __instance.Map;
             var cell = __instance.Position;
             var currentTerrain = __instance.Position.GetTerrain(map);
-            float multiplier = 1;
-            if (currentTerrain.IsWater && __instance.def.entityDefToBuild is TerrainDef tDef && tDef.IsDiggable())
-            {
-                if (currentTerrain == TerrainDefOf.WaterShallow ||
-                    currentTerrain == TerrainDefOf.WaterMovingShallow)
-                    multiplier = shallowMultiplier;
-                else if (currentTerrain == TerrainDefOf.WaterDeep ||
-                    currentTerrain == TerrainDefOf.WaterMovingChestDeep ||
-                    currentTerrain == TerrainDefOf.WaterOceanShallow)
-                    multiplier = deepMultiplier;
-                else if (currentTerrain == TerrainDefs.Marsh)
-                    multiplier = marshMultiplier;
-                else if (currentTerrain == TerrainDefOf.WaterOceanDeep)
-                    multiplier = deepOceanMultiplier;
-            }
+            float multiplier = HarmonyPatchSharedData.DeriveMultiplierForFill(currentTerrain, newTerrain);
             if (multiplier != 1) //If the multiplier will do anything..
-                foreach (var pair in __result)
-                    ReflectionCache.ThingDefCount_count.SetValue(pair, pair.Count * multiplier);
+            {
+                var newList = new List<ThingDefCountClass>();
+                for (int i = 0; i < __result.Count; i++)
+                {
+                    var oldPair = __result[i];
+                    newList.Add(new ThingDefCountClass(oldPair.thingDef, Mathf.RoundToInt(oldPair.count * multiplier)));
+                }
+                __result = newList;
+            }
         }
     }
 }

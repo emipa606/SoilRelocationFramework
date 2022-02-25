@@ -28,5 +28,25 @@ namespace SR.ToggleablePatches
                     def.CostList.Remove(costListItems.First()); //Yeet!
             },
         };
+
+        internal static ToggleablePatch<BuildableDef> FungalGravelUsesRawFungusPatch = new ToggleablePatch<BuildableDef>
+        {
+            Name = "Fungal Gravel Uses Raw Fungus",
+            Enabled = SoilRelocationSettings.FungalGravelUsesRawFungusEnabled,
+            TargetDefName = TerrainDefOf.FungalGravel.defName,
+            TargetModID = "Ludeon.RimWorld.Ideology",
+            Patch = def =>
+            {
+                if (def.costList == null)
+                    def.costList = new List<ThingDefCountClass>();
+                def.costList.Add(new ThingDefCountClass { count = 5, thingDef = ThingDefs.RawFungus }); //Add an additional cost of 5 raw fungus.
+            },
+            Unpatch = def =>
+            {
+                var costListItems = def.costList.Where(tdcc => tdcc.thingDef == ThingDefs.RawFungus); //Try to find our patch..
+                if (costListItems.Any()) //If we find it..
+                    def.CostList.Remove(costListItems.First()); //Yeet!
+            },
+        };
     }
 }

@@ -11,7 +11,7 @@
     <AssemblyName>UdderlyEvelyn.SoilRelocation</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+	<Deterministic>true</Deterministic>
     <LangVersion>Preview</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -60,13 +60,15 @@
   <ItemGroup>
     <Compile Include="Comps\CompProperties_Meltable.cs" />
     <Compile Include="Comps\CompMeltable.cs" />
+    <Compile Include="Harmony Patches\Frame_CompleteConstruction.cs" />
     <Compile Include="Harmony Patches\Frame_MaterialsNeeded.cs" />
     <Compile Include="Harmony Patches\Blueprint_Build_MaterialsNeeded.cs" />
     <Compile Include="Harmony Patches\Frame_WorkToBuild.cs" />
     <Compile Include="Harmony Patches\Blueprint_Build_WorkTotal.cs" />
-    <Compile Include="Jobs\JobDefOf.cs" />
+    <Compile Include="Harmony Patches\HarmonyPatchSharedData.cs" />
+    <Compile Include="Jobs\JobDefs.cs" />
     <Compile Include="Jobs\JobDriver_Dig.cs" />
-    <Compile Include="Reflected.cs" />
+    <Compile Include="ThingDefs.cs" />
     <Compile Include="TerrainDefExtensions.cs" />
     <Compile Include="TerrainDefs.cs" />
     <Compile Include="ToggleablePatches\DubsSkylights.cs" />

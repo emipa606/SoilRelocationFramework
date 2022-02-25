@@ -88,7 +88,7 @@ namespace SR
 					else if (defNameLowerInvariant.Contains("gravel") || labelLowerInvariant.Contains("gravel"))
 						toDrop = SoilDefs.SR_Gravel;
 					else
-						Log.Warning("[Soil Relocation] Unsupported soil \"" + ot.defName + "\" AKA \"" + ot.label + "\" being dug, was not able to guess what to drop, report this to the creator of the mod it came from or UdderlyEvelyn to fix this.");
+						SoilRelocation.Log("Unsupported soil \"" + ot.defName + "\" AKA \"" + ot.label + "\" being dug, was not able to guess what to drop, report this to the creator of the mod it came from or UdderlyEvelyn to fix this.", ErrorLevel.Warning);
 					if (newKey)
 						_noCostItemGuessCache.Add(ot, toDrop); //Cache it for later.
 				}
@@ -115,7 +115,7 @@ namespace SR
 						var naturalWater = WaterFreezes_Interop.QueryCellNaturalWater(Map, c);
 						var isNaturalWater = naturalWater != null;
 						var water = WaterFreezes_Interop.QueryCellWater(Map, c);
-						Log.Message("[Soil Relocation] WF Compat.. utIsWater: " + utIsWater + ", naturalWater: " + naturalWater?.defName + ", isNaturalWater: " + isNaturalWater + ", water: " + water + ", toDropAmount: " + toDropAmount);
+						//SoilRelocation.Log("WF Compat.. utIsWater: " + utIsWater + ", naturalWater: " + naturalWater?.defName + ", isNaturalWater: " + isNaturalWater + ", water: " + water + ", toDropAmount: " + toDropAmount);
 						if ((isNaturalWater || utIsWater) && water <= 0) //If natural water isn't null or under-terrain is water but there's no water at that tile..
 							Map.terrainGrid.SetTerrain(c, TerrainDefs.Mud); //Set the terrain to mud to represent the sediment under the water normally.
 						else if (isNaturalWater && water > 0) //If it's natural water and there's more than 0 water..
@@ -123,7 +123,7 @@ namespace SR
 						else if (ut != null) //It's got water at the cell but the cell isn't set to water, but water is in the under-terrain..
 							Map.terrainGrid.SetTerrain(c, ut); //Set the top layer to the under-terrain
 						else
-							Log.Error("[Soil Relocation] Attempted to dig WaterFreezes ice but there was no under-terrain, it was not natural water with water depth, and it wasn't zero-depth natural or under-terrain water.");
+							SoilRelocation.Log("Attempted to dig WaterFreezes ice but there was no under-terrain, it was not natural water with water depth, and it wasn't zero-depth natural or under-terrain water.", ErrorLevel.Error);
 
 						Utilities.DropThing(Map, c, toDrop, toDropAmount); //Drop the item
 						return; //Don't need to run the rest of the code, WF has special handling above.

@@ -7,6 +7,8 @@ using RimWorld;
 using Verse;
 using RimWorld.Planet;
 using UnityEngine;
+using HarmonyLib;
+using System.Reflection;
 
 namespace SR
 {
@@ -17,13 +19,18 @@ namespace SR
 
         static SoilRelocation()
         {
-            Log.Message("[Soil Relocation] Initializing..");
+            SoilRelocation.Log("Initializing..");
             Patches.Add(ToggleablePatches.Vanilla.SandbagsUseSandPatch);
+            Patches.Add(ToggleablePatches.Vanilla.FungalGravelUsesRawFungusPatch);
             Patches.Add(ToggleablePatches.DubsSkylights.GlassUsesSandPatch);
             Patches.Add(ToggleablePatches.JustGlass.GlassUsesSandPatch);
             Patches.Add(ToggleablePatches.GlassPlusLights.GlassUsesSandPatch);
             Patches.Add(ToggleablePatches.VFEArchitect.PackedDirtCostsDirt);
             ProcessPatches();
+            Harmony harmony = new Harmony("UdderlyEvelyn.SoilRelocation");
+            harmony.PatchAll();
+            if (WaterFreezes_Interop.InteropTargetIsPresent)
+                harmony.Patch(AccessTools.Method(typeof(Frame), "CompleteConstruction"), new HarmonyMethod(typeof(Frame_CompleteConstruction), "Prefix"));
         }
 
         /// <summary>
@@ -32,10 +39,56 @@ namespace SR
         /// <param name="reason">the reason to process them, optional, shown in logging</param>
         public static void ProcessPatches(string reason = null)
         {
-            Log.Message("[Soil Relocation] Processing patches" + (reason != null ? " (" + reason + ")" : "") + "..");
+            SoilRelocation.Log("Processing patches" + (reason != null ? " (" + reason + ")" : "") + "..");
             foreach (var patch in Patches)
                 patch.Process();
         }
+
+        private static Version version = Assembly.GetAssembly(typeof(SoilRelocation)).GetName().Version;
+        /// <summary>
+        /// The assembly version of the mod.
+        /// </summary>
+        public static string Version = version.Major + "." + version.Minor + "." + version.Build;
+
+        /// <summary>
+        /// Logging function for the mod, prints the message with the appropriate method based on errorLevel, optionally ignoring the "stop logging limit".
+        /// </summary>
+        /// <param name="message">the message to log</param>
+        /// <param name="errorLevel">the type of logging method to use</param>
+        /// <param name="errorOnceKey">if doing ErrorOnce logging, the unique key to use (defaults to 0)</param>
+        /// <param name="ignoreStopLoggingLimit">if true, resets the message count before logging the message</param>
+        public static void Log(string message, ErrorLevel errorLevel = ErrorLevel.Message, int errorOnceKey = 0, bool ignoreStopLoggingLimit = false)
+        {
+            if (ignoreStopLoggingLimit)
+                Verse.Log.ResetMessageCount();
+            var text = "[Soil Relocation " + Version + "] " + message;
+            switch (errorLevel)
+            {
+                case ErrorLevel.Message:
+                    Verse.Log.Message(text);
+                    break;
+                case ErrorLevel.Warning:
+                    Verse.Log.Warning(text);
+                    break;
+                case ErrorLevel.Error:
+                    Verse.Log.Error(text);
+                    break;
+                case ErrorLevel.ErrorOnce:
+                    Verse.Log.ErrorOnce(text, errorOnceKey);
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Determines which logging method to use through the SoilRelocation.Log method.
+    /// </summary>
+    public enum ErrorLevel
+    {
+        Message,
+        Warning,
+        Error,
+        ErrorOnce,
     }
 
     public class SoilRelocationMod : Mod
@@ -58,6 +111,7 @@ namespace SR
             listingStandard.Begin(inRect);
             listingStandard.Label("The below settings take effect immediately, no restart required.");
             listingStandard.CheckboxLabeled("Sandbags Use Sand", ref SoilRelocationSettings.SandbagsUseSandEnabled, "Patch vanilla sandbags so they use sand in addition to cloth.");
+            listingStandard.CheckboxLabeled("Fungal Gravel Uses Raw Fungus", ref SoilRelocationSettings.FungalGravelUsesRawFungusEnabled, "Patch vanilla Fungal Gravel to cost a bit of Raw Fungus to avoid it being exploitable/unbalanced.");
             listingStandard.CheckboxLabeled("Dubs Skylights Glass Uses Sand", ref SoilRelocationSettings.DubsSkylightsGlassUsesSandEnabled, "Patch Dubs Skylights glass recipes so that they use sand instead of steel.");
             listingStandard.CheckboxLabeled("Just Glass Glass Uses Sand", ref SoilRelocationSettings.JustGlassGlassUsesSandEnabled, "Patch the Just Glass glass recipe so that it uses sand instead of a stone chunk.");
             listingStandard.CheckboxLabeled("Glass+Lights Glass Uses Sand", ref SoilRelocationSettings.GlassPlusLightsGlassUsesSandEnabled, "Patch the Glass+Lights glass recipe so that it uses sand instead of a stone chunk.");
@@ -74,7 +128,7 @@ namespace SR
             ToggleablePatches.GlassPlusLights.GlassUsesSandPatch.Enabled = SoilRelocationSettings.GlassPlusLightsGlassUsesSandEnabled;
             ToggleablePatches.VFEArchitect.PackedDirtCostsDirt.Enabled = SoilRelocationSettings.VFEArchitectPackedDirtCostsDirtEnabled;
             SoilRelocation.ProcessPatches("settings were updated");
-                
+
             base.WriteSettings();
         }
     }
