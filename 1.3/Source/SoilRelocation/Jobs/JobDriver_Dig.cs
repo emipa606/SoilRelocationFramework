@@ -106,25 +106,21 @@ namespace SR
 						ot.defName == "WF_RiverIceThick")
 					{
 						toDropAmount = Math.Max(1, Mathf.RoundToInt(WaterFreezes_Interop.TakeCellIce(Map, c).Value / 25 * toDropAmount));
-						ut = Map.terrainGrid.UnderTerrainAt(c); //Get under-terrain
-						var utIsWater = ut == TerrainDefOf.WaterDeep || 
-											ut == TerrainDefOf.WaterShallow ||
-											ut == TerrainDefs.Marsh ||
-											ut == TerrainDefOf.WaterMovingShallow ||
-											ut == TerrainDefOf.WaterMovingChestDeep;
-						var naturalWater = WaterFreezes_Interop.QueryCellNaturalWater(Map, c);
-						var isNaturalWater = naturalWater != null;
-						var water = WaterFreezes_Interop.QueryCellWater(Map, c);
+						var water = WaterFreezes_Interop.QueryCellAllWater(Map, c);
+						var waterDepth = WaterFreezes_Interop.QueryCellWater(Map, c);
+						//The below has two different cases for mud, might be refactorable?
 						//SoilRelocation.Log("WF Compat.. utIsWater: " + utIsWater + ", naturalWater: " + naturalWater?.defName + ", isNaturalWater: " + isNaturalWater + ", water: " + water + ", toDropAmount: " + toDropAmount);
-						if ((isNaturalWater || utIsWater) && water <= 0) //If natural water isn't null or under-terrain is water but there's no water at that tile..
-							Map.terrainGrid.SetTerrain(c, TerrainDefs.Mud); //Set the terrain to mud to represent the sediment under the water normally.
-						else if (isNaturalWater && water > 0) //If it's natural water and there's more than 0 water..
-							Map.terrainGrid.SetTerrain(c, naturalWater); //Set it to its natural water type.
-						else if (ut != null) //It's got water at the cell but the cell isn't set to water, but water is in the under-terrain..
-							Map.terrainGrid.SetTerrain(c, ut); //Set the top layer to the under-terrain
-						else
-							SoilRelocation.Log("Attempted to dig WaterFreezes ice but there was no under-terrain, it was not natural water with water depth, and it wasn't zero-depth natural or under-terrain water.", ErrorLevel.Error);
-
+						if (waterDepth <= 0) //If natural water isn't null or under-terrain is water but there's no water at that tile..
+						{
+							if (Map.Biome.defName == "SeaIce") //Special case for sea ice biomes, can't have it giving mud, makes no sense!
+								Map.terrainGrid.SetTerrain(c, TerrainDefOf.WaterOceanDeep);
+							else
+								Map.terrainGrid.SetTerrain(c, TerrainDefs.Mud); //Set the terrain to mud to represent the sediment under the water normally.
+						}
+						else if (waterDepth > 0) //If it's natural water and there's more than 0 water..
+							Map.terrainGrid.SetTerrain(c, water); //Set it to its water type.
+						else //This should never happen, but log if it does.
+							SoilRelocation.Log("Attempted to dig WaterFreezes ice but did not fit a recognized circumstance.", ErrorLevel.Error);
 						Utilities.DropThing(Map, c, toDrop, toDropAmount); //Drop the item
 						return; //Don't need to run the rest of the code, WF has special handling above.
 					}
