@@ -29,5 +29,31 @@ namespace SR
 			foreach (var thingCount in thingCountList)
 				DropThing(map, cell, thingCount.thingDef, Rand.Range(thingCount.count - downwardCountVariance, thingCount.count + upwardCountVariance), tpm);
 		}
-	}
+
+        //public static T DeepCopy<T>(this T original) where T : class
+        //{
+        //    if (original == null) //If it's just null..
+        //        return null; //No need to do the work, just return null.
+        //    var type = typeof(T);
+        //    var clone = (T)Activator.CreateInstance(type);
+        //    //if (T is new()) //lol this breaks C# compiler.
+        //    //    clone = new T();
+        //    var properties = type.GetProperties();
+        //    foreach (var pi in properties)
+        //        if (pi.CanWrite)
+        //        {
+        //            if (pi.PropertyType.IsClass)
+        //                pi.SetValue(clone, pi.GetValue(original).DeepCopy());
+        //            else
+        //                pi.SetValue(clone, pi.GetValue(original));
+        //        }
+        //    var fields = type.GetFields();
+        //    foreach (var fi in fields)
+        //        if (fi.FieldType.IsClass)
+        //            fi.SetValue(clone, fi.GetValue(original).DeepCopy());
+        //        else
+        //            fi.SetValue(clone, fi.GetValue(original));
+        //    return clone;
+        //}
+    }
 }

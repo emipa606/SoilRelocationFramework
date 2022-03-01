@@ -15,33 +15,14 @@ namespace SR
     [StaticConstructorOnStartup]
     public static class SoilRelocation
     {
-        public static List<IToggleablePatch> Patches = new List<IToggleablePatch>();
-
         static SoilRelocation()
         {
-            SoilRelocation.Log("Initializing..");
-            Patches.Add(ToggleablePatches.Vanilla.SandbagsUseSandPatch);
-            Patches.Add(ToggleablePatches.Vanilla.FungalGravelUsesRawFungusPatch);
-            Patches.Add(ToggleablePatches.DubsSkylights.GlassUsesSandPatch);
-            Patches.Add(ToggleablePatches.JustGlass.GlassUsesSandPatch);
-            Patches.Add(ToggleablePatches.GlassPlusLights.GlassUsesSandPatch);
-            Patches.Add(ToggleablePatches.VFEArchitect.PackedDirtCostsDirt);
-            ProcessPatches();
+            Log("Initializing..");
+            ToggleablePatch.ProcessPatches("UdderlyEvelyn.SoilRelocation");
             Harmony harmony = new Harmony("UdderlyEvelyn.SoilRelocation");
             harmony.PatchAll();
             if (WaterFreezes_Interop.InteropTargetIsPresent)
                 harmony.Patch(AccessTools.Method(typeof(Frame), "CompleteConstruction"), new HarmonyMethod(typeof(Frame_CompleteConstruction), "Prefix"));
-        }
-
-        /// <summary>
-        /// Process the patches stored in SoilRelocation.Patches.
-        /// </summary>
-        /// <param name="reason">the reason to process them, optional, shown in logging</param>
-        public static void ProcessPatches(string reason = null)
-        {
-            SoilRelocation.Log("Processing patches" + (reason != null ? " (" + reason + ")" : "") + "..");
-            foreach (var patch in Patches)
-                patch.Process();
         }
 
         private static Version version = Assembly.GetAssembly(typeof(SoilRelocation)).GetName().Version;
@@ -127,7 +108,7 @@ namespace SR
             ToggleablePatches.JustGlass.GlassUsesSandPatch.Enabled = SoilRelocationSettings.JustGlassGlassUsesSandEnabled;
             ToggleablePatches.GlassPlusLights.GlassUsesSandPatch.Enabled = SoilRelocationSettings.GlassPlusLightsGlassUsesSandEnabled;
             ToggleablePatches.VFEArchitect.PackedDirtCostsDirt.Enabled = SoilRelocationSettings.VFEArchitectPackedDirtCostsDirtEnabled;
-            SoilRelocation.ProcessPatches("settings were updated");
+            ToggleablePatch.ProcessPatches("UdderlyEvelyn.SoilRelocation", "settings were updated");
 
             base.WriteSettings();
         }

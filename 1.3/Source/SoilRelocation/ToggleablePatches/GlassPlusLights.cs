@@ -10,14 +10,16 @@ namespace SR.ToggleablePatches
 {
     internal class GlassPlusLights
     {
-        internal static ToggleablePatch<RecipeDef> GlassUsesSandPatch = new ToggleablePatch<RecipeDef>
+        [ToggleablePatch]
+        internal static ToggleablePatch<RecipeDef> GlassUsesSandPatch = new()
         {
             Name = "Glass+Lights Glass Uses Sand",
             Enabled = SoilRelocationSettings.GlassPlusLightsGlassUsesSandEnabled,
             TargetDefName = "MakeGlass",
             TargetModID = "NanoCE.GlassLights",
-            Patch = def =>
+            Patch = (patch, def) =>
             {
+                patch.State = def.fixedIngredientFilter;
                 def.fixedIngredientFilter = new ThingFilter();
                 def.fixedIngredientFilter.SetAllow(SoilDefs.SR_Sand, true);
                 def.ingredients.Clear();
@@ -28,17 +30,9 @@ namespace SR.ToggleablePatches
                 ingredient.SetBaseCount(10);
                 def.ingredients.Add(ingredient);
             },
-            Unpatch = def =>
+            Unpatch = (patch, def) =>
             {
-                def.fixedIngredientFilter = new ThingFilter();
-                def.fixedIngredientFilter.SetAllow(ThingCategoryDefOf.StoneChunks, true);
-                def.ingredients.Clear();
-                var ingredient = new IngredientCount
-                {
-                    filter = def.fixedIngredientFilter,
-                };
-                ingredient.SetBaseCount(1);
-                def.ingredients.Add(ingredient);
+                def.fixedIngredientFilter = (ThingFilter)patch.State;
             },
         };
     }

@@ -5,9 +5,71 @@ using System.Text;
 using System.Threading.Tasks;
 using Verse;
 using RimWorld;
+using System.Reflection;
 
 namespace SR
 {
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class ToggleablePatch : Attribute
+    {
+        public static bool AutoScan = true;
+        protected static bool _performedPatchScan = false;
+        public static Action<string> MessageLoggingMethod = Log.Message;
+        public static Action<string> WarningLoggingMethod = Log.Warning;
+        public static Action<string> ErrorLoggingMethod = Log.Error;
+        public static List<IToggleablePatch> Patches = new List<IToggleablePatch>();
+        
+        public static void ScanForPatches()
+        {
+            if (!_performedPatchScan)
+            {
+                var types = Assembly.GetExecutingAssembly().GetTypes();
+                var members = types.SelectMany(type => type.GetMembers(
+                        BindingFlags.Public |
+                        BindingFlags.NonPublic |
+                        BindingFlags.Static
+                        )
+                );
+                var iToggleablePatchType = typeof(IToggleablePatch);
+                foreach (var member in members)
+                    if (member.HasAttribute<ToggleablePatch>())
+                    {
+                        if (member is FieldInfo field)
+                        {
+                            if (field.FieldType.GetInterfaces().Contains(iToggleablePatchType))
+                                Patches.Add((IToggleablePatch)field.GetValue(null));
+                            else ErrorLoggingMethod("[ToggleablePatch] Field \"" + field.Name + "\" is marked with ToggleablePatch attribute but does not implement IToggleablePatch.");
+                        }
+                        else if (member is PropertyInfo property)
+                        {
+                            if (property.PropertyType.GetInterfaces().Contains(iToggleablePatchType))
+                                Patches.Add((IToggleablePatch)property.GetValue(null));
+                            else ErrorLoggingMethod("[ToggleablePatch] Property \"" + property.Name + "\" is marked with ToggleablePatch attribute but does not implement IToggleablePatch.");
+                        }
+                    }
+                _performedPatchScan = true;
+            }
+        }
+
+        public static void AddPatches(params IToggleablePatch[] patches)
+        {
+            Patches.AddRange(patches);
+        }
+
+        /// <summary>
+        /// Process the patches stored in ToggleablePatch.Patches.
+        /// </summary>
+        /// <param name="reason">the reason to process them, optional, shown in logging</param>
+        public static void ProcessPatches(string modID, string reason = null)
+        {
+            if (AutoScan)
+                ScanForPatches();
+            MessageLoggingMethod("[ToggleablePatch] Processing " + Patches.Count + " patches" + (reason != null ? " because " + reason : "") + " for \"" + modID + "\"..");
+            foreach (var patch in Patches)
+                patch.Process();
+        }
+    }
+
     public static class ToggleablePatchExtensions
     {
         /// <summary>
@@ -18,8 +80,10 @@ namespace SR
         {
             if (patch.Enabled)
                 patch.Apply();
-            else if (patch.Applied)
+            else if (patch.Applied) //If it's not enabled but it is applied..
                 patch.Remove();
+            else
+                ToggleablePatch.MessageLoggingMethod("[ToggleablePatch] Skipping patch \"" + patch.Name + "\" because it is disabled.");
         }
     }
 
@@ -84,11 +148,15 @@ namespace SR
         /// <summary>
         /// The patch code.
         /// </summary>
-        public Action<T> Patch;
+        public Action<ToggleablePatch<T>, T> Patch;
         /// <summary>
         /// The unpatch code - this should undo the patch code completely.
         /// </summary>
-        public Action<T> Unpatch;
+        public Action<ToggleablePatch<T>, T> Unpatch;
+        /// <summary>
+        /// A space to save data from the patching process to be used by the unpatching process, primarily for restoring non-vanilla data in destructive patches.
+        /// </summary>
+        public object State;
 
         /// <summary>
         /// Returns the target as a string in the form of ModID.DefName (DefType.FullName) with the "ModID." missing if no Mod ID is assigned (e.g., it's Vanilla or unconditional).
@@ -106,21 +174,28 @@ namespace SR
         /// </summary>
         public void Apply()
         {
-            if (CanPatch && !Applied)
+            if (CanPatch)
             {
-                SoilRelocation.Log("" + (Name != null ? ("Applying patch \"" + Name + "\", patching ") : "Patching ") + TargetDescriptionString + "..");
-                if (targetDef == null)
-                    targetDef = DefDatabase<T>.GetNamed(TargetDefName);
-                try
+                if (!Applied)
                 {
-                    Patch(targetDef);
+                    ToggleablePatch.MessageLoggingMethod("[ToggleablePatch] " + (Name != null ? ("Applying patch \"" + Name + "\", patching ") : "Patching ") + TargetDescriptionString + "..");
+                    if (targetDef == null)
+                        targetDef = DefDatabase<T>.GetNamed(TargetDefName);
+                    try
+                    {
+                        Patch(this, targetDef);
+                    }
+                    catch (Exception ex)
+                    {
+                        ToggleablePatch.ErrorLoggingMethod("[ToggleablePatch] Error " + (Name != null ? ("applying patch \"" + Name + "\"") : "patching ") + ". Most likely you have another mod that already patches " + TargetDescriptionString + ". Remove that mod or disable this patch in the mod options.\n\n" + ex.ToString());
+                    }
+                    Applied = true; //Set it as applied.
                 }
-                catch (Exception ex)
-                {
-                    SoilRelocation.Log("Error " + (Name != null ? ("applying patch \"" + Name + "\"") : "patching ") + ". Most likely you have another mod that already patches " + TargetDescriptionString + ". Remove that mod or disable this patch in the mod options.\n\n" + ex.ToString(), ErrorLevel.Warning);
-                }
-                Applied = true; //Set it as applied.
+                else
+                    ToggleablePatch.MessageLoggingMethod("[ToggleablePatch] Skipping application of patch \"" + Name + "\" because it is already applied.");
             }
+            else
+                ToggleablePatch.MessageLoggingMethod("[ToggleablePatch] Skipping application of patch \"" + Name + "\" because it cannot be applied.");
         }
 
         /// <summary>
@@ -130,19 +205,21 @@ namespace SR
         {
             if (Applied) //If it's been applied already.
             {
-                SoilRelocation.Log("" + (Name != null ? ("Removing patch \"" + Name + "\", unpatching ") : "Unpatching ") + TargetDescriptionString + "..");
+                ToggleablePatch.MessageLoggingMethod("[ToggleablePatch] " + (Name != null ? ("Removing patch \"" + Name + "\", unpatching ") : "Unpatching ") + TargetDescriptionString + "..");
                 if (targetDef == null)
                     targetDef = DefDatabase<T>.GetNamed(TargetDefName);
                 try
                 {
-                    Unpatch(targetDef);
+                    Unpatch(this, targetDef);
                 }
                 catch (Exception ex)
                 {
-                    SoilRelocation.Log("Error " + (Name != null ? ("removing patch \"" + Name + "\"") : "unpatching ") + ". Most likely you have another mod that already patches " + TargetDescriptionString + ", and it failed to patch in the first place. Remove that mod or disable this patch in the mod options.\n\n" + ex.ToString(), ErrorLevel.Warning);
+                    ToggleablePatch.ErrorLoggingMethod("[ToggleablePatch] Error " + (Name != null ? ("removing patch \"" + Name + "\"") : "unpatching ") + ". Most likely you have another mod that already patches " + TargetDescriptionString + ", and it failed to patch in the first place. Remove that mod or disable this patch in the mod options.\n\n" + ex.ToString());
                 }
                 Applied = false; //Set it as not applied anymore.
             }
+            else
+                ToggleablePatch.MessageLoggingMethod("[ToggleablePatch] Skipping removal of patch \"" + Name + "\" because it is not applied.");
         }
 
         /// <summary>
@@ -155,7 +232,7 @@ namespace SR
                 foreach (var modID in ConflictingModIDs)
                     if (ModLister.GetActiveModWithIdentifier(modID) != null) //If mod present..
                     {
-                        SoilRelocation.Log("Skipping patch \"" + Name + "\" because conflicting mod with ID \"" + modID + "\" was found.");
+                        ToggleablePatch.MessageLoggingMethod("[ToggleablePatch] Skipping patch \"" + Name + "\" because conflicting mod with ID \"" + modID + "\" was found.");
                         return false; //Can't patch.
                     }
                 if (TargetModID != null) //If it has a target mod..
@@ -198,11 +275,13 @@ namespace SR
         {
             if (!Applied)
             {
-                SoilRelocation.Log("Applying patches in patch group \"" + Name + "\"..");
+                ToggleablePatch.MessageLoggingMethod("[ToggleablePatch] Applying patches in patch group \"" + Name + "\"..");
                 foreach (var patch in Patches)
                     patch.Apply();
                 Applied = true;
             }
+            else
+                ToggleablePatch.MessageLoggingMethod("[ToggleablePatch] Skipping application of patch group \"" + Name + "\" because it is already applied.");
         }
 
         /// <summary>
@@ -212,11 +291,13 @@ namespace SR
         {
             if (Applied)
             {
-                SoilRelocation.Log("Removing patches in patch group \"" + Name + "\"..");
+                ToggleablePatch.MessageLoggingMethod("[ToggleablePatch] Removing patches in patch group \"" + Name + "\"..");
                 foreach (var patch in Patches)
                     patch.Remove();
                 Applied = false;
             }
+            else
+                ToggleablePatch.MessageLoggingMethod("[ToggleablePatch] Skipping removal of patch group \"" + Name + "\" because it is not applied.");
         }
     }
 }
