@@ -16,6 +16,8 @@ namespace SR
         internal static void Prefix(Frame __instance)
         {
             var map = __instance.Map;
+            if (map == null)
+                return; 
             var cell = __instance.Position;
             var oldTerrain = cell.GetTerrain(map);
             //If it was water and it has become soil (but not ice).
