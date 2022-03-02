@@ -96,31 +96,20 @@ namespace SR
 				{
 					#region WaterFreezesHandling
 					//Handle WaterFreezes Ice..
-					if (ot.defName == "WF_LakeIceThin" || 
-						ot.defName == "WF_LakeIce" || 
-						ot.defName == "WF_LakeIceThick" || 
-						ot.defName == "WF_MarshIceThin" || 
-						ot.defName == "WF_MarshIce" ||
-						ot.defName == "WF_RiverIceThin" ||
-						ot.defName == "WF_RiverIce" ||
-						ot.defName == "WF_RiverIceThick")
+					if (WaterFreezes_Interop.IsThawableIce(ot))
 					{
 						toDropAmount = Math.Max(1, Mathf.RoundToInt(WaterFreezes_Interop.TakeCellIce(Map, c).Value / 25 * toDropAmount));
 						var water = WaterFreezes_Interop.QueryCellAllWater(Map, c);
 						var waterDepth = WaterFreezes_Interop.QueryCellWater(Map, c);
-						//The below has two different cases for mud, might be refactorable?
-						//SoilRelocation.Log("WF Compat.. utIsWater: " + utIsWater + ", naturalWater: " + naturalWater?.defName + ", isNaturalWater: " + isNaturalWater + ", water: " + water + ", toDropAmount: " + toDropAmount);
-						if (waterDepth <= 0) //If natural water isn't null or under-terrain is water but there's no water at that tile..
+						if (waterDepth > 0) //If there's more than 0 water..
+							Map.terrainGrid.SetTerrain(c, water); //Set it to its water type.
+						else //There's no water at that tile..
 						{
 							if (Map.Biome.defName == "SeaIce") //Special case for sea ice biomes, can't have it giving mud, makes no sense!
 								Map.terrainGrid.SetTerrain(c, TerrainDefOf.WaterOceanDeep);
 							else
 								Map.terrainGrid.SetTerrain(c, TerrainDefs.Mud); //Set the terrain to mud to represent the sediment under the water normally.
 						}
-						else if (waterDepth > 0) //If it's natural water and there's more than 0 water..
-							Map.terrainGrid.SetTerrain(c, water); //Set it to its water type.
-						else //This should never happen, but log if it does.
-							SoilRelocation.Log("Attempted to dig WaterFreezes ice but did not fit a recognized circumstance.", ErrorLevel.Error);
 						Utilities.DropThing(Map, c, toDrop, toDropAmount); //Drop the item
 						return; //Don't need to run the rest of the code, WF has special handling above.
 					}

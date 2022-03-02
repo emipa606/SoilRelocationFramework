@@ -18,11 +18,28 @@ namespace SR
 		private static Func<Map, IntVec3, TerrainDef> _queryCellAllWaterDelegate;
 		private static Action<Map, IntVec3> _clearCellNaturalWaterDelegate;
 		private static Action<Map, IntVec3> _clearCellWaterDelegate;
+		private static Func<TerrainDef, bool> _isThawableIceDelegate;
 
 		/// <summary>
 		/// Returns true if the target type for interop was located.
 		/// </summary>
 		public static bool InteropTargetIsPresent = _waterFreezesAPIType != null;
+
+		/// <summary>
+		/// Call WF.API.IsThawableIce without needing to reference the assembly.
+		/// </summary>
+		/// <param name="def">TerrainDef to check whether is thawable ice</param>
+		/// <returns></returns>
+		public static bool IsThawableIce(TerrainDef def)
+		{
+			if (_waterFreezesAPIType != null)
+			{
+				if (_isThawableIceDelegate == null) //Everything in here should only execute once if the mod is present.
+					_isThawableIceDelegate = (Func<TerrainDef, bool>)_waterFreezesAPIType.GetMethod("IsThawableIce").CreateDelegate(typeof(Func<TerrainDef, bool>)); //Cache it..
+				return _isThawableIceDelegate(def);
+			}
+			return false; //Mod not loaded, return false so nothing is detected as WF ice.
+		}
 
 		/// <summary>
 		/// Call WF.API.QueryCellAllWater without needing to reference the assembly.
