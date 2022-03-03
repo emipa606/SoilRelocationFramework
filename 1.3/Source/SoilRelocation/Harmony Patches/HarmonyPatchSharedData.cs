@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Verse;
 using RimWorld;
+using UnityEngine;
 
 namespace SR
 {
     internal static class HarmonyPatchSharedData
     {
-        internal static float GravelDivisor = 3;
+        internal static float GravelMultiplier = .33f;
 
         internal static Dictionary<TerrainDef, float> MultiplierByWaterDef = new Dictionary<TerrainDef, float>
         {
@@ -34,9 +35,38 @@ namespace SR
                 else //Default catch-all for modded water..
                     multiplier = 4; //Hope it's appropriate, lol.
                 if (gravelAdjusts && newTerrain == TerrainDefOf.Gravel)
-                    multiplier -= GravelDivisor;
+                    multiplier *= GravelMultiplier;
             }
             return multiplier;
+        }
+
+        internal static List<ThingDefCountClass> GetWaterFillAdjustedCostListForFrame(BuildableDef entDef, ThingDef stuff, bool errorOnNullStuff, Frame frame)
+        {
+            var originalList = entDef.CostListAdjusted(stuff);
+            var map = frame.Map;
+            if (map == null)
+                return originalList;
+            var newTerrain = entDef as TerrainDef;
+            if (newTerrain == null) //If it's not a TerrainDef
+                return originalList; //We don't need to touch it.
+            var cell = frame.Position;
+            var currentTerrain = frame.Position.GetTerrain(map);
+            float multiplier = HarmonyPatchSharedData.DeriveMultiplierForFill(currentTerrain, newTerrain);
+            if (multiplier != 1) //If the multiplier will do anything..
+            {
+                var newList = new List<ThingDefCountClass>();
+                var sb = new StringBuilder();
+                for (int i = 0; i < originalList.Count; i++)
+                {
+                    var oldPair = originalList[i];
+                    var newPair = new ThingDefCountClass(oldPair.thingDef, Mathf.RoundToInt(oldPair.count * multiplier));
+                    newList.Add(newPair);
+                    sb.AppendLine(oldPair.thingDef.defName + ": " + oldPair.count + " -> " + newPair.count);
+                }
+                SoilRelocation.Log("Water Filling Cost Adjustment (Frame)\n" + sb.ToString());
+                return newList;
+            }
+            return originalList;
         }
     }
 }

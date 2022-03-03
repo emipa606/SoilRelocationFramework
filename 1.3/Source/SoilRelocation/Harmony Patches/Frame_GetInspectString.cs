@@ -12,8 +12,8 @@ using System.Reflection.Emit;
 
 namespace SR
 {
-    [HarmonyPatch(typeof(Frame), "MaterialsNeeded")]
-    internal static class Frame_MaterialsNeeded
+    [HarmonyPatch(typeof(Frame), "GetInspectString")]
+    internal static class Frame_GetInspectString
     {
         internal static MethodInfo _harmonyPatchSharedData_GetWaterFillAdjustedCostListForFrame = AccessTools.Method(typeof(HarmonyPatchSharedData), "GetWaterFillAdjustedCostListForFrame");
 
