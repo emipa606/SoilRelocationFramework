@@ -5,14 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 using Verse;
 using RimWorld;
+using System.Runtime.CompilerServices;
 
 namespace SR
 {
     public static class TerrainDefExtensions
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsDiggable(this TerrainDef def)
         {
             return def.affordances.Contains(TerrainAffordanceDefOf.Diggable) && def.driesTo == null;
+        }
+
+        private static Dictionary<TerrainDef, bool> bridgeCache = new Dictionary<TerrainDef, bool>();
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsBridge(this TerrainDef def)
+        {
+            if (!bridgeCache.ContainsKey(def))
+                bridgeCache[def] = def.bridge || def.label.ToLowerInvariant().Contains("bridge") || def.defName.ToLowerInvariant().Contains("bridge");
+            return bridgeCache[def];
         }
     }
 }

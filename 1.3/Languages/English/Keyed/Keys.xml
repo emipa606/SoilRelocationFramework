@@ -18,4 +18,7 @@
   <MeltableCurrentlyRefrigerated>Refrigerated (melts in {0})</MeltableCurrentlyRefrigerated>
   <MeltableNotRefrigerated>Not refrigerated (melts in {0})</MeltableNotRefrigerated>
 
+<!--PlaceWorker Strings-->
+<CannotPlaceOnBridgeUnlessWaterOrThawableIce>Cannot place on a bridge unless that bridge is over water or (with Water Freezes installed) thawable ice.</CannotPlaceOnBridgeUnlessWaterOrThawableIce>
+
 </LanguageData>

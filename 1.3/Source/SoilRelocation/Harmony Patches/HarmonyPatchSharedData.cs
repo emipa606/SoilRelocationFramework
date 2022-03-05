@@ -59,11 +59,8 @@ namespace SR
                 for (int i = 0; i < originalList.Count; i++)
                 {
                     var oldPair = originalList[i];
-                    var newPair = new ThingDefCountClass(oldPair.thingDef, Mathf.RoundToInt(oldPair.count * multiplier));
-                    newList.Add(newPair);
-                    sb.AppendLine(oldPair.thingDef.defName + ": " + oldPair.count + " -> " + newPair.count);
+                    newList.Add(new ThingDefCountClass(oldPair.thingDef, Mathf.RoundToInt(oldPair.count * multiplier)));
                 }
-                SoilRelocation.Log("Water Filling Cost Adjustment (Frame)\n" + sb.ToString());
                 return newList;
             }
             return originalList;

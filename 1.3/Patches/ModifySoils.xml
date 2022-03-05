@@ -10,7 +10,9 @@
 			<li Class="PatchOperationAdd">
 				<xpath>/Defs/TerrainDef[defName = "Soil"]</xpath>
 				<value>
-					<layerable>true</layerable>
+					<placeWorkers>
+						<li>SR.PlaceWorker_Soil</li>
+					</placeWorkers>
 					<costList>
 						<SR_Soil>10</SR_Soil>
 					</costList>
@@ -22,7 +24,9 @@
 			<li Class="PatchOperationAdd">
 				<xpath>/Defs/TerrainDef[defName = "Sand"]</xpath>
 				<value>
-					<layerable>true</layerable>
+					<placeWorkers>
+						<li>SR.PlaceWorker_Soil</li>
+					</placeWorkers>
 					<costList>
 						<SR_Sand>10</SR_Sand>
 					</costList>
@@ -34,7 +38,9 @@
 			<li Class="PatchOperationAdd">
 				<xpath>/Defs/TerrainDef[defName = "SoilRich"]</xpath>
 				<value>
-					<layerable>true</layerable>
+					<placeWorkers>
+						<li>SR.PlaceWorker_Soil</li>
+					</placeWorkers>
 					<costList>
 						<SR_RichSoil>10</SR_RichSoil>
 					</costList>
@@ -46,7 +52,9 @@
 			<li Class="PatchOperationAdd">
 				<xpath>/Defs/TerrainDef[defName = "Gravel"]</xpath>
 				<value>
-					<layerable>true</layerable>
+					<placeWorkers>
+						<li>SR.PlaceWorker_Soil</li>
+					</placeWorkers>
 					<costList>
 						<SR_Gravel>10</SR_Gravel>
 					</costList>
@@ -58,7 +66,9 @@
 			<li Class="PatchOperationAdd">
 				<xpath>/Defs/TerrainDef[defName = "Ice"]</xpath>
 				<value>
-					<layerable>true</layerable>
+					<placeWorkers>
+						<li>SR.PlaceWorker_Soil</li>
+					</placeWorkers>
 					<costList>
 						<SR_Ice>10</SR_Ice>
 					</costList>

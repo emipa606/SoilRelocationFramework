@@ -67,8 +67,11 @@
     <Compile Include="Harmony Patches\Frame_WorkToBuild.cs" />
     <Compile Include="Harmony Patches\Blueprint_Build_WorkTotal.cs" />
     <Compile Include="Harmony Patches\HarmonyPatchSharedData.cs" />
+    <Compile Include="Harmony Patches\TerrainGrid_SetTerrain.cs" />
     <Compile Include="Jobs\JobDefs.cs" />
     <Compile Include="Jobs\JobDriver_Dig.cs" />
+    <Compile Include="PlaceWorker_Soil.cs" />
+    <Compile Include="TerrainSystemOverhaul_Interop.cs" />
     <Compile Include="ThingDefs.cs" />
     <Compile Include="TerrainDefExtensions.cs" />
     <Compile Include="TerrainDefs.cs" />

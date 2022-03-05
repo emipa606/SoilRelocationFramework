@@ -53,8 +53,9 @@ namespace SR
 
 		protected override void DoEffect(IntVec3 c)
 		{
-			TerrainDef ot = c.GetTerrain(Map);
-			if (!ot.affordances.Contains(TerrainAffordanceDefOf.Diggable)) //If the terrain isn't diggable (maybe the terrain was swapped out dynamically, e.g., LakesCanFreeze)..
+			Map map = Map;
+			TerrainDef ot = c.GetTerrain(map);
+			if (!ot.IsDiggable()) //If the terrain isn't diggable (maybe the terrain was swapped out dynamically, e.g., WaterFreezes)..
 				return; //Abort.
 			TerrainDef ut;
 			//Generic mod compatibility support (go by costList, else guess by defName/label (and cache guess for performance), else warn user in log)
@@ -98,38 +99,38 @@ namespace SR
 					//Handle WaterFreezes Ice..
 					if (WaterFreezes_Interop.IsThawableIce(ot))
 					{
-						toDropAmount = Math.Max(1, Mathf.RoundToInt(WaterFreezes_Interop.TakeCellIce(Map, c).Value / 25 * toDropAmount));
-						var water = WaterFreezes_Interop.QueryCellAllWater(Map, c);
-						var waterDepth = WaterFreezes_Interop.QueryCellWater(Map, c);
+						toDropAmount = Math.Max(1, Mathf.RoundToInt(WaterFreezes_Interop.TakeCellIce(map, c).Value / 25 * toDropAmount));
+						var water = WaterFreezes_Interop.QueryCellAllWater(map, c);
+						var waterDepth = WaterFreezes_Interop.QueryCellWater(map, c);
 						if (waterDepth > 0) //If there's more than 0 water..
-							Map.terrainGrid.SetTerrain(c, water); //Set it to its water type.
+							map.terrainGrid.SetTerrain(c, water); //Set it to its water type.
 						else //There's no water at that tile..
 						{
-							if (Map.Biome.defName == "SeaIce") //Special case for sea ice biomes, can't have it giving mud, makes no sense!
-								Map.terrainGrid.SetTerrain(c, TerrainDefOf.WaterOceanDeep);
+							if (map.Biome.defName == "SeaIce") //Special case for sea ice biomes, can't have it giving mud, makes no sense!
+								map.terrainGrid.SetTerrain(c, TerrainDefOf.WaterOceanDeep);
 							else
-								Map.terrainGrid.SetTerrain(c, TerrainDefs.Mud); //Set the terrain to mud to represent the sediment under the water normally.
+								map.terrainGrid.SetTerrain(c, TerrainDefs.Mud); //Set the terrain to mud to represent the sediment under the water normally.
 						}
-						Utilities.DropThing(Map, c, toDrop, toDropAmount); //Drop the item
+						Utilities.DropThing(map, c, toDrop, toDropAmount); //Drop the item
 						return; //Don't need to run the rest of the code, WF has special handling above.
 					}
 					#endregion //Handle WaterFreezes special support..
-					Utilities.DropThing(Map, c, toDrop, toDropAmount); //Drop the item
+					Utilities.DropThing(map, c, toDrop, toDropAmount); //Drop the item
 				}
 			}
 			else //costList present, use that.
-				Utilities.DropThings(Map, c, ot.costList, 2, 1);
-			ut = Map.terrainGrid.UnderTerrainAt(c); //Get under-terrain
+				Utilities.DropThings(map, c, ot.costList, 2, 1);
+			ut = map.terrainGrid.UnderTerrainAt(c); //Get under-terrain
 			if (ut != null) //If there was under-terrain..
-				Map.terrainGrid.SetTerrain(c, ut); //Set the top layer to the under-terrain
+				map.terrainGrid.SetTerrain(c, ut); //Set the top layer to the under-terrain
 			else //No under-terrain
 			{
-				if (Map.Biome.defName == "SeaIce" && ot == TerrainDefOf.Ice) //Special case for sea ice biomes, can't have it giving stone to work with and allowing deep drilling!
-					Map.terrainGrid.SetTerrain(c, TerrainDefOf.WaterOceanDeep);
+				if (map.Biome.defName == "SeaIce" && ot == TerrainDefOf.Ice) //Special case for sea ice biomes, can't have it giving stone to work with and allowing deep drilling!
+					map.terrainGrid.SetTerrain(c, TerrainDefOf.WaterOceanDeep);
 				else //All other cases..
-					Map.terrainGrid.SetTerrain(c, Map.GetComponent<CMS.MapComponent_StoneGrid>().StoneTerrainAt(c)); //Set the terrain to the natural stone for this area to represent bedrock
+					map.terrainGrid.SetTerrain(c, map.GetComponent<CMS.MapComponent_StoneGrid>().StoneTerrainAt(c)); //Set the terrain to the natural stone for this area to represent bedrock
 			}
-			FilthMaker.RemoveAllFilth(c, Map);
+			FilthMaker.RemoveAllFilth(c, map);
 		}
 
 		protected override IEnumerable<Toil> MakeNewToils()

@@ -21,8 +21,8 @@ namespace SR
             ToggleablePatch.ProcessPatches("UdderlyEvelyn.SoilRelocation");
             Harmony harmony = new Harmony("UdderlyEvelyn.SoilRelocation");
             harmony.PatchAll();
-            if (WaterFreezes_Interop.InteropTargetIsPresent)
-                harmony.Patch(AccessTools.Method(typeof(Frame), "CompleteConstruction"), new HarmonyMethod(typeof(Frame_CompleteConstruction), "Prefix"));
+            if (WaterFreezes_Interop.InteropTargetIsPresent) //If WF is installed..
+                harmony.Patch(AccessTools.Method(typeof(Frame), "CompleteConstruction"), new HarmonyMethod(typeof(Frame_CompleteConstruction), "Prefix")); //Clear natural water when filling water.
         }
 
         private static Version version = Assembly.GetAssembly(typeof(SoilRelocation)).GetName().Version;
