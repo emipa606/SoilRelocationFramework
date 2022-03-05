@@ -27,11 +27,15 @@ namespace SR
         internal static float DeriveMultiplierForFill(TerrainDef currentTerrain, TerrainDef newTerrain, bool gravelAdjusts = true)
         {
             float multiplier = 1;
+            var currentIsWetBridgeable = currentTerrain.IsWetBridgeable();
+            var currentIsWater = currentTerrain.IsWater;
             //If it's water now and it will become soil (but not ice).
-            if (currentTerrain.IsWater && newTerrain.IsDiggable() && newTerrain.defName != "Ice")
+            if ((currentIsWater || currentIsWetBridgeable) && newTerrain != TerrainDefOf.Ice && newTerrain.HasSoilPlaceWorker())
             {
-                if (MultiplierByWaterDef.ContainsKey(currentTerrain))
+                if (currentIsWater && MultiplierByWaterDef.ContainsKey(currentTerrain))
                     multiplier = MultiplierByWaterDef[currentTerrain];
+                else if (currentIsWetBridgeable)
+                    multiplier = 1.6f; //Bit more than half of Marsh's multiplier.
                 else //Default catch-all for modded water..
                     multiplier = 4; //Hope it's appropriate, lol.
                 if (gravelAdjusts && newTerrain == TerrainDefOf.Gravel)
@@ -47,11 +51,11 @@ namespace SR
             if (map == null)
                 return originalList;
             var newTerrain = entDef as TerrainDef;
-            if (newTerrain == null) //If it's not a TerrainDef
+            if (newTerrain == null || newTerrain == TerrainDefOf.Ice) //If it's not a TerrainDef (or it's ice)
                 return originalList; //We don't need to touch it.
             var cell = frame.Position;
             var currentTerrain = frame.Position.GetTerrain(map);
-            float multiplier = HarmonyPatchSharedData.DeriveMultiplierForFill(currentTerrain, newTerrain);
+            float multiplier = DeriveMultiplierForFill(currentTerrain, newTerrain);
             if (multiplier != 1) //If the multiplier will do anything..
             {
                 var newList = new List<ThingDefCountClass>();

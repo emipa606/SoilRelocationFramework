@@ -26,5 +26,17 @@ namespace SR
                 bridgeCache[def] = def.bridge || def.label.ToLowerInvariant().Contains("bridge") || def.defName.ToLowerInvariant().Contains("bridge");
             return bridgeCache[def];
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasSoilPlaceWorker(this TerrainDef def)
+        {
+            return def.placeWorkers != null && def.placeWorkers.Contains(typeof(PlaceWorker_Soil));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsWetBridgeable(this TerrainDef def)
+        {
+            return def.driesTo != null && def.affordances.Contains(TerrainAffordanceDefOf.Bridgeable);
+        }
     }
 }

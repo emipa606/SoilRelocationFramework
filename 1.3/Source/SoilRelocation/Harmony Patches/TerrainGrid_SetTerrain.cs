@@ -23,7 +23,10 @@ namespace SR
         {
             if (__state.Item1 == newTerr || __state.Item1 == null) //If we're not actually changing anything or it had no terrain previously..
                 return; //Who cares?
-            if (__state.Item2 && (newTerr.placeWorkers != null && newTerr.placeWorkers.Contains(typeof(PlaceWorker_Soil)))) //If the new terrain is one of the soils we care about and there was no underTerrain before..
+            if (__state.Item2 //If there was no underTerrain before..
+             && newTerr.HasSoilPlaceWorker() //And the new terrain is one of the soils we care about..
+             && !__state.Item1.IsWater //And the old terrain wasn't water (not water fill)..
+             && !__state.Item1.IsWetBridgeable()) //And the old terrain wasn't wet bridgeable (not "water" fill)..
                 ___map.terrainGrid.SetUnderTerrain(c, __state.Item1); //Store the old terrain as underTerrain.
         }
     }

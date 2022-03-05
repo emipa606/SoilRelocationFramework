@@ -106,7 +106,7 @@ namespace SR
 							map.terrainGrid.SetTerrain(c, water); //Set it to its water type.
 						else //There's no water at that tile..
 						{
-							if (map.Biome.defName == "SeaIce") //Special case for sea ice biomes, can't have it giving mud, makes no sense!
+							if (map.Biome == BiomeDefOf.SeaIce) //Special case for sea ice biomes, can't have it giving mud, makes no sense!
 								map.terrainGrid.SetTerrain(c, TerrainDefOf.WaterOceanDeep);
 							else
 								map.terrainGrid.SetTerrain(c, TerrainDefs.Mud); //Set the terrain to mud to represent the sediment under the water normally.
@@ -125,7 +125,7 @@ namespace SR
 				map.terrainGrid.SetTerrain(c, ut); //Set the top layer to the under-terrain
 			else //No under-terrain
 			{
-				if (map.Biome.defName == "SeaIce" && ot == TerrainDefOf.Ice) //Special case for sea ice biomes, can't have it giving stone to work with and allowing deep drilling!
+				if (ot == TerrainDefOf.Ice && map.Biome == BiomeDefOf.SeaIce) //Special case for sea ice biomes, can't have it giving stone to work with and allowing deep drilling!
 					map.terrainGrid.SetTerrain(c, TerrainDefOf.WaterOceanDeep);
 				else //All other cases..
 					map.terrainGrid.SetTerrain(c, map.GetComponent<CMS.MapComponent_StoneGrid>().StoneTerrainAt(c)); //Set the terrain to the natural stone for this area to represent bedrock

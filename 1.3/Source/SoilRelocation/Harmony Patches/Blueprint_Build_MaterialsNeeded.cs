@@ -20,7 +20,7 @@ namespace SR
             if (map == null)
                 return;
             var newTerrain = __instance.def.entityDefToBuild as TerrainDef;
-            if (newTerrain == null) //If it's not a TerrainDef
+            if (newTerrain == null || newTerrain == TerrainDefOf.Ice) //If it's not a TerrainDef (or it's ice)
                 return; //We don't need to touch it.
             var cell = __instance.Position;
             var currentTerrain = __instance.Position.GetTerrain(map);
