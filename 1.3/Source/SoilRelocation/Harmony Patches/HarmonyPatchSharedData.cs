@@ -35,7 +35,7 @@ namespace SR
                 if (currentIsWater && MultiplierByWaterDef.ContainsKey(currentTerrain))
                     multiplier = MultiplierByWaterDef[currentTerrain];
                 else if (currentIsWetBridgeable)
-                    multiplier = 1.6f; //Bit more than half of Marsh's multiplier.
+                    multiplier = 2f;
                 else //Default catch-all for modded water..
                     multiplier = 4; //Hope it's appropriate, lol.
                 if (gravelAdjusts && newTerrain == TerrainDefOf.Gravel)
