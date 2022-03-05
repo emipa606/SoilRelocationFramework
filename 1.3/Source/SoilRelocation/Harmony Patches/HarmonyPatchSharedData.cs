@@ -35,7 +35,7 @@ namespace SR
                 if (currentIsWater && MultiplierByWaterDef.ContainsKey(currentTerrain))
                     multiplier = MultiplierByWaterDef[currentTerrain];
                 else if (currentIsWetBridgeable)
-                    multiplier = 2f;
+                    multiplier = 2;
                 else //Default catch-all for modded water..
                     multiplier = 4; //Hope it's appropriate, lol.
                 if (gravelAdjusts && newTerrain == TerrainDefOf.Gravel)
