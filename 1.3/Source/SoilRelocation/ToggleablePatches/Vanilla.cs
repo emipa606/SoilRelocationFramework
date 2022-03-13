@@ -33,7 +33,7 @@ namespace SR.ToggleablePatches
         {
             Name = "Fungal Gravel Uses Raw Fungus",
             Enabled = SoilRelocationSettings.FungalGravelUsesRawFungusEnabled,
-            TargetDefName = TerrainDefOf.FungalGravel.defName,
+            TargetDefName = "FungalGravel",
             TargetModID = "Ludeon.RimWorld.Ideology",
             Patch = (patch, def) =>
             {
