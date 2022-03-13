@@ -14,8 +14,7 @@ namespace SR
         {
             var currentTerrain = loc.GetTerrain(map);
             var underTerrain = map.terrainGrid.UnderTerrainAt(loc);
-            var isBridge = currentTerrain.IsBridge() //It's a bridge..
-                           || (TerrainSystemOverhaul_Interop.TerrainSystemOverhaulPresent && TerrainSystemOverhaul_Interop.GetBridge(map.terrainGrid, loc) != null); //Or it's a bridge (with TSO)..
+            var isBridge = currentTerrain.IsBridge(); //It's a bridge..
             if (checkingDef == TerrainDefOf.Ice)
             {
                 if (isBridge)

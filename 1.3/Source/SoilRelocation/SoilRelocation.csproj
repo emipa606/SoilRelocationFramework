@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\..\..\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
@@ -67,7 +71,6 @@
     <Compile Include="Jobs\JobDefs.cs" />
     <Compile Include="Jobs\JobDriver_Dig.cs" />
     <Compile Include="PlaceWorker_Soil.cs" />
-    <Compile Include="TerrainSystemOverhaul_Interop.cs" />
     <Compile Include="ThingDefs.cs" />
     <Compile Include="TerrainDefExtensions.cs" />
     <Compile Include="TerrainDefs.cs" />
@@ -87,12 +90,6 @@
     <Compile Include="ToggleablePatch.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Jobs\WorkGiver_Dig.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Lib.Harmony">
-      <Version>2.2.1</Version>
-      <ExcludeAssets>runtime</ExcludeAssets>
-    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
