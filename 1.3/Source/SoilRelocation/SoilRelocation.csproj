@@ -71,7 +71,6 @@
     <Compile Include="Jobs\JobDefs.cs" />
     <Compile Include="Jobs\JobDriver_Dig.cs" />
     <Compile Include="PlaceWorker_Soil.cs" />
-    <Compile Include="TerrainSystemOverhaul_Interop.cs" />
     <Compile Include="ThingDefs.cs" />
     <Compile Include="TerrainDefExtensions.cs" />
     <Compile Include="TerrainDefs.cs" />

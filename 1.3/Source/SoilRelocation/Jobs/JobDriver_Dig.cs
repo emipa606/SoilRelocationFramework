@@ -122,7 +122,7 @@ namespace SR
 				Utilities.DropThings(map, c, ot.costList, 2, 1);
 			ut = map.terrainGrid.UnderTerrainAt(c); //Get under-terrain
 			if (ut != null) //If there was under-terrain..
-				map.terrainGrid.SetTerrain(c, ut); //Set the top layer to the under-terrain
+				map.terrainGrid.RemoveTopLayer(c, false); //Set the top layer to the under-terrain (that's what this method does)
 			else //No under-terrain
 			{
 				if (ot == TerrainDefOf.Ice && map.Biome == BiomeDefOf.SeaIce) //Special case for sea ice biomes, can't have it giving stone to work with and allowing deep drilling!
