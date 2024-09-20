@@ -13,10 +13,14 @@ public class TerrainGrid_SetTerrain
 
     internal static void Postfix(IntVec3 c, TerrainDef newTerr, Map ___map, ref (TerrainDef, bool) __state)
     {
-        if (__state.Item1 != newTerr && __state is { Item1: not null, Item2: true } && newTerr.HasSoilPlaceWorker() &&
-            !__state.Item1.IsWater && !__state.Item1.IsWetBridgeable())
+        if (__state.Item1 == newTerr || __state is not { Item1: not null, Item2: true } ||
+            !newTerr.HasSoilPlaceWorker() ||
+            __state.Item1.IsWater || __state.Item1.IsWetBridgeable())
         {
-            ___map.terrainGrid.SetUnderTerrain(c, __state.Item1);
+            return;
         }
+
+        ___map.terrainGrid.SetUnderTerrain(c, __state.Item1);
+        ___map.fertilityGrid.FertilityGridUpdate();
     }
 }
