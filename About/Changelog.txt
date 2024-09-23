@@ -1,5 +1,8 @@
 # Changelog for SoilRelocationFramework
 
+1.5.3 - Added support for lichen-covered soil as well as soft sand
+
+
 1.5.2 - Added fertility update when setting terrain
 
 
