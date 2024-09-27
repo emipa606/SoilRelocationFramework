@@ -1,5 +1,8 @@
 # Changelog for SoilRelocationFramework
 
+1.5.4 - Added support for [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1841354677]Alpha Biomes[/url]
+
+
 1.5.3 - Added support for lichen-covered soil as well as soft sand
 
 
