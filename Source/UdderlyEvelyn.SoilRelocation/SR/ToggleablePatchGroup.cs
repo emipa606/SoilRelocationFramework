@@ -10,7 +10,7 @@ public class ToggleablePatchGroup : IToggleablePatch
 
     public bool Enabled { get; set; }
 
-    public bool Applied { get; protected set; }
+    public bool Applied { get; private set; }
 
     public void Apply()
     {

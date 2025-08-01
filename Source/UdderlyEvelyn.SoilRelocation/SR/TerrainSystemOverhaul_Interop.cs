@@ -18,12 +18,9 @@ public static class TerrainSystemOverhaul_Interop
             return null;
         }
 
-        if (_getBridgeDelegate == null)
-        {
-            _getBridgeDelegate = (Func<TerrainGrid, IntVec3, TerrainDef>)_terrainSystemOverhaulUtilsType
-                .GetMethod("GetBridge")
-                ?.CreateDelegate(typeof(Func<TerrainGrid, IntVec3, TerrainDef>));
-        }
+        _getBridgeDelegate ??= (Func<TerrainGrid, IntVec3, TerrainDef>)_terrainSystemOverhaulUtilsType
+            .GetMethod("GetBridge")
+            ?.CreateDelegate(typeof(Func<TerrainGrid, IntVec3, TerrainDef>));
 
         return _getBridgeDelegate?.Invoke(terrGrid, c);
     }

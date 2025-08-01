@@ -14,15 +14,6 @@ public static class Utilities
     }
 
     public static void DropThings(Map map, IntVec3 cell, List<ThingDefCountClass> thingCountList,
-        ThingPlaceMode tpm = ThingPlaceMode.Near)
-    {
-        foreach (var thingCount in thingCountList)
-        {
-            DropThing(map, cell, thingCount.thingDef, thingCount.count);
-        }
-    }
-
-    public static void DropThings(Map map, IntVec3 cell, List<ThingDefCountClass> thingCountList,
         int downwardCountVariance, int upwardCountVariance, ThingPlaceMode tpm = ThingPlaceMode.Near)
     {
         foreach (var thingCount in thingCountList)

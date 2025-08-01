@@ -7,20 +7,20 @@ namespace SR;
 
 public class CompMeltable : ThingComp
 {
-    protected static readonly int hoursToMeltStart = 1;
+    private static readonly int hoursToMeltStart = 1;
 
-    protected readonly int meltBufferTicksMax = Mathf.RoundToInt(hoursToMeltStart * 2500f);
+    private readonly int meltBufferTicksMax = Mathf.RoundToInt(hoursToMeltStart * 2500f);
 
-    protected readonly float meltMultiplier = 0.01f;
-    public float? floatHealth = 0f;
+    private readonly float meltMultiplier = 0.01f;
+    private float? floatHealth = 0f;
 
-    protected int meltBufferTicks;
+    private int meltBufferTicks;
 
-    protected float meltRate;
+    private float meltRate;
 
-    protected float meltRatePerHour;
+    private float meltRatePerHour;
 
-    public MeltStage Stage => !(parent.AmbientTemperature <= 0f) ? MeltStage.Melting : MeltStage.Solid;
+    private MeltStage Stage => !(parent.AmbientTemperature <= 0f) ? MeltStage.Melting : MeltStage.Solid;
 
     public override void CompTick()
     {
@@ -70,7 +70,7 @@ public class CompMeltable : ThingComp
         }
     }
 
-    public void UpdateFloatHealthToRealHealth()
+    private void UpdateFloatHealthToRealHealth()
     {
         if (!floatHealth.HasValue || (float)parent.HitPoints < floatHealth)
         {
@@ -78,7 +78,7 @@ public class CompMeltable : ThingComp
         }
     }
 
-    public void UpdateRealHealthToFloatHealth()
+    private void UpdateRealHealthToFloatHealth()
     {
         if (floatHealth != null)
         {

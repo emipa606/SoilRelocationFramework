@@ -4,7 +4,7 @@ namespace SR.ToggleablePatches;
 
 internal class DubsSkylights
 {
-    [ToggleablePatch] internal static readonly ToggleablePatchGroup GlassUsesSandPatch = new ToggleablePatchGroup
+    [ToggleablePatch] internal static readonly ToggleablePatchGroup GlassUsesSandPatch = new()
     {
         Name = "Dubs Skylights Glass Uses Sand",
         Enabled = SoilRelocationSettings.DubsSkylightsGlassUsesSandEnabled,

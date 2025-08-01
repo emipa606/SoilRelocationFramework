@@ -7,9 +7,9 @@ namespace SR;
 
 internal static class HarmonyPatchSharedData
 {
-    internal static readonly float GravelMultiplier = 0.33f;
+    private static readonly float GravelMultiplier = 0.33f;
 
-    internal static readonly Dictionary<TerrainDef, float> MultiplierByWaterDef = new Dictionary<TerrainDef, float>
+    private static readonly Dictionary<TerrainDef, float> MultiplierByWaterDef = new()
     {
         {
             TerrainDefs.Marsh,

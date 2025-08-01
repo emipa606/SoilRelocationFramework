@@ -5,17 +5,14 @@ namespace SR.ToggleablePatches;
 internal class Vanilla
 {
     [ToggleablePatch] internal static readonly ToggleablePatch<BuildableDef> SandbagsUseSandPatch =
-        new ToggleablePatch<BuildableDef>
+        new()
         {
             Name = "Sandbags Use Sand",
             Enabled = SoilRelocationSettings.SandbagsUseSandEnabled,
             TargetDefName = "Sandbags",
             Patch = delegate(ToggleablePatch<BuildableDef> _, BuildableDef def)
             {
-                if (def.costList == null)
-                {
-                    def.costList = [];
-                }
+                def.costList ??= [];
 
                 def.costList.Add(new ThingDefCountClass
                 {
@@ -30,7 +27,7 @@ internal class Vanilla
         };
 
     [ToggleablePatch] internal static ToggleablePatch<BuildableDef> FungalGravelUsesRawFungusPatch =
-        new ToggleablePatch<BuildableDef>
+        new()
         {
             Name = "Fungal Gravel Uses Raw Fungus",
             Enabled = SoilRelocationSettings.FungalGravelUsesRawFungusEnabled,
@@ -38,10 +35,7 @@ internal class Vanilla
             TargetModID = "Ludeon.RimWorld.Ideology",
             Patch = delegate(ToggleablePatch<BuildableDef> _, BuildableDef def)
             {
-                if (def.costList == null)
-                {
-                    def.costList = [];
-                }
+                def.costList ??= [];
 
                 def.costList.Add(new ThingDefCountClass
                 {

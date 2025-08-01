@@ -18,7 +18,7 @@ public class Designator_Dig : Designator
         soundSucceeded = SoundDefOf.Designate_Mine;
     }
 
-    public override int DraggableDimensions => 2;
+    public override DrawStyleCategoryDef DrawStyleCategory => DrawStyleCategoryDefOf.Orders;
 
     public override bool DragDrawMeasurements => true;
 

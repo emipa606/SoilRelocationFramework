@@ -20,4 +20,6 @@
   <CannotPlaceIceOnBridge>Eis kann nicht auf einer Brücke platziert werden.</CannotPlaceIceOnBridge>
   <CannotFillWithIce>Wasser/nasses Gelände kann nicht mit Eis gefüllt werden (es würde nur schmelzen und die Situation verschlimmern).</CannotFillWithIce>
   <CannotPlaceOnWetUnlessBridgeable>Kann nicht auf nassem Terrain platziert werden, es sei denn, es ist auch überbrückbar (verwenden Sie zuerst einen Feuchtigkeitssauger).</CannotPlaceOnWetUnlessBridgeable>
+  <!--Melting System Related-->
+  <!--PlaceWorker Strings-->
 </LanguageData>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <!--designatorDropdown, costList, designationCategory-->
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/TerrainDef[defName = "Soil" or defName = "MossyTerrain" or defName = "AB_MycoticSoil" or defName = "AB_MycoticGrass" or defName = "AB_GrassyFlowerySoil" or defName = "AB_LushGrass"]</xpath>
+        <value>
+          <placeWorkers>
+            <li>SR.PlaceWorker_Soil</li>
+          </placeWorkers>
+          <costList>
+            <SR_Soil>10</SR_Soil>
+          </costList>
+          <designatorDropdown>SR</designatorDropdown>
+          <designationCategory>Floors</designationCategory>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/TerrainDef[defName = "Sand" or defName = "SoftSand" or defName = "GU_AlienSand" or defName = "GU_RichAlienSand" or defName = "GU_AlienSandFine" or defName = "AB_ForsakenSand" or defName = "AB_FineForsakenSand" or defName = "AB_FineSand" or defName = "AB_GrassySand"]</xpath>
+        <value>
+          <placeWorkers>
+            <li>SR.PlaceWorker_Soil</li>
+          </placeWorkers>
+          <costList>
+            <SR_Sand>10</SR_Sand>
+          </costList>
+          <designatorDropdown>SR</designatorDropdown>
+          <designationCategory>Floors</designationCategory>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/TerrainDef[defName = "SoilRich" or defName = "AB_MycoticSoilRich" or defName = "AB_FertileGrassyFlowerySoil" or defName = "AB_HardenedGrassFertile"]</xpath>
+        <value>
+          <placeWorkers>
+            <li>SR.PlaceWorker_Soil</li>
+          </placeWorkers>
+          <costList>
+            <SR_RichSoil>10</SR_RichSoil>
+          </costList>
+          <designatorDropdown>SR</designatorDropdown>
+          <designationCategory>Floors</designationCategory>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/TerrainDef[defName = "Gravel"]</xpath>
+        <value>
+          <placeWorkers>
+            <li>SR.PlaceWorker_Soil</li>
+          </placeWorkers>
+          <costList>
+            <SR_Gravel>10</SR_Gravel>
+          </costList>
+          <designatorDropdown>SR</designatorDropdown>
+          <designationCategory>Floors</designationCategory>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/TerrainDef[defName = "Ice"]</xpath>
+        <value>
+          <placeWorkers>
+            <li>SR.PlaceWorker_Soil</li>
+          </placeWorkers>
+          <costList>
+            <SR_Ice>10</SR_Ice>
+          </costList>
+          <designatorDropdown>SR</designatorDropdown>
+          <designationCategory>Floors</designationCategory>
+        </value>
+      </li>
+      <!--WorkToBuild, MarketValue-->
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/TerrainDef[defName = "Soil" or defName = "MossyTerrain" or defName = "AB_MycoticSoil" or defName = "AB_MycoticGrass" or defName = "AB_GrassyFlowerySoil" or defName = "AB_LushGrass"]/statBases</xpath>
+        <value>
+          <WorkToBuild>200</WorkToBuild>
+          <MarketValue>0</MarketValue>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/TerrainDef[defName = "Sand" or defName = "SoftSand" or defName = "GU_AlienSand" or defName = "GU_RichAlienSand" or defName = "GU_AlienSandFine" or defName = "AB_ForsakenSand" or defName = "AB_FineForsakenSand" or defName = "AB_FineSand" or defName = "AB_GrassySand"]/statBases</xpath>
+        <value>
+          <WorkToBuild>200</WorkToBuild>
+          <MarketValue>0</MarketValue>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/TerrainDef[defName = "SoilRich" or defName = "AB_MycoticSoilRich" or defName = "AB_FertileGrassyFlowerySoil" or defName = "AB_HardenedGrassFertile"]/statBases</xpath>
+        <value>
+          <WorkToBuild>200</WorkToBuild>
+          <MarketValue>0</MarketValue>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/TerrainDef[defName = "Gravel"]/statBases</xpath>
+        <value>
+          <WorkToBuild>200</WorkToBuild>
+          <MarketValue>0</MarketValue>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/TerrainDef[defName = "Ice"]/statBases</xpath>
+        <value>
+          <WorkToBuild>200</WorkToBuild>
+          <MarketValue>0</MarketValue>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>

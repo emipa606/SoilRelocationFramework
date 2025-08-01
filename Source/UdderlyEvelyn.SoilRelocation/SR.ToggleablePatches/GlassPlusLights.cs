@@ -5,7 +5,7 @@ namespace SR.ToggleablePatches;
 internal class GlassPlusLights
 {
     [ToggleablePatch] internal static readonly ToggleablePatch<RecipeDef> GlassUsesSandPatch =
-        new ToggleablePatch<RecipeDef>
+        new()
         {
             Name = "Glass+Lights Glass Uses Sand",
             Enabled = SoilRelocationSettings.GlassPlusLightsGlassUsesSandEnabled,

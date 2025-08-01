@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: stony soil -->
+  <SR_Gravel.label>stony soil</SR_Gravel.label>
+  <!-- EN: Plants can grow in this, but it's not the best. -->
+  <SR_Gravel.description>Plants can grow in this, but it's not the best.</SR_Gravel.description>
+  <!-- EN: ice -->
+  <SR_Ice.label>ice</SR_Ice.label>
+  <!-- EN: Nothing's going to grow in this, but maybe it has other uses? -->
+  <SR_Ice.description>Nothing's going to grow in this, but maybe it has other uses?</SR_Ice.description>
+  <!-- EN: rich soil -->
+  <SR_RichSoil.label>rich soil</SR_RichSoil.label>
+  <!-- EN: This is the good stuff, soil that makes plants grow much more rapidly. -->
+  <SR_RichSoil.description>This is the good stuff, soil that makes plants grow much more rapidly.</SR_RichSoil.description>
+  <!-- EN: sand -->
+  <SR_Sand.label>sand</SR_Sand.label>
+  <!-- EN: Sand can be used for various construction purpose and processed into glass, but it isn't very hospitable for plants. -->
+  <SR_Sand.description>Sand can be used for various construction purpose and processed into glass, but it isn't very hospitable for plants.</SR_Sand.description>
+  <!-- EN: soil -->
+  <SR_Soil.label>soil</SR_Soil.label>
+  <!-- EN: Soil. Dirt. You know, the plain old brown stuff on the ground what things grow in. -->
+  <SR_Soil.description>Soil. Dirt. You know, the plain old brown stuff on the ground what things grow in.</SR_Soil.description>
+</LanguageData>

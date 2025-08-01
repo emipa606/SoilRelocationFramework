@@ -5,7 +5,7 @@ namespace SR.ToggleablePatches;
 internal class VFEArchitect
 {
     [ToggleablePatch] internal static readonly ToggleablePatch<BuildableDef> PackedDirtCostsDirt =
-        new ToggleablePatch<BuildableDef>
+        new()
         {
             Name = "VFE Architect Packed Dirt Costs Dirt",
             Enabled = SoilRelocationSettings.VFEArchitectPackedDirtCostsDirtEnabled,
@@ -13,10 +13,7 @@ internal class VFEArchitect
             TargetModID = "VanillaExpanded.VFEArchitect",
             Patch = delegate(ToggleablePatch<BuildableDef> _, BuildableDef def)
             {
-                if (def.costList == null)
-                {
-                    def.costList = [];
-                }
+                def.costList ??= [];
 
                 def.costList.Add(new ThingDefCountClass
                 {

@@ -9,9 +9,9 @@ namespace SR;
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
 public class ToggleablePatch : Attribute
 {
-    public static readonly bool AutoScan = true;
+    private static readonly bool AutoScan = true;
 
-    protected static bool _performedPatchScan;
+    private static bool _performedPatchScan;
 
     public static readonly Action<string> MessageLoggingMethod = Log.Message;
 
@@ -19,9 +19,9 @@ public class ToggleablePatch : Attribute
 
     public static readonly Action<string> ErrorLoggingMethod = Log.Error;
 
-    public static readonly List<IToggleablePatch> Patches = [];
+    private static readonly List<IToggleablePatch> Patches = [];
 
-    public static void ScanForPatches()
+    private static void ScanForPatches()
     {
         if (_performedPatchScan)
         {
@@ -92,12 +92,12 @@ public class ToggleablePatch<T> : IToggleablePatch where T : Def
 {
     public List<string> ConflictingModIDs = [];
 
-    protected bool? modInstalled;
+    private bool? modInstalled;
 
     public Action<ToggleablePatch<T>, T> Patch;
 
     public object State;
-    protected T targetDef;
+    private T targetDef;
 
     public string TargetDefName;
 
@@ -105,16 +105,16 @@ public class ToggleablePatch<T> : IToggleablePatch where T : Def
 
     public Action<ToggleablePatch<T>, T> Unpatch;
 
-    public string TargetDescriptionString =>
+    private string TargetDescriptionString =>
         $"{(TargetModID != null ? TargetModID + "." : "")}{TargetDefName} ({typeof(T).FullName})";
 
-    public bool CanPatch
+    private bool CanPatch
     {
         get
         {
             foreach (var conflictingModID in ConflictingModIDs)
             {
-                if (ModLister.GetActiveModWithIdentifier(conflictingModID) == null)
+                if (ModLister.GetActiveModWithIdentifier(conflictingModID, true) == null)
                 {
                     continue;
                 }
@@ -129,10 +129,7 @@ public class ToggleablePatch<T> : IToggleablePatch where T : Def
                 return true;
             }
 
-            if (!modInstalled.HasValue)
-            {
-                modInstalled = ModLister.GetActiveModWithIdentifier(TargetModID) != null;
-            }
+            modInstalled ??= ModLister.GetActiveModWithIdentifier(TargetModID, true) != null;
 
             return modInstalled.Value;
         }
@@ -142,7 +139,7 @@ public class ToggleablePatch<T> : IToggleablePatch where T : Def
 
     public bool Enabled { get; set; }
 
-    public bool Applied { get; protected set; }
+    public bool Applied { get; private set; }
 
     public void Apply()
     {
@@ -152,10 +149,7 @@ public class ToggleablePatch<T> : IToggleablePatch where T : Def
             {
                 ToggleablePatch.MessageLoggingMethod(
                     $"[ToggleablePatch] {(Name != null ? "Applying patch \"" + Name + "\", patching " : "Patching ")}{TargetDescriptionString}..");
-                if (targetDef == null)
-                {
-                    targetDef = DefDatabase<T>.GetNamed(TargetDefName);
-                }
+                targetDef ??= DefDatabase<T>.GetNamed(TargetDefName);
 
                 try
                 {
@@ -188,10 +182,7 @@ public class ToggleablePatch<T> : IToggleablePatch where T : Def
         {
             ToggleablePatch.MessageLoggingMethod(
                 $"[ToggleablePatch] {(Name != null ? "Removing patch \"" + Name + "\", unpatching " : "Unpatching ")}{TargetDescriptionString}..");
-            if (targetDef == null)
-            {
-                targetDef = DefDatabase<T>.GetNamed(TargetDefName);
-            }
+            targetDef ??= DefDatabase<T>.GetNamed(TargetDefName);
 
             try
             {

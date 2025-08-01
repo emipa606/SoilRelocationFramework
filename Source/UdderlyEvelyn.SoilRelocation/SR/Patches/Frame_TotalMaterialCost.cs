@@ -7,10 +7,10 @@ using RimWorld;
 
 namespace SR;
 
-[HarmonyPatch(typeof(Frame), nameof(Frame.GetInspectString))]
-internal static class Frame_GetInspectString
+[HarmonyPatch(typeof(Frame), nameof(Frame.TotalMaterialCost))]
+internal static class Frame_TotalMaterialCost
 {
-    internal static readonly MethodInfo _harmonyPatchSharedData_GetWaterFillAdjustedCostListForFrame =
+    private static readonly MethodInfo _harmonyPatchSharedData_GetWaterFillAdjustedCostListForFrame =
         AccessTools.Method(typeof(HarmonyPatchSharedData),
             nameof(HarmonyPatchSharedData.GetWaterFillAdjustedCostListForFrame));
 

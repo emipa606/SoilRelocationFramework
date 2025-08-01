@@ -20,4 +20,6 @@
   <CannotPlaceIceOnBridge>不能在桥上放置冰块。</CannotPlaceIceOnBridge>
   <CannotFillWithIce>不能用冰填充水域/潮湿地形（冰会融化，使情况更糟）。</CannotFillWithIce>
   <CannotPlaceOnWetUnlessBridgeable>不能放置在潮湿的地形上，除非它也是可架桥的（先使用抽湿机）。</CannotPlaceOnWetUnlessBridgeable>
+  <!--Melting System Related-->
+  <!--PlaceWorker Strings-->
 </LanguageData>

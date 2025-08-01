@@ -8,7 +8,7 @@ namespace SR;
 [StaticConstructorOnStartup]
 public static class SoilRelocation
 {
-    public static readonly string Version;
+    private static readonly string Version;
 
     static SoilRelocation()
     {

@@ -20,4 +20,6 @@
   <CannotPlaceIceOnBridge>Il n'est pas possible de placer de la glace sur un pont.</CannotPlaceIceOnBridge>
   <CannotFillWithIce>Impossible de remplir les terrains humides avec de la glace (elle fondrait et aggraverait la situation).</CannotFillWithIce>
   <CannotPlaceOnWetUnlessBridgeable>Ne peut être placé sur un terrain humide à moins qu'il ne soit également praticable (utilisez d'abord un extracteur d'humidité).</CannotPlaceOnWetUnlessBridgeable>
+  <!--Melting System Related-->
+  <!--PlaceWorker Strings-->
 </LanguageData>

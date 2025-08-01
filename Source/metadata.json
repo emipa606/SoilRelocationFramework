@@ -2,6 +2,14 @@
   "Continued": true,
   "CanAdd": "2",
   "CanRemove": "2",
-  "PreviewVersion": "1.5",
-  "SocialImageSet": true
+  "PreviewVersion": "1.6",
+  "SocialImageSet": true,
+  "Patches": true,
+  "Defs": true,
+  "Assemblies": true,
+  "LinesOfCode": 57385,
+  "LinesOfXML": 13168,
+  "CodeBaseSize": 77,
+  "LastXmlCleaning": "2025-08-01T22:23:25.5019833+02:00",
+  "SearchTags": " terrain manipulation"
 }

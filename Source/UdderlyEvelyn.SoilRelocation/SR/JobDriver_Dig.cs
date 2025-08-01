@@ -10,11 +10,11 @@ namespace SR;
 
 public class JobDriver_Dig : JobDriver_AffectFloor
 {
-    protected readonly Dictionary<TerrainDef, ThingDef> _noCostItemGuessCache = new Dictionary<TerrainDef, ThingDef>();
+    private readonly Dictionary<TerrainDef, ThingDef> _noCostItemGuessCache = new();
 
-    protected float workLeft = -1000f;
+    private float workLeft = -1000f;
 
-    protected float workTotal;
+    private float workTotal;
 
     public JobDriver_Dig()
     {

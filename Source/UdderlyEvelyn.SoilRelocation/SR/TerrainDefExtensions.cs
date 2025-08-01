@@ -7,7 +7,7 @@ namespace SR;
 
 public static class TerrainDefExtensions
 {
-    private static readonly Dictionary<TerrainDef, bool> bridgeCache = new Dictionary<TerrainDef, bool>();
+    private static readonly Dictionary<TerrainDef, bool> bridgeCache = new();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsDiggable(this TerrainDef def)

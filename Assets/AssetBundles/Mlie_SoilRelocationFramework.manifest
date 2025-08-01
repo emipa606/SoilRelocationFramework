@@ -1,0 +1,26 @@
+ManifestFileVersion: 0
+CRC: 1550274597
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ca8772e2083a2182c3d4820e6b47ef13
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 2612ac43db082a73502ee80f2eceb73f
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: ca8772e2083a2182c3d4820e6b47ef13
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Mlie.SoilRelocationFramework/Textures/ResourceSoil.png
+- Assets/Data/Mlie.SoilRelocationFramework/Textures/DesignatorDig.png
+- Assets/Data/Mlie.SoilRelocationFramework/Textures/ResourceIce.png
+- Assets/Data/Mlie.SoilRelocationFramework/Textures/ResourceRichSoil.png
+- Assets/Data/Mlie.SoilRelocationFramework/Textures/DesignationDig.png
+- Assets/Data/Mlie.SoilRelocationFramework/Textures/ResourceGravel.png
+- Assets/Data/Mlie.SoilRelocationFramework/Textures/ResourceSand.png
+Dependencies: []
