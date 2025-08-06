@@ -20,7 +20,7 @@ public class TerrainGrid_SetTerrain
             return;
         }
 
-        ___map.terrainGrid.SetUnderTerrain(c, __state.Item1);
+        //___map.terrainGrid.SetUnderTerrain(c, __state.Item1);
         ___map.fertilityGrid.FertilityGridUpdate();
     }
 }
