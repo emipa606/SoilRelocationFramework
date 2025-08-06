@@ -2,7 +2,7 @@
 <ModSyncNinjaData>
   <ID>180fd8e2-c6b5-4504-baf1-9a4e1430e056</ID>
   <ModName>Soil Relocation Framework (Continued)</ModName>
-  <Version>1.6.0</Version>
+  <Version>1.6.1</Version>
   <SaveBreaking>False</SaveBreaking>
   <Host name="Github">
     <Owner>emipa606</Owner>
