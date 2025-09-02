@@ -27,6 +27,18 @@
   <loadAfter>
     <li>brrainz.harmony</li>
     <li>Mlie.ConsistentMapStone</li>
+	<li>OskarPotocki.VFE.Classical</li>
+	<li>talias.VFEHardleatherConcrete</li>
+	<li>VanillaExpanded.VFEArchitect</li>
+	<li>VanillaExpanded.VFEPower</li>
+	<li>VanillaExpanded.VFEFarming</li>
+	<li>Dubwise.Rimatomics</li>
+	<li>Dubwise.Rimefeller</li>
+	<li>ReBuild.COTR.DoorsAndCorners</li>
+	<li>NanoCE.GlassLights</li>
+	<li>Dubwise.DubsSkylights</li>
+	<li>Owlchemist.WallUtilities</li>
+	<li>Veltaris.SpaceSolar</li>
   </loadAfter>
   <description>[img]https://i.imgur.com/buuPQel.png[/img]
 Update of Evelyns mod https://steamcommunity.com/sharedfiles/filedetails/?id=2654088143

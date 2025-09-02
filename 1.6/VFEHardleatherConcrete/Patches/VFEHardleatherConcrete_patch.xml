@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+<!-- Fast concrete press from chunks -->
+    <Operation Class="PatchOperationAdd">
+        <xpath>/Defs/PipeSystem.ProcessDef[defName="talias_PressConcreteFast"]/ingredients</xpath>
+        <value>
+            <li>
+                <thing>SR_Sand</thing>
+                <countNeeded>8</countNeeded>
+            </li>
+        </value>
+    </Operation>
+
+    <!-- Press concrete from 100 blocks (talias version) -->
+    <Operation Class="PatchOperationAdd">
+        <xpath>/Defs/PipeSystem.ProcessDef[defName="talias_PressConcreteFromBlocks"]/ingredients</xpath>
+        <value>
+            <li>
+                <thing>SR_Sand</thing>
+                <countNeeded>10</countNeeded>
+            </li>
+        </value>
+    </Operation>
+
+    <!-- Press concrete from 50 blocks (talias version) -->
+    <Operation Class="PatchOperationAdd">
+        <xpath>/Defs/PipeSystem.ProcessDef[defName="talias_PressConcreteFromBlocksHalf"]/ingredients</xpath>
+        <value>
+            <li>
+                <thing>SR_Sand</thing>
+                <countNeeded>5</countNeeded>
+            </li>
+        </value>
+    </Operation>
+
+    <!-- Press concrete from 100 blocks (VFEC version) -->
+    <Operation Class="PatchOperationAdd">
+        <xpath>/Defs/PipeSystem.ProcessDef[defName="VFEC_PressConcreteFromBlocks"]/ingredients</xpath>
+        <value>
+            <li>
+                <thing>SR_Sand</thing>
+                <countNeeded>10</countNeeded>
+            </li>
+        </value>
+    </Operation>
+
+    <!-- Press concrete from 50 blocks (VFEC version) -->
+    <Operation Class="PatchOperationAdd">
+        <xpath>/Defs/PipeSystem.ProcessDef[defName="VFEC_PressConcreteFromBlocksHalf"]/ingredients</xpath>
+        <value>
+            <li>
+                <thing>SR_Sand</thing>
+                <countNeeded>5</countNeeded>
+            </li>
+        </value>
+    </Operation>
+</Patch>

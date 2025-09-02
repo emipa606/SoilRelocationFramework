@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+  <!-- Remove the base and all concrete lamps derived from it -->
+  <Operation Class="PatchOperationRemove">
+    <xpath>/Defs/ThingDef[defName="GLCeilingLamp"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>/Defs/ThingDef[defName="GLCeilingLamp_Red"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>/Defs/ThingDef[defName="GLCeilingLamp_Blue"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>/Defs/ThingDef[defName="GLCeilingLamp_Green"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>/Defs/ThingDef[defName="GLCeilingLamp_Violet"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>/Defs/ThingDef[defName="GLCeilingLamp_Yellow"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>/Defs/ThingDef[defName="GLCeilingLamp_Orange"]</xpath>
+  </Operation>
+
+</Patch>

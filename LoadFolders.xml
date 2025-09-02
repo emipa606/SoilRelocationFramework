@@ -19,5 +19,17 @@
     <li>/</li>
     <li>1.6</li>
     <li>Assets</li>
+    <li IfModActive="OskarPotocki.VFE.Classical">1.6/VFEClassical</li>
+	<li IfModActive="VanillaExpanded.VFEFarming">1.6/VFEFarming</li>
+    <li IfModActive="talias.VFEHardleatherConcrete">1.6/VFEHardleatherConcrete</li>
+	<li IfModActive="NanoCE.GlassLights">1.6/NanoGlassPatch</li>
+	<li IfModActiveAll="NanoCE.GlassLights,Owlchemist.WallUtilities">1.6/OwlWallUtils</li>
+	<li IfModActiveAll="VanillaExpanded.VFEArchitect,OskarPotocki.VFE.Classical">1.6/VFEArchitectConcrete</li>
+	<li IfModActiveAll="VanillaExpanded.VFEPower,OskarPotocki.VFE.Classical">1.6/VFEPowerConcrete</li>
+	<li IfModActiveAll="Dubwise.Rimatomics,OskarPotocki.VFE.Classical">1.6/RimatomicsConcrete</li>
+	<li IfModActiveAll="Dubwise.Rimefeller,OskarPotocki.VFE.Classical">1.6/RimefellerConcrete</li>
+	<li IfModActiveAll="ReBuild.COTR.DoorsAndCorners,NanoCE.GlassLights">1.6/RebuildPatchNanoGlass</li>
+	<li IfModActiveAll="VanillaExpanded.VFEPower,NanoCE.GlassLights">1.6/VFEPowerGlass</li>
+	<li IfModActiveAll="Veltaris.SpaceSolar,NanoCE.GlassLights">1.6/SpaceSolarPanelGlass</li>
   </v1.6>
 </loadFolders>
