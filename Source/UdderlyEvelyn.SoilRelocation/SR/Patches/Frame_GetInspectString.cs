@@ -8,6 +8,7 @@ using RimWorld;
 namespace SR;
 
 [HarmonyPatch(typeof(Frame), nameof(Frame.GetInspectString))]
+[HarmonyPatchCategory("ArgonicCore_Interop")]
 internal static class Frame_GetInspectString
 {
     private static readonly MethodInfo _harmonyPatchSharedData_GetWaterFillAdjustedCostListForFrame =
