@@ -17,7 +17,11 @@ public static class SoilRelocation
         Log("Initializing..");
         ToggleablePatch.ProcessPatches("UdderlyEvelyn.SoilRelocation");
         var harmony = new Harmony("UdderlyEvelyn.SoilRelocation");
-        harmony.PatchAll();
+        harmony.PatchAllUncategorized();
+        if (!LoadedModManager.RunningModsListForReading.Any(mod => mod.PackageIdPlayerFacing == "Argon.CoreLib"))
+        {
+            harmony.PatchCategory("ArgonicCore_Interop");
+        }
         if (WaterFreezes_Interop.InteropTargetIsPresent)
         {
             harmony.Patch(AccessTools.Method(typeof(Frame), "CompleteConstruction"),
