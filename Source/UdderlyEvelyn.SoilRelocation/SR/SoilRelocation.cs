@@ -14,18 +14,13 @@ public static class SoilRelocation
     {
         var version = Assembly.GetAssembly(typeof(SoilRelocation)).GetName().Version;
         Version = $"{version.Major}.{version.Minor}.{version.Build}";
-        Log("Initializing..");
         ToggleablePatch.ProcessPatches("UdderlyEvelyn.SoilRelocation");
         var harmony = new Harmony("UdderlyEvelyn.SoilRelocation");
-        harmony.PatchAllUncategorized();
-        if (!LoadedModManager.RunningModsListForReading.Any(mod => mod.PackageIdPlayerFacing == "Argon.CoreLib"))
-        {
-            harmony.PatchCategory("ArgonicCore_Interop");
-        }
+        harmony.PatchAll(Assembly.GetExecutingAssembly());
         if (WaterFreezes_Interop.InteropTargetIsPresent)
         {
-            harmony.Patch(AccessTools.Method(typeof(Frame), "CompleteConstruction"),
-                new HarmonyMethod(typeof(Frame_CompleteConstruction), "Prefix"));
+            harmony.Patch(AccessTools.Method(typeof(Frame), nameof(Frame.CompleteConstruction)),
+                new HarmonyMethod(typeof(Frame_CompleteConstruction), nameof(Frame_CompleteConstruction.Prefix)));
         }
     }
 

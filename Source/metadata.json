@@ -7,9 +7,9 @@
   "Patches": true,
   "Defs": true,
   "Assemblies": true,
-  "LinesOfCode": 57387,
-  "LinesOfXML": 13168,
+  "LinesOfCode": 57971,
+  "LinesOfXML": 15201,
   "CodeBaseSize": 76,
-  "LastXmlCleaning": "2025-08-06T23:37:22.4868575+02:00",
+  "LastXmlCleaning": "2025-09-04T12:44:54.381979+02:00",
   "SearchTags": " terrain manipulation"
 }

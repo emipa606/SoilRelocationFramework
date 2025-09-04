@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/PipeSystem.ProcessDef[defName="VFEC_PressConcrete"]/ingredients</xpath>
+    <value>
+      <li>
+        <thing>SR_Sand</thing>
+        <countNeeded>8</countNeeded>
+      </li>
+    </value>
+  </Operation>
+  <!-- Replace concrete terrain cost with VFEC concrete blocks -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/TerrainDef[defName="Concrete"]/costList</xpath>
+    <value>
+      <costList>
+        <VFEC_BlocksConcrete>1</VFEC_BlocksConcrete>
+      </costList>
+    </value>
+  </Operation>
+  <!-- Replace paved terrain costs with VFEC concrete blocks (using contains for fuzzy matching) -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/TerrainDef[contains(defName, "Paved") or contains(defName, "Asphalt") or contains(label, "paved") or contains(label, "asphalt")]/costList</xpath>
+    <value>
+      <costList>
+        <VFEC_BlocksConcrete>2</VFEC_BlocksConcrete>
+      </costList>
+    </value>
+  </Operation>
+  <!-- Add concrete to Geothermal Generator -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef[defName="GeothermalGenerator"]/costList</xpath>
+    <value>
+      <VFEC_BlocksConcrete>85</VFEC_BlocksConcrete>
+    </value>
+  </Operation>
+</Patch>

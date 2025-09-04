@@ -87,7 +87,13 @@ public class JobDriver_Dig : JobDriver_AffectFloor
             {
                 if (WaterFreezes_Interop.IsThawableIce(terrain))
                 {
-                    num = Math.Max(1, Mathf.RoundToInt(WaterFreezes_Interop.TakeCellIce(map, c).Value / 25f * num));
+                    var cellIce = WaterFreezes_Interop.TakeCellIce(map, c);
+                    if (cellIce == null)
+                    {
+                        return;
+                    }
+
+                    num = Math.Max(1, Mathf.RoundToInt((float)(cellIce / 25f * num)));
                     var newTerr = WaterFreezes_Interop.QueryCellAllWater(map, c);
                     if (WaterFreezes_Interop.QueryCellWater(map, c) > 0f)
                     {
@@ -147,12 +153,19 @@ public class JobDriver_Dig : JobDriver_AffectFloor
                     ReadyForNextToil();
                 }
 
-                if (terrainDef.defName == "LCF_LakeIceThin" || terrainDef.defName == "LCF_LakeIce" ||
-                    terrainDef.defName == "LCF_LakeIceThick")
+                if (terrainDef.defName is "LCF_LakeIceThin" or "LCF_LakeIce" or "LCF_LakeIceThick")
                 {
-                    workTotal = (BaseWorkAmount / 2f) +
-                                (WaterFreezes_Interop.QueryCellIce(Map, TargetLocA).Value / 100f *
-                                 (BaseWorkAmount / 2f));
+                    var cellIce = WaterFreezes_Interop.QueryCellIce(Map, TargetLocA);
+                    if (cellIce == null)
+                    {
+                        workTotal = BaseWorkAmount;
+                    }
+                    else
+                    {
+                        workTotal = (float)((BaseWorkAmount / 2f) +
+                                            (cellIce / 100f *
+                                             (BaseWorkAmount / 2f)));
+                    }
                 }
                 else
                 {

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Patch>
-	<Operation Class="PatchOperationAdd">
-	  <xpath>/Defs/ThingDef[defName="VFE_AdvancedSolarGenerator"]/costList</xpath>
-	  <value>
-		<ReinforcedGlass>50</ReinforcedGlass>
-	  </value>
-	</Operation>
-</Patch>

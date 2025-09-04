@@ -4,18 +4,23 @@ using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using RimWorld;
+using Verse;
 
 namespace SR;
 
 [HarmonyPatch(typeof(Frame), nameof(Frame.GetInspectString))]
-[HarmonyPatchCategory("ArgonicCore_Interop")]
 internal static class Frame_GetInspectString
 {
     private static readonly MethodInfo _harmonyPatchSharedData_GetWaterFillAdjustedCostListForFrame =
         AccessTools.Method(typeof(HarmonyPatchSharedData),
             nameof(HarmonyPatchSharedData.GetWaterFillAdjustedCostListForFrame));
 
-    internal static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    public static bool Prepare()
+    {
+        return ModLister.GetActiveModWithIdentifier("Argon.CoreLib", true) == null;
+    }
+
+    public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         var fired = false;
         var instructionList = instructions.ToList();

@@ -8,7 +8,7 @@
         <li Class="PatchOperationAdd">
           <xpath>Defs/ThingDef[defName='PlantPot'][not(costList)]</xpath>
           <value>
-            <costList/>
+            <costList />
           </value>
         </li>
         <li Class="PatchOperationAdd">
@@ -20,7 +20,6 @@
       </operations>
     </match>
   </Operation>
-  
   <!-- Target PlantPot_Bonsai -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName='PlantPot_Bonsai']</xpath>
@@ -29,7 +28,7 @@
         <li Class="PatchOperationAdd">
           <xpath>Defs/ThingDef[defName='PlantPot_Bonsai'][not(costList)]</xpath>
           <value>
-            <costList/>
+            <costList />
           </value>
         </li>
         <li Class="PatchOperationAdd">
@@ -41,7 +40,6 @@
       </operations>
     </match>
   </Operation>
-  
   <!-- Target VFE_LongPlantPot -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName='VFE_LongPlantPot']</xpath>
@@ -50,7 +48,7 @@
         <li Class="PatchOperationAdd">
           <xpath>Defs/ThingDef[defName='VFE_LongPlantPot'][not(costList)]</xpath>
           <value>
-            <costList/>
+            <costList />
           </value>
         </li>
         <li Class="PatchOperationAdd">

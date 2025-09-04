@@ -1,5 +1,9 @@
 # Changelog for SoilRelocationFramework
 
+1.6.2 - Various patches for using sand, soil, concrete and glass in recipes from various mods (via Mlg-arch)
+Compatibility with Argonic Core (via mrgrim)
+
+
 1.6.1 - Fix for breaking gravship, thanks to CaptainGold1
 
 
