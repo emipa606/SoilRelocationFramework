@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Target PlantPot -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName='PlantPot']</xpath>
+    <match Class="PatchOperationSequence">
+      <operations>
+        <li Class="PatchOperationAdd">
+          <xpath>Defs/ThingDef[defName='PlantPot'][not(costList)]</xpath>
+          <value>
+            <costList/>
+          </value>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>Defs/ThingDef[defName='PlantPot']/costList</xpath>
+          <value>
+            <SR_Soil>2</SR_Soil>
+          </value>
+        </li>
+      </operations>
+    </match>
+  </Operation>
+  
+  <!-- Target PlantPot_Bonsai -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName='PlantPot_Bonsai']</xpath>
+    <match Class="PatchOperationSequence">
+      <operations>
+        <li Class="PatchOperationAdd">
+          <xpath>Defs/ThingDef[defName='PlantPot_Bonsai'][not(costList)]</xpath>
+          <value>
+            <costList/>
+          </value>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>Defs/ThingDef[defName='PlantPot_Bonsai']/costList</xpath>
+          <value>
+            <SR_Soil>2</SR_Soil>
+          </value>
+        </li>
+      </operations>
+    </match>
+  </Operation>
+  
+  <!-- Target VFE_LongPlantPot -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName='VFE_LongPlantPot']</xpath>
+    <match Class="PatchOperationSequence">
+      <operations>
+        <li Class="PatchOperationAdd">
+          <xpath>Defs/ThingDef[defName='VFE_LongPlantPot'][not(costList)]</xpath>
+          <value>
+            <costList/>
+          </value>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>Defs/ThingDef[defName='VFE_LongPlantPot']/costList</xpath>
+          <value>
+            <SR_Soil>2</SR_Soil>
+          </value>
+        </li>
+      </operations>
+    </match>
+  </Operation>
+</Patch>
