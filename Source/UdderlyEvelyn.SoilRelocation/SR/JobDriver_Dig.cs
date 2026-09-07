@@ -93,7 +93,7 @@ public class JobDriver_Dig : JobDriver_AffectFloor
                         return;
                     }
 
-                    num = Math.Max(1, Mathf.RoundToInt((float)(cellIce / 25f * num)));
+                    num = Math.Max(1, Mathf.RoundToInt((float)(cellIce / 25f * num)!));
                     var newTerr = WaterFreezes_Interop.QueryCellAllWater(map, c);
                     if (WaterFreezes_Interop.QueryCellWater(map, c) > 0f)
                     {
@@ -164,7 +164,7 @@ public class JobDriver_Dig : JobDriver_AffectFloor
                     {
                         workTotal = (float)((BaseWorkAmount / 2f) +
                                             (cellIce / 100f *
-                                             (BaseWorkAmount / 2f)));
+                                             (BaseWorkAmount / 2f)))!;
                     }
                 }
                 else

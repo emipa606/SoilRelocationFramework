@@ -2,7 +2,7 @@ using Verse;
 
 namespace SR.ToggleablePatches;
 
-internal class VFEArchitect
+internal static class VFEArchitect
 {
     [ToggleablePatch] internal static readonly ToggleablePatch<BuildableDef> PackedDirtCostsDirt =
         new()

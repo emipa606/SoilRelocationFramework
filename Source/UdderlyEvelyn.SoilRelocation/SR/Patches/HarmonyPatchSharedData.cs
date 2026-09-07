@@ -79,7 +79,7 @@ internal static class HarmonyPatchSharedData
 
         _ = frame.Position;
         var num = DeriveMultiplierForFill(frame.Position.GetTerrain(map), terrainDef);
-        if (num == 1f)
+        if (num.Equals(1f))
         {
             return list;
         }

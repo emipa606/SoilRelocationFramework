@@ -20,7 +20,7 @@ internal static class Blueprint_Build_TotalMaterialCost
 
         _ = __instance.Position;
         var num = HarmonyPatchSharedData.DeriveMultiplierForFill(__instance.Position.GetTerrain(map), terrainDef);
-        if (num == 1f)
+        if (num.Equals(1f))
         {
             return;
         }

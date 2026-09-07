@@ -23,24 +23,25 @@ public class SoilRelocationMod : Mod
     {
         var listing_Standard = new Listing_Standard();
         listing_Standard.Begin(inRect);
-        listing_Standard.Label("The below settings take effect immediately, no restart required.");
-        listing_Standard.CheckboxLabeled("Sandbags Use Sand", ref SoilRelocationSettings.SandbagsUseSandEnabled,
-            "Patch vanilla sandbags so they use sand in addition to cloth.");
-        listing_Standard.CheckboxLabeled("Fungal Gravel Uses Raw Fungus",
+        listing_Standard.Label("SRP.NoRestartWarning".Translate());
+        listing_Standard.CheckboxLabeled("SRP.SandbagsUseSand".Translate(),
+            ref SoilRelocationSettings.SandbagsUseSandEnabled,
+            "SRP.SandbagsUseSandTT".Translate());
+        listing_Standard.CheckboxLabeled("SRP.FungalGravelUsesRawFungus".Translate(),
             ref SoilRelocationSettings.FungalGravelUsesRawFungusEnabled,
-            "Patch vanilla Fungal Gravel to cost a bit of Raw Fungus to avoid it being exploitable/unbalanced.");
-        listing_Standard.CheckboxLabeled("Dubs Skylights Glass Uses Sand",
+            "SRP.FungalGravelUsesRawFungusTT".Translate());
+        listing_Standard.CheckboxLabeled("SRP.DubsSkylightsGlassUsesSand".Translate(),
             ref SoilRelocationSettings.DubsSkylightsGlassUsesSandEnabled,
-            "Patch Dubs Skylights glass recipes so that they use sand instead of steel.");
-        listing_Standard.CheckboxLabeled("Just Glass Glass Uses Sand",
+            "SRP.DubsSkylightsGlassUsesSandTT".Translate());
+        listing_Standard.CheckboxLabeled("SRP.JustGlassGlassUsesSand".Translate(),
             ref SoilRelocationSettings.JustGlassGlassUsesSandEnabled,
-            "Patch the Just Glass glass recipe so that it uses sand instead of a stone chunk.");
-        listing_Standard.CheckboxLabeled("Glass+Lights Glass Uses Sand",
+            "SRP.JustGlassGlassUsesSandTT".Translate());
+        listing_Standard.CheckboxLabeled("SRP.GlassPlusLightsGlassUsesSand".Translate(),
             ref SoilRelocationSettings.GlassPlusLightsGlassUsesSandEnabled,
-            "Patch the Glass+Lights glass recipe so that it uses sand instead of a stone chunk.");
-        listing_Standard.CheckboxLabeled("VFE Architect Packed Dirt Costs Dirt",
+            "SRP.GlassPlusLightsGlassUsesSandTT".Translate());
+        listing_Standard.CheckboxLabeled("SRP.VFEArchitectPackedDirtCostsDirt".Translate(),
             ref SoilRelocationSettings.VFEArchitectPackedDirtCostsDirtEnabled,
-            "Patches VFE Architect's packed dirt recipe to cost one soil to avoid an exploit that gives you free soil.");
+            "SRP.VFEArchitectPackedDirtCostsDirtTT".Translate());
         listing_Standard.End();
         base.DoSettingsWindowContents(inRect);
     }

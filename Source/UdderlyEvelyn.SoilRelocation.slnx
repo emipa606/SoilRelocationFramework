@@ -6,4 +6,26 @@
     <BuildType Name="Release" />
   </Configurations>
   <Project Path="UdderlyEvelyn.SoilRelocation/UdderlyEvelyn.SoilRelocation.csproj" />
+  <Folder Name="/XML/About/">
+    <File Path="../About/about.xml" />
+  </Folder>
+  <Folder Name="/XML/1.6/Defs/">
+    <File Path="../1.6/Defs/DesignationDropdownGroups.xml" />
+    <File Path="../1.6/Defs/Designations.xml" />
+    <File Path="../1.6/Defs/Jobs.xml" />
+    <File Path="../1.6/Defs/Recipes.xml" />
+    <File Path="../1.6/Defs/Resources.xml" />
+    <File Path="../1.6/Defs/ThingCategories.xml" />
+    <File Path="../1.6/Defs/WorkGivers.xml" />
+  </Folder>
+  <Folder Name="/XML/1.6/Patches/">
+    <File Path="../1.6/Patches/AddDesignators.xml" />
+    <File Path="../1.6/Patches/MeltableSnowman.xml" />
+    <File Path="../1.6/Patches/ModifySoils.xml" />
+    <File Path="../1.6/Patches/ModifyWaters.xml" />
+    <File Path="../1.6/Patches/Pots_Soil_Patches.xml" />
+  </Folder>
+  <Folder Name="/XML/Languages/English/Keyed/">
+    <File Path="../Languages/English/Keyed/Keys.xml" />
+  </Folder>
 </Solution>

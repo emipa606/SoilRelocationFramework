@@ -1,5 +1,10 @@
 # Changelog for SoilRelocationFramework
 
+1.6.3 - When pressing SHIFT, digging will only designate the same soil-types as the first tile selected.
+Added some missing translation strings
+Used DeepL to update translations for ChineseSimplified, French, German
+
+
 1.6.2 - Various patches for using sand, soil, concrete and glass in recipes from various mods (via Mlg-arch)
 Compatibility with Argonic Core (via mrgrim)
 

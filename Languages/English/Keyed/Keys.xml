@@ -3,6 +3,7 @@
   <!--Digging Related-->
   <Dig>Dig</Dig>
   <DigDesc>Dig up soil to place elsewhere.</DigDesc>
+  <DigDescNew>Dig up soil to place elsewhere. Hold SHIFT to lock terrain type to the first selected soil.</DigDescNew>
   <AlreadyDigging>Already digging.</AlreadyDigging>
   <RemoveBuildingFirst>Must remove building first.</RemoveBuildingFirst>
   <TerrainCannotBeDug>This terrain cannot be dug.</TerrainCannotBeDug>
@@ -21,4 +22,17 @@
   <CannotPlaceIceOnBridge>Cannot place ice on a bridge.</CannotPlaceIceOnBridge>
   <CannotFillWithIce>Cannot fill water/wet terrain with ice (it would just melt and make it worse).</CannotFillWithIce>
   <CannotPlaceOnWetUnlessBridgeable>Cannot place on wet terrain unless it is also bridgeable (use a moisture extractor first).</CannotPlaceOnWetUnlessBridgeable>
+  <SRP.NoRestartWarning>The below settings take effect immediately, no restart required.</SRP.NoRestartWarning>
+  <SRP.SandbagsUseSand>Sandbags Use Sand</SRP.SandbagsUseSand>
+  <SRP.SandbagsUseSandTT>Patch vanilla sandbags so that they use sand in addition to cloth.</SRP.SandbagsUseSandTT>
+  <SRP.FungalGravelUsesRawFungus>Fungal Gravel Uses Raw Fungus</SRP.FungalGravelUsesRawFungus>
+  <SRP.FungalGravelUsesRawFungusTT>Patch vanilla Fungal Gravel to cost a bit of Raw Fungus to avoid it being exploitable/unbalanced.</SRP.FungalGravelUsesRawFungusTT>
+  <SRP.DubsSkylightsGlassUsesSand>Dubs Skylights Glass Uses Sand</SRP.DubsSkylightsGlassUsesSand>
+  <SRP.DubsSkylightsGlassUsesSandTT>Patch Dubs Skylights glass recipes so that they use sand instead of steel.</SRP.DubsSkylightsGlassUsesSandTT>
+  <SRP.JustGlassGlassUsesSand>Just Glass Glass Uses Sand</SRP.JustGlassGlassUsesSand>
+  <SRP.JustGlassGlassUsesSandTT>Patch the Just Glass glass recipe so that it uses sand instead of a stone chunk.</SRP.JustGlassGlassUsesSandTT>
+  <SRP.GlassPlusLightsGlassUsesSand>Glass+Lights Glass Uses Sand</SRP.GlassPlusLightsGlassUsesSand>
+  <SRP.GlassPlusLightsGlassUsesSandTT>Patch the Glass+Lights glass recipe so that it uses sand instead of a stone chunk.</SRP.GlassPlusLightsGlassUsesSandTT>
+  <SRP.VFEArchitectPackedDirtCostsDirt>VFE Architect Packed Dirt Costs Dirt</SRP.VFEArchitectPackedDirtCostsDirt>
+  <SRP.VFEArchitectPackedDirtCostsDirtTT>Patches VFE Architect's packed dirt recipe to cost one soil to avoid an exploit that gives you free soil.</SRP.VFEArchitectPackedDirtCostsDirtTT>
 </LanguageData>

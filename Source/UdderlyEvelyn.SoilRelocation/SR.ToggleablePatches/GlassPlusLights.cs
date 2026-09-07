@@ -2,7 +2,7 @@ using Verse;
 
 namespace SR.ToggleablePatches;
 
-internal class GlassPlusLights
+internal static class GlassPlusLights
 {
     [ToggleablePatch] internal static readonly ToggleablePatch<RecipeDef> GlassUsesSandPatch =
         new()

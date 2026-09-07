@@ -2,7 +2,7 @@ using Verse;
 
 namespace SR.ToggleablePatches;
 
-internal class Vanilla
+internal static class Vanilla
 {
     [ToggleablePatch] internal static readonly ToggleablePatch<BuildableDef> SandbagsUseSandPatch =
         new()

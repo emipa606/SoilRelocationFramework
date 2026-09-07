@@ -4,7 +4,7 @@ using Verse;
 namespace SR;
 
 [HarmonyPatch(typeof(TerrainGrid), nameof(TerrainGrid.SetTerrain))]
-public class TerrainGrid_SetTerrain
+public static class TerrainGrid_SetTerrain
 {
     internal static void Prefix(IntVec3 c, Map ___map, ref (TerrainDef, bool) __state)
     {
@@ -20,7 +20,6 @@ public class TerrainGrid_SetTerrain
             return;
         }
 
-        //___map.terrainGrid.SetUnderTerrain(c, __state.Item1);
         ___map.fertilityGrid.FertilityGridUpdate();
     }
 }

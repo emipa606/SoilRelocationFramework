@@ -2,7 +2,7 @@ using Verse;
 
 namespace SR.ToggleablePatches;
 
-internal class DubsSkylights
+internal static class DubsSkylights
 {
     [ToggleablePatch] internal static readonly ToggleablePatchGroup GlassUsesSandPatch = new()
     {
