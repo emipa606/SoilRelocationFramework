@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Reactor Core A - Add concrete for biological shielding -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="ReactorCoreA"]/costList</xpath>
+    <value>
+      <costList>
+        <VFEC_BlocksConcrete>200</VFEC_BlocksConcrete>
+        <Steel>250</Steel>
+        <ComponentIndustrial>12</ComponentIndustrial>
+      </costList>
+    </value>
+  </Operation>
+  <!-- Reactor Core B - More concrete for larger reactor -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="ReactorCoreB"]/costList</xpath>
+    <value>
+      <costList>
+        <VFEC_BlocksConcrete>300</VFEC_BlocksConcrete>
+        <Steel>250</Steel>
+        <Plasteel>50</Plasteel>
+        <ComponentIndustrial>16</ComponentIndustrial>
+        <ComponentSpacer>3</ComponentSpacer>
+      </costList>
+    </value>
+  </Operation>
+  <!-- Reactor Core C - Most concrete for massive reactor -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="ReactorCoreC"]/costList</xpath>
+    <value>
+      <costList>
+        <VFEC_BlocksConcrete>400</VFEC_BlocksConcrete>
+        <Steel>300</Steel>
+        <Plasteel>150</Plasteel>
+        <ComponentIndustrial>24</ComponentIndustrial>
+        <ComponentSpacer>6</ComponentSpacer>
+      </costList>
+    </value>
+  </Operation>
+  <!-- Storage Pool - Concrete shielding structure -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="storagePool"]/costList</xpath>
+    <value>
+      <costList>
+        <VFEC_BlocksConcrete>300</VFEC_BlocksConcrete>
+        <Steel>150</Steel>
+        <ComponentIndustrial>6</ComponentIndustrial>
+      </costList>
+    </value>
+  </Operation>
+  <!-- Cooling Tower - Concrete structure -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="CoolingTower"]/costList</xpath>
+    <value>
+      <costList>
+        <VFEC_BlocksConcrete>800</VFEC_BlocksConcrete>
+        <Steel>200</Steel>
+        <ComponentIndustrial>12</ComponentIndustrial>
+      </costList>
+    </value>
+  </Operation>
+  <!-- Large Turbines - Add concrete foundations -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="Turbine"]/costList</xpath>
+    <value>
+      <costList>
+        <VFEC_BlocksConcrete>50</VFEC_BlocksConcrete>
+        <Steel>200</Steel>
+        <turbineBlade>250</turbineBlade>
+        <ComponentIndustrial>12</ComponentIndustrial>
+      </costList>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="BigTurbine"]/costList</xpath>
+    <value>
+      <costList>
+        <VFEC_BlocksConcrete>150</VFEC_BlocksConcrete>
+        <Steel>500</Steel>
+        <turbineBlade>1000</turbineBlade>
+        <ComponentIndustrial>20</ComponentIndustrial>
+        <ComponentSpacer>2</ComponentSpacer>
+      </costList>
+    </value>
+  </Operation>
+  <!-- Add concrete to Research Reactor -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef[defName="ResearchReactor"]/costList</xpath>
+    <value>
+      <VFEC_BlocksConcrete>30</VFEC_BlocksConcrete>
+    </value>
+  </Operation>
+  <!-- Add concrete to Plutonium Processor -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef[defName="PlutoniumProcessor"]/costList</xpath>
+    <value>
+      <VFEC_BlocksConcrete>60</VFEC_BlocksConcrete>
+    </value>
+  </Operation>
+  <!-- Add concrete to Water Cooling System -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef[defName="CoolingWater"]/costList</xpath>
+    <value>
+      <VFEC_BlocksConcrete>50</VFEC_BlocksConcrete>
+    </value>
+  </Operation>
+  <!-- Replace costList for BaseSarc (abstract parent) -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[@ParentName="BaseSarc" and not(costList)]</xpath>
+        <value>
+          <costList>
+            <VFEC_BlocksConcrete>250</VFEC_BlocksConcrete>
+            <Steel>100</Steel>
+          </costList>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[@ParentName="BaseSarc" and costList]/costList</xpath>
+        <value>
+          <VFEC_BlocksConcrete>250</VFEC_BlocksConcrete>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+  <!-- Radiation Shielding Wall - Concrete with DU and steel reinforcement -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="RadiationShielding"]/costList</xpath>
+    <value>
+      <costList>
+        <VFEC_BlocksConcrete>3</VFEC_BlocksConcrete>
+        <DepletedUraniumPellets>10</DepletedUraniumPellets>
+        <Steel>2</Steel>
+      </costList>
+    </value>
+  </Operation>
+  <!-- DU Blast Door - Concrete core with steel cladding -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="DU_Blastdoor"]/costList</xpath>
+    <value>
+      <costList>
+        <VFEC_BlocksConcrete>20</VFEC_BlocksConcrete>
+        <DepletedUraniumPellets>25</DepletedUraniumPellets>
+        <Steel>20</Steel>
+        <ComponentIndustrial>2</ComponentIndustrial>
+      </costList>
+    </value>
+  </Operation>
+</Patch>

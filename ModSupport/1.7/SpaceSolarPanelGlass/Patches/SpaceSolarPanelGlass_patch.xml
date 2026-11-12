@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef[defName="AV_SolarPanel_small"]/costList</xpath>
+    <value>
+      <Glass>4</Glass>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef[defName="AV_SolarPanel_wide"]/costList</xpath>
+    <value>
+      <Glass>6</Glass>
+    </value>
+  </Operation>
+</Patch>

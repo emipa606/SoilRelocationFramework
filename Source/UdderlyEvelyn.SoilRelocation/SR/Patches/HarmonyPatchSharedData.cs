@@ -52,8 +52,15 @@ internal static class HarmonyPatchSharedData
             return num;
         }
 
-        num = isWater && MultiplierByWaterDef.TryGetValue(currentTerrain, out var value) ? value :
-            !bridgeable ? 4f : 2f;
+        if (isWater && MultiplierByWaterDef.TryGetValue(currentTerrain, out var value))
+        {
+            num = value;
+        }
+        else
+        {
+            num = !bridgeable ? 4f : 2f;
+        }
+
         if (gravelAdjusts && newTerrain == TerrainDefOf.Gravel)
         {
             num *= GravelMultiplier;
@@ -67,12 +74,7 @@ internal static class HarmonyPatchSharedData
     {
         var list = entDef.CostListAdjusted(stuff);
         var map = frame.Map;
-        if (map == null)
-        {
-            return list;
-        }
-
-        if (entDef is not TerrainDef terrainDef || terrainDef == TerrainDefOf.Ice)
+        if (map == null || entDef is not TerrainDef terrainDef || terrainDef == TerrainDefOf.Ice)
         {
             return list;
         }

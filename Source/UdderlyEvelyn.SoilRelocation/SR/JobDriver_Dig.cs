@@ -52,14 +52,26 @@ public class JobDriver_Dig : JobDriver_AffectFloor
                 var text2 = terrain.label.ToLowerInvariant();
                 if (text.Contains("soil") || text.Contains("dirt") || text2.Contains("soil") || text2.Contains("dirt"))
                 {
-                    thingDef =
-                        !text.Contains("fertile") && !text.Contains("rich") && !text2.Contains("fertile") &&
-                        !text2.Contains("rich")
-                            ? !text.Contains("stony") && !text.Contains("rocky") && !text2.Contains("stony") &&
-                              !text2.Contains("rocky")
-                                ? SoilDefs.SR_Soil
-                                : SoilDefs.SR_Gravel
-                            : SoilDefs.SR_RichSoil;
+                    if (!text.Contains("fertile") && !text.Contains("rich") && !text2.Contains("fertile") &&
+                        !text2.Contains("rich") && !text.Contains("riverbank") && !text2.Contains("riverbank"))
+                    {
+                        if (!text.Contains("stony") && !text.Contains("rocky") && !text2.Contains("stony") &&
+                            !text2.Contains("rocky"))
+                        {
+                            thingDef =
+                                SoilDefs.SR_Soil;
+                        }
+                        else
+                        {
+                            thingDef =
+                                SoilDefs.SR_Gravel;
+                        }
+                    }
+                    else
+                    {
+                        thingDef =
+                            SoilDefs.SR_RichSoil;
+                    }
                 }
                 else if (text.Contains("ice") || text2.Contains("ice"))
                 {
@@ -93,7 +105,7 @@ public class JobDriver_Dig : JobDriver_AffectFloor
                         return;
                     }
 
-                    num = Math.Max(1, Mathf.RoundToInt((float)(cellIce / 25f * num)!));
+                    num = Math.Max(1, Mathf.RoundToInt((float)(cellIce / 25f * num)));
                     var newTerr = WaterFreezes_Interop.QueryCellAllWater(map, c);
                     if (WaterFreezes_Interop.QueryCellWater(map, c) > 0f)
                     {

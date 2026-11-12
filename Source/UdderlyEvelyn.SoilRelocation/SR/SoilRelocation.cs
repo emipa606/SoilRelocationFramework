@@ -12,8 +12,12 @@ public static class SoilRelocation
 
     static SoilRelocation()
     {
-        var version = Assembly.GetAssembly(typeof(SoilRelocation)).GetName().Version;
-        Version = $"{version.Major}.{version.Minor}.{version.Build}";
+        var version = Assembly.GetAssembly(typeof(SoilRelocation))?.GetName().Version;
+        if (version != null)
+        {
+            Version = $"{version.Major}.{version.Minor}.{version.Build}";
+        }
+
         ToggleablePatch.ProcessPatches("UdderlyEvelyn.SoilRelocation");
         var harmony = new Harmony("UdderlyEvelyn.SoilRelocation");
         harmony.PatchAll(Assembly.GetExecutingAssembly());

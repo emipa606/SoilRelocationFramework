@@ -92,18 +92,18 @@ public class ToggleablePatch<T> : IToggleablePatch where T : Def
 {
     public List<string> ConflictingModIDs = [];
 
-    private bool? modInstalled;
-
     public Action<ToggleablePatch<T>, T> Patch;
 
     public object State;
-    private T targetDef;
 
     public string TargetDefName;
 
     public string TargetModID;
 
     public Action<ToggleablePatch<T>, T> Unpatch;
+
+    private bool? modInstalled;
+    private T targetDef;
 
     private string TargetDescriptionString =>
         $"{(TargetModID != null ? TargetModID + "." : "")}{TargetDefName} ({typeof(T).FullName})";

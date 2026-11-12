@@ -8,8 +8,8 @@ public class WorkGiver_Dig : WorkGiver_ConstructAffectFloor
 {
     protected override DesignationDef DesDef => DesignationDefOf.SR_Dig;
 
-    public override Job JobOnCell(Pawn pawn, IntVec3 c, bool forced = false)
+    public override Job JobOnCell(Pawn pawn, IntVec3 cell, bool forced = false)
     {
-        return JobMaker.MakeJob(JobDefs.SR_Dig, c);
+        return JobMaker.MakeJob(JobDefs.SR_Dig, cell);
     }
 }
